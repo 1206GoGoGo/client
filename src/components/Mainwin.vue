@@ -95,7 +95,7 @@ export default {
       //alert('Hello ')
       switch(id){
         case 'xqdmwh':
-          this.$router.push({name: 'xqdmwh',params:{ id:'1'}});
+          this.$router.push({name: 'xqdmwh',params:{ tip:'首页——>系统维护——>公共代码维护——>校区代码维护'}});
           break;
         case 'zxyygl':
           this.$router.push({name: 'xqdmwh',params:{ id:'1'}});
