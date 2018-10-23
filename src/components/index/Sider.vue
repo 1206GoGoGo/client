@@ -88,13 +88,11 @@ export default {
     methods:{
         //路由跳转处理
         handleSelect:function(index,indexpath){
-            console.log(this);
-            this.$router.push({path:'/Xqdm'});
-            console.log("----")
             var locthis=this;
             switch(index)
             {
-                case "1-1-1":console.log("进入跳转");locthis.$router.push({path:'/Xqdm'});break;
+                //通过index来控制路由跳转
+                case "1-1-1":locthis.$router.push({path:'/xqdm'});break;
                 default:console.log("跳转错误");
             }
         }
