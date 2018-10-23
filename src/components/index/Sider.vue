@@ -1,26 +1,29 @@
 <template>
 <div class="sider">
     <div class="title-area">
-        <div class="title">武汉理工大学</div>
-        <div class="logo">-图片-</div>
+        <img class="whut-logo" src="../../assets/whut-logo.png">
+        <span class="whut-title-area">
+            <img src="../../assets/whut-title.png" class="whut-title-logo">
+            <div>教务管理系统</div>
+        </span>
     </div>
    <el-menu  class="" @select="handleSelect"   :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#e83729">
       
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>系统维护</template>   
             <el-submenu index="1-1">
-                <template slot="title">- 公共代码维护</template> 
-                <el-menu-item index="1-1-1">- - 校区代码维护</el-menu-item>
-                <el-menu-item index="1-1-2">- - 学院代码维护</el-menu-item>
-                <el-menu-item index="1-1-3">-  -专业代码维护</el-menu-item>
+                <template slot="title">-公共代码维护</template> 
+                <el-menu-item index="1-1-1">- -校区代码维护</el-menu-item>
+                <el-menu-item index="1-1-2">- -学院代码维护</el-menu-item>
+                <el-menu-item index="1-1-3">- -专业代码维护</el-menu-item>
             </el-submenu>
             <el-submenu index="1-2">
                 <template slot="title">- 计划子模块代码维护</template> 
-                <el-menu-item index="1-2-1">- - 课程性质代码维护</el-menu-item>
-                <el-menu-item index="1-2-2">- - 课程类别代码维护</el-menu-item>
-                <el-menu-item index="1-2-3">-  -学科类别代码维护</el-menu-item>
-                <el-menu-item index="1-2-4">-  -选修课程归属代码维护</el-menu-item>
-                <el-menu-item index="1-2-5">- - 考核方式代码维护</el-menu-item>
+                <el-menu-item index="1-2-1">- -课程性质代码维护</el-menu-item>
+                <el-menu-item index="1-2-2">- -课程类别代码维护</el-menu-item>
+                <el-menu-item index="1-2-3">- -学科类别代码维护</el-menu-item>
+                <el-menu-item index="1-2-4">- -选修课程归属代码维护</el-menu-item>
+                <el-menu-item index="1-2-5">- -考核方式代码维护</el-menu-item>
             </el-submenu>
        </el-submenu>
 
@@ -113,6 +116,22 @@ export default {
     }
     .sider .title-area{
         height:84px;
+    }
+    .whut-logo{
+        float:left;
+        height:75px;
+    }
+    .whut-title-area{
+        float:right;
+        width:200px;
+        margin-right:0px;
+    }
+    .whut-title-logo{
+        display: inline-block;
+        margin-top:7px;
+        margin-right:6px;
+        width:180px;
+
     }
     .el-menu{
         text-align: left;
