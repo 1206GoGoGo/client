@@ -2,25 +2,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Xqdm from '@/components/xtwh/ggdmwh/xqdmwh/xqdmwh'
-
-import RightForm from '@/components/xtwh/ggdmwh/xqdmwh/rightForm'
-
-Vue.use(Router)
+import xtwh from './xtwh.js'
+Vue.use(Router);
 
 export default new Router({
-    mode:'hash',
-    routes:[
-        {
-            path:"/xqdm",
-            component:Xqdm,
-            name: 'xqdmwh',
-            children: [{
-                path: '/xqdmwh/rightForm/:change_id',
-                name: 'rightForm',
-                component: RightForm
-            }]
-        }
-
-    ]
+    routes:xtwh
 })

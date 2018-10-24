@@ -96,6 +96,14 @@ export default {
             {
                 //通过index来控制路由跳转
                 case "1-1-1":locthis.$router.push({path:'/xqdm'});break;
+                case "1-1-2":locthis.$router.push({path:'/xydm'});break;
+                case "1-1-3":locthis.$router.push({path:'/zydm'});break;
+                case "1-2-1":locthis.$router.push({path:'/kcxzdm'});break;
+                case "1-2-2":locthis.$router.push({path:'/kclbdm'});break;
+                case "1-2-3":locthis.$router.push({path:'/xklbdm'});break;
+                case "1-2-4":locthis.$router.push({path:'/xxkcgsdm'});break;
+                case "1-2-5":locthis.$router.push({path:'/khfsdm'});break;
+                
                 default:console.log("跳转错误");
             }
         }
