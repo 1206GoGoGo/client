@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div style="text-align:left">添加校区代码</div>
+        <div style="text-align:left">学科类别代码</div>
         <div style="margin: 20px;"></div>
-        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-            <el-form-item label="校区代码">
-                <el-input v-model="formLabelAlign.xqdm" placeholder="添加新的校区信息"></el-input>
+        <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign">
+            <el-form-item label="学科类别代码">
+                <el-input v-model="formLabelAlign.xklbdm" placeholder="添加新的学科代码"></el-input>
             </el-form-item>
-            <el-form-item label="校区名称">
-                <el-input v-model="formLabelAlign.xqmc"></el-input>
+            <el-form-item label="学科类别名称">
+                <el-input v-model="formLabelAlign.xklbmc"></el-input>
             </el-form-item>
-            <el-form-item label="校区简拼">
-                <el-input v-model="formLabelAlign.xqjp"></el-input>
+            <el-form-item label="学科类别英文名">
+                <el-input v-model="formLabelAlign.xklbywm"></el-input>
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
@@ -41,9 +41,9 @@ export default {
         return {
             labelPosition: 'right',
             formLabelAlign: {
-                xqdm: this.$route.params.val.xqdm,
-                xqmc: this.$route.params.val.xqmc,
-                xqjp: this.$route.params.val.xqjp
+                xklbdm: this.$route.params.val.xklbdm,
+                xklbmc: this.$route.params.val.xklbmc,
+                xklbywm: this.$route.params.val.xklbywm
             },
             optype: type
         };

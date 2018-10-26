@@ -13,7 +13,7 @@ export default {
     name: "ChooseButton",
     methods: {
          goto(kinf){
-             this.$router.push({name: 'rightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
+             this.$router.push({name: 'khfsdmRightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
          }
     }
 };

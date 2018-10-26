@@ -11,24 +11,29 @@
             :default-sort = "{prop: 'xqdm', order: 'descending'}"
             >
             <el-table-column
-                type="index"
-                width="100">
+                type="index">
             </el-table-column>
             <el-table-column
-                prop="xqdm"
-                label="校区代码"
+                prop="xydm"
+                label="学院代码"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqmc"
-                label="校区名称"
+                prop="xyjc"
+                label="学院简称"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqjp"
-                label="校区简拼"
+                prop="xyqc"
+                label="学院全称"
+                sortable
+                width="100">
+            </el-table-column>
+            <el-table-column
+                prop="xyywmc"
+                label="学院英文名称"
                 sortable
                 width="100">
             </el-table-column>
@@ -58,21 +63,24 @@ export default {
     data() {
       return {
          tableData: [{
-          xqdm: '001',
-          xqmc: '鉴湖',
-          xqjp: 'jh',
+          xydm: '001',
+          xyjc: '计算机',
+          xyqc: '计算机科学与技术学院',
+          xyywmc: 'computer science and technology',
+          state: '正常'
+          }, {
+          xydm: '001',
+          xyjc: '鉴湖',
+          xyqc: 'jh',
+          xyywmc: '',
           state: '0'
           }, {
-          xqdm: '002',
-          xqmc: '南湖',
-          xqjp: 'jh',
+          xydm: '001',
+          xyjc: '鉴湖',
+          xyqc: 'jh',
+          xyywmc: '',
           state: '0'
-        }, {
-          xqdm: '003',
-          xqmc: '马房山',
-          xqjp: 'jh',
-          state: '0'
-        }]
+          }]
       }
     },
     methods: {
@@ -84,7 +92,7 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'xydmRightForm',params:{ val:row ,change_id: row.xydm, type: 'change'}});
       },
       handleDelete(index, row) {
         alert(index);

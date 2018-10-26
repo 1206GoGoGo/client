@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div style="text-align:left">添加校区代码</div>
+        <div style="text-align:left">考核方式代码维护</div>
         <div style="margin: 20px;"></div>
-        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-            <el-form-item label="校区代码">
-                <el-input v-model="formLabelAlign.xqdm" placeholder="添加新的校区信息"></el-input>
+        <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign">
+            <el-form-item label="考核方式代码">
+                <el-input v-model="formLabelAlign.khfsdm" placeholder="添加新的考核方式"></el-input>
             </el-form-item>
-            <el-form-item label="校区名称">
-                <el-input v-model="formLabelAlign.xqmc"></el-input>
+            <el-form-item label="考核方式名称">
+                <el-input v-model="formLabelAlign.khfsmc"></el-input>
             </el-form-item>
-            <el-form-item label="校区简拼">
-                <el-input v-model="formLabelAlign.xqjp"></el-input>
+            <el-form-item label="建议考试方式">
+                <el-input v-model="formLabelAlign.jyksfs"></el-input>
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
@@ -31,9 +31,9 @@ export default {
             return {
                 labelPosition: 'right',
                 formLabelAlign: {
-                    xqdm: '',
-                    xqmc: '',
-                    xqjp: ''
+                    khfsdm: '',
+                    khfsmc: '',
+                    jyksfs: ''
                 },
                 optype: type
             };
@@ -41,9 +41,9 @@ export default {
         return {
             labelPosition: 'right',
             formLabelAlign: {
-                xqdm: this.$route.params.val.xqdm,
-                xqmc: this.$route.params.val.xqmc,
-                xqjp: this.$route.params.val.xqjp
+                khfsdm: this.$route.params.val.khfsdm,
+                khfsmc: this.$route.params.val.khfsmc,
+                jyksfs: this.$route.params.val.jyksfs
             },
             optype: type
         };

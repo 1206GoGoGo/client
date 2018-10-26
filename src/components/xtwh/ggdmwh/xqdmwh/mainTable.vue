@@ -84,7 +84,7 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'xqdmRightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
       },
       handleDelete(index, row) {
         alert(index);

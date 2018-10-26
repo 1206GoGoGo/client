@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <div style="text-align:left">
-      <br/>
-      <xtwhChooseButton></xtwhChooseButton>
-    </div>
+
     <el-container>
       <el-main>
+        <div style="text-align:left">
+          <xtwhChooseButton></xtwhChooseButton>
+          <br/>
+        </div>
         <main-table></main-table>
       </el-main>
-      <el-aside>
-        <router-view :key="key"></router-view>
-      </el-aside>
+      <div id="isshow" style="display:none">
+        <el-aside>
+          <router-view :key="key"></router-view>
+        </el-aside>
+      </div>
     </el-container>
   </div>
 </template>

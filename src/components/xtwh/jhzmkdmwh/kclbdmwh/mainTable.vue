@@ -11,24 +11,14 @@
             :default-sort = "{prop: 'xqdm', order: 'descending'}"
             >
             <el-table-column
-                type="index"
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqdm"
-                label="校区代码"
+                prop="kclbdm"
+                label="课程类别代码"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqmc"
-                label="校区名称"
-                sortable
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqjp"
-                label="校区简拼"
+                prop="kclbmc"
+                label="课程类别名称"
                 sortable
                 width="100">
             </el-table-column>
@@ -58,21 +48,18 @@ export default {
     data() {
       return {
          tableData: [{
-          xqdm: '001',
-          xqmc: '鉴湖',
-          xqjp: 'jh',
+          kclbdm: '001',
+          kclbmc: '实验课',
           state: '0'
-          }, {
-          xqdm: '002',
-          xqmc: '南湖',
-          xqjp: 'jh',
+          },{
+          kclbdm: '002',
+          kclbmc: '公共课',
           state: '0'
-        }, {
-          xqdm: '003',
-          xqmc: '马房山',
-          xqjp: 'jh',
+          },{
+          kclbdm: '003',
+          kclbmc: '鉴湖',
           state: '0'
-        }]
+          } ]
       }
     },
     methods: {
@@ -84,7 +71,7 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'kclbdmRightForm',params:{ val:row ,change_id: row.kclbdm, type: 'change'}});
       },
       handleDelete(index, row) {
         alert(index);

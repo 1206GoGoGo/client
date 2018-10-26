@@ -20,7 +20,7 @@ import xtwhChooseButton from "./chooseButton.vue"
 import mainTable from "./mainTable.vue"
 import rightForm from "./rightForm"
 export default {
-  name: "xqdmwh",
+  name: "kclbdmwh",
   components: {xtwhChooseButton,mainTable,rightForm},
   computed: {
       key() {

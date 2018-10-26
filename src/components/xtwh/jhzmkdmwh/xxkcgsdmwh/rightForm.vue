@@ -1,16 +1,15 @@
 <template>
     <div>
-        <div style="text-align:left">添加校区代码</div>
+        <div style="text-align:left">选修课程归属代码维护</div>
         <div style="margin: 20px;"></div>
-        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-            <el-form-item label="校区代码">
-                <el-input v-model="formLabelAlign.xqdm" placeholder="添加新的校区信息"></el-input>
+        <el-form :label-position="labelPosition" label-width="180px" :model="formLabelAlign">
+            <el-form-item label="选修课程归属代码">
+                <el-input v-model="formLabelAlign.xxkcgsdm" 
+                :disabled="true"
+                placeholder="自动生成ID"></el-input>
             </el-form-item>
-            <el-form-item label="校区名称">
-                <el-input v-model="formLabelAlign.xqmc"></el-input>
-            </el-form-item>
-            <el-form-item label="校区简拼">
-                <el-input v-model="formLabelAlign.xqjp"></el-input>
+            <el-form-item label="选修课程归属名称">
+                <el-input v-model="formLabelAlign.xxkcgsmc"></el-input>
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
@@ -19,6 +18,8 @@
 </template>
 
 <script>
+//处理代码数字是否可以修改的问题
+//待处理，若是自动生成，则无需区分
 
 export default {
     name: "xt",
@@ -41,9 +42,8 @@ export default {
         return {
             labelPosition: 'right',
             formLabelAlign: {
-                xqdm: this.$route.params.val.xqdm,
-                xqmc: this.$route.params.val.xqmc,
-                xqjp: this.$route.params.val.xqjp
+                xxkcgsdm: this.$route.params.val.xxkcgsdm,
+                xxkcgsmc: this.$route.params.val.xxkcgsmc
             },
             optype: type
         };

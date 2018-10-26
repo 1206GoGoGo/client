@@ -11,24 +11,26 @@
             :default-sort = "{prop: 'xqdm', order: 'descending'}"
             >
             <el-table-column
-                type="index"
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqdm"
-                label="校区代码"
+                prop="kcxzdm"
+                label="课程性质代码"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqmc"
-                label="校区名称"
+                prop="kcxzmc"
+                label="课程性质名称"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqjp"
-                label="校区简拼"
+                prop="kcxzywqc"
+                label="课程性质英文全称"
+                sortable
+                width="100">
+            </el-table-column>
+            <el-table-column
+                prop="kcxzywjc"
+                label="课程性质英文简称"
                 sortable
                 width="100">
             </el-table-column>
@@ -58,21 +60,18 @@ export default {
     data() {
       return {
          tableData: [{
-          xqdm: '001',
-          xqmc: '鉴湖',
-          xqjp: 'jh',
+          kcxzdm: '001',
+          kcxzmc: '大类必修',
+          kcxzywqc: 'jh21312312asdasd',
+          kcxzywjc: 'ads',
           state: '0'
-          }, {
-          xqdm: '002',
-          xqmc: '南湖',
-          xqjp: 'jh',
+          },{
+          kcxzdm: '002',
+          kcxzmc: '选修课',
+          kcxzywqc: 'jh21312312asdasd',
+          kcxzywjc: 'ads',
           state: '0'
-        }, {
-          xqdm: '003',
-          xqmc: '马房山',
-          xqjp: 'jh',
-          state: '0'
-        }]
+          }]
       }
     },
     methods: {
@@ -84,7 +83,7 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'kcxzdmRightForm',params:{ val:row ,change_id: row.kcxzdm, type: 'change'}});
       },
       handleDelete(index, row) {
         alert(index);

@@ -11,32 +11,19 @@
             :default-sort = "{prop: 'xqdm', order: 'descending'}"
             >
             <el-table-column
-                type="index"
-                width="100">
+                prop="xxkcgsdm"
+                label="选修课程归属代码"
+                sortable>
             </el-table-column>
             <el-table-column
-                prop="xqdm"
-                label="校区代码"
-                sortable
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqmc"
-                label="校区名称"
-                sortable
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqjp"
-                label="校区简拼"
-                sortable
-                width="100">
+                prop="xxkcgsmc"
+                label="选修课程归属名称"
+                sortable>
             </el-table-column>
             <el-table-column
                 prop="state"
                 label="是否停用"
-                sortable
-                width="100">
+                sortable>
             </el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -58,21 +45,14 @@ export default {
     data() {
       return {
          tableData: [{
-          xqdm: '001',
-          xqmc: '鉴湖',
-          xqjp: 'jh',
+          xxkcgsdm: '001',
+          xxkcgsmc: '人文社科',
           state: '0'
-          }, {
-          xqdm: '002',
-          xqmc: '南湖',
-          xqjp: 'jh',
+          },{
+          xxkcgsdm: '002',
+          xxkcgsmc: '体育类',
           state: '0'
-        }, {
-          xqdm: '003',
-          xqmc: '马房山',
-          xqjp: 'jh',
-          state: '0'
-        }]
+          },]
       }
     },
     methods: {
@@ -84,7 +64,9 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'xxkcgsdmRightForm',
+            params:{ val:row ,change_id: row.xxkcgsdm+new Date().getSeconds(), type: 'change'}});
+            //通过改变每次的参数解决路由跳转失效的问题
       },
       handleDelete(index, row) {
         alert(index);

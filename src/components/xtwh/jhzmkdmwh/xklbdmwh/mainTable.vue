@@ -11,24 +11,20 @@
             :default-sort = "{prop: 'xqdm', order: 'descending'}"
             >
             <el-table-column
-                type="index"
-                width="100">
-            </el-table-column>
-            <el-table-column
-                prop="xqdm"
-                label="校区代码"
+                prop="xklbdm"
+                label="学科类别代码"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqmc"
-                label="校区名称"
+                prop="xklbmc"
+                label="学科类别名称"
                 sortable
                 width="100">
             </el-table-column>
             <el-table-column
-                prop="xqjp"
-                label="校区简拼"
+                prop="xklbywm"
+                label="学科类别英文名"
                 sortable
                 width="100">
             </el-table-column>
@@ -58,21 +54,21 @@ export default {
     data() {
       return {
          tableData: [{
-          xqdm: '001',
-          xqmc: '鉴湖',
-          xqjp: 'jh',
+          xklbdm: '001',
+          xklbmc: '理学',
+          xklbywm: 'jh',
           state: '0'
-          }, {
-          xqdm: '002',
-          xqmc: '南湖',
-          xqjp: 'jh',
+          },{
+          xklbdm: '002',
+          xklbmc: '工学',
+          xklbywm: 'jh',
           state: '0'
-        }, {
-          xqdm: '003',
-          xqmc: '马房山',
-          xqjp: 'jh',
+          },{
+          xklbdm: '003',
+          xklbmc: '文学',
+          xklbywm: 'jh',
           state: '0'
-        }]
+          }]
       }
     },
     methods: {
@@ -84,7 +80,7 @@ export default {
         //this.$router.replace({name: 'rightFormView',params:{ val:val ,change_id: val.xqdm}});
       },
       handleEdit(index, row) {
-        this.$router.replace({name: 'rightForm',params:{ val:row ,change_id: row.xqdm, type: 'change'}});
+        this.$router.replace({name: 'xklbdmRightForm',params:{ val:row ,change_id: row.xklbdm, type: 'change'}});
       },
       handleDelete(index, row) {
         alert(index);
