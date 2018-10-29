@@ -4,7 +4,7 @@
         <div class="title">武汉理工大学</div>
         <div class="logo">-图片-</div>
     </div>
-   <el-menu  class="" @select="handleSelect"   :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#e83729">
+   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#e83729">
       
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>系统维护</template>   
@@ -26,7 +26,7 @@
 
         <el-submenu index="2">
             <template   slot="title"><i class="el-icon-menu"></i>专业信息</template>  
-            <el-menu-item index="2-1">- 专业信息管理</el-menu-item>
+            <el-menu-item index="2-1">-专业信息管理</el-menu-item>
         </el-submenu>
 
         <el-submenu index="3">
@@ -81,7 +81,7 @@ export default {
     name:"Sider",
     data:function(){
         return {
-
+            
         }
     },
 
@@ -93,6 +93,9 @@ export default {
             {
                 //通过index来控制路由跳转
                 case "1-1-1":locthis.$router.push({path:'/xqdm'});break;
+                case "8-1":locthis.$router.push({path:'/sjx'});break;
+                case "8-1":locthis.$router.push({path:'/select'});break;
+                case "8-2":locthis.$router.push({path:'/fjx'});break;
                 default:console.log("跳转错误");
             }
         }
