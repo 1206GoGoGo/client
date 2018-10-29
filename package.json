@@ -11,9 +11,11 @@
     "test": "npm run e2e",
     "build": "node build/build.js",
     "electron_dev_single": "electron build/electron.js",
-    "electron_dev": "npm run build && electron build/electron.js"
+    "electron_dev": "npm run build && electron build/electron.js",
+    "packager": "electron-packager ./ jwc --platform=win32  --arch=x64 --electron-version=3.0.3 --out=exe00版 --overwrite"
   },
   "dependencies": {
+    "ajv": "^6.5.4",
     "element-ui": "^2.4.8",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
@@ -35,7 +37,6 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
-    "electron": "^3.0.5",
     "electron-packager": "^12.2.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
