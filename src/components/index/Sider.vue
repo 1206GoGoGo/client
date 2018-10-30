@@ -81,7 +81,7 @@
 <script>
 //首页侧边栏模块
 export default {
-    name:"Sider",
+    name:"sider",
     data:function(){
         return {
             
@@ -103,6 +103,8 @@ export default {
                 case "1-2-3":locthis.$router.push({path:'/xklbdm'});break;
                 case "1-2-4":locthis.$router.push({path:'/xxkcgsdm'});break;
                 case "1-2-5":locthis.$router.push({path:'/khfsdm'});break;
+
+                case "2-1":locthis.$router.push({path:'/zyxxgl'});break;
 
                 case "8-1":locthis.$router.push({path:'/sjx'});break;
                 case "8-1":locthis.$router.push({path:'/select'});break;

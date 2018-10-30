@@ -12,8 +12,8 @@
   </div>
 </template>
 <script>
-import Sider from '@/components/index/Sider'
-import MainPanel from '@/components/index/MainPanel'
+import Sider from '@/components/index/sider'
+import MainPanel from '@/components/index/mainPanel'
 export default {
   name: 'App',
   data:function(){

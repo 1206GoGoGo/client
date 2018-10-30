@@ -11,7 +11,7 @@
 <script>
 //主界面
 export default {
-    name:"MainPanel",
+    name:"mainPanel",
     data:function(){
         return {
 
