@@ -9,7 +9,6 @@
 </el-breadcrumb>
 <!-- 显示当前页面路径 结束 -->
 
-<div>wgwug</div>
 <!-- 菜单栏 开始 -->
 <el-row :gutter="20" style="width: 100%" class="time"> 
   <el-col :span="14">
@@ -35,9 +34,9 @@
   <el-col :span="14">
     <div class="grid-content bg-purple">
       <el-row> 
-        <el-button type="primary" plain >清空</el-button>
-        <el-button type="primary" plain >查询</el-button>
-        <el-button type="primary" plain >删除</el-button>
+        <el-button type="primary" plain @click="cle">清空</el-button>
+        <el-button type="primary" plain @click="sel">查询</el-button>
+        <el-button type="primary" plain @click="del">删除</el-button>
         <el-button type="primary" plain @click="look">查看</el-button>
       </el-row>
     </div>
@@ -54,7 +53,6 @@
           :data="tableData"
           border
           highlight-current-row
-          
           class="t1"
           height="500" 
           style="width: 100%"
@@ -157,7 +155,16 @@ export default {
       },
       look(){
             this.$router.push('/select')
-         }       
+         },
+      cle(id){
+
+      },
+      sel(id){
+
+      },
+      del(id){
+
+      }       
       // row1(row, event, column){
           
       // },

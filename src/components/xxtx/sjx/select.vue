@@ -13,7 +13,7 @@
         <el-col :span="6"><div class="grid-content bg-purple"><span>发自:</span></div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple"><span>发自:</span></div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple">
-            <el-button type="primary" plain>返回</el-button>
+            <el-button type="primary" plain @click="back">返回</el-button>
             </div>
         </el-col>
       </el-row>
@@ -23,7 +23,14 @@
 </template>
 <script>
 export default {
-    
+    data(){
+      
+    },
+    methods:{
+      back(){
+        this.$router.push('/sjx')
+      }
+    }
 }
 </script>
 <style>
@@ -35,7 +42,7 @@ export default {
    }
    .order{
     margin: 10px;
-    height: 70px;
+    /* height: 70px; */
     line-height: 70px;
     width: 100%;
     float:left;

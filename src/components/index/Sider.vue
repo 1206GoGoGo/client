@@ -109,7 +109,7 @@ export default {
                 case "8-1":locthis.$router.push({path:'/sjx'});break;
                 case "8-1":locthis.$router.push({path:'/select'});break;
                 case "8-2":locthis.$router.push({path:'/fjx'});break;
-                
+                case "8-3":locthis.$router.push({path:'/hsx'});break;
                 
                 default:console.log("跳转错误");
             }

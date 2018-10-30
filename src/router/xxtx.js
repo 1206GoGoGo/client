@@ -3,7 +3,7 @@
 import sjx from '@/components/xxtx/sjx/sjx'
 import fjx from '@/components/xxtx/fjx/fjx'
 import select from '@/components/xxtx/sjx/select'
-
+import hsx from '@/components/xxtx/hsx/hsx'
 
 export default [
     {
@@ -17,7 +17,10 @@ export default [
     {
         path:"/select",
         component:select,
+    },
+    {
+        path:"/hsx",
+        component:hsx,
     }
-
 
 ]
