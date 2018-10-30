@@ -17,10 +17,10 @@
       <!-- <div> class="demonstration"-->
         <span>按时间查询：</span>
         <el-date-picker
-          v-model="value1"
-          type="daterange"
-          align="right"
-          unlink-panels="true"
+          v-model="value1" 
+          type="daterange" 
+          align="right" 
+          unlink-panels 
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
@@ -53,7 +53,7 @@
         <el-table
           :data="tableData"
           border
-          highlight-current-row="true"
+          highlight-current-row
           
           class="t1"
           height="500" 
@@ -110,13 +110,13 @@ export default {
         // {prop:"content",label:"内容概要"},
         // {prop:"time",label:"发送时间"}
         // ],
-        tableData: {
+        tableData: [{
           status: '维护中',
           new: '代码维护',
           title: '前端框架',
           content:'系统为C/S结构，客户端采用electron使用网页前端技术来编写。',
           time:'2016-05-01'
-        },
+        }],
     //日期选择
     pickerOptions2: {
           shortcuts: [{
