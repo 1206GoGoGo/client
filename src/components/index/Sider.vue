@@ -96,11 +96,10 @@ export default {
             {
                 //通过index来控制路由跳转
                 case "1-1-1":locthis.$router.push({path:'/xqdm'});break;
-<<<<<<< HEAD
                 case "8-1":locthis.$router.push({path:'/sjx'});break;
                 case "8-1":locthis.$router.push({path:'/select'});break;
                 case "8-2":locthis.$router.push({path:'/fjx'});break;
-=======
+                case "8-3":locthis.$router.push({path:'/hsx'});break;
                 case "1-1-2":locthis.$router.push({path:'/xydm'});break;
                 case "1-1-3":locthis.$router.push({path:'/zydm'});break;
                 case "1-2-1":locthis.$router.push({path:'/kcxzdm'});break;
@@ -109,7 +108,6 @@ export default {
                 case "1-2-4":locthis.$router.push({path:'/xxkcgsdm'});break;
                 case "1-2-5":locthis.$router.push({path:'/khfsdm'});break;
                 
->>>>>>> 2cc097a09c0e3719c99fa3565353a2f2e9c83478
                 default:console.log("跳转错误");
             }
         }
