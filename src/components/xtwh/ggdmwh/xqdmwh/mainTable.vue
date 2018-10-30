@@ -55,6 +55,18 @@
 
 <script>
 export default {
+    created () { // 在组件初始化的时候执行，只执行一次
+        this.axios.get('/user')
+            .then(function (response) {
+                //将response获得的数据进行处理
+                alert(response.state)
+                //this.data();
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
     data() {
       return {
          tableData: [{

@@ -7,7 +7,7 @@
             <div>教务管理系统</div>
         </span>
     </div>
-   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#e83729">
+   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#fff">
       
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>系统维护</template>   
@@ -123,7 +123,7 @@ export default {
     .sider{
         display: inline-block;
         position:absolute;
-        width:300px;
+        min-width:250px;
         top:0px;
         left:0px;
         bottom:0px;
@@ -134,18 +134,18 @@ export default {
     }
     .whut-logo{
         float:left;
-        height:75px;
+        height:60px;
+        margin-left:10px;
     }
     .whut-title-area{
         float:right;
-        width:200px;
-        margin-right:0px;
+        width:160px;
+        margin-right:10px;
     }
     .whut-title-logo{
         display: inline-block;
         margin-top:7px;
-        margin-right:6px;
-        width:180px;
+        width:130px;
 
     }
     .el-menu{
@@ -156,8 +156,9 @@ export default {
     }
 
     .el-menu-item.is-active{
-        background-color:#080809 !important;
+        background-color:#409EFF !important;
     }
+  
    .el-submenu{
        position: relative;
    }
@@ -165,7 +166,7 @@ export default {
         content:" ";
         z-index: 10;
         position: absolute;
-        width:250px;
+        width:200px;
         height:0px;
         bottom:0px;
         left:25px;
@@ -173,11 +174,9 @@ export default {
         border-bottom:1px groove #95989d;
     }
     .el-menu-item:hover{
-        background-color: #080809 !important;
+        background-color: #409EFF  !important;
     }
-    .el-submenu__title:hover{
-        background-color: #080809 !important;
-    }
+
     .el-submenu__title i{
         color:#fff !important;
     }
