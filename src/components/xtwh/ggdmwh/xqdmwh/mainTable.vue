@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-table
-            stripe=true
-            border=true
+            stripe=false
+            border=false
             highlight-current-row
             @row-click="handleCurrentChange"
             height="350px"
