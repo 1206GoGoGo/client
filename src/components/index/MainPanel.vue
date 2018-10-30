@@ -1,6 +1,5 @@
 <template>
-    <el-container>
-        <el-header>el-header</el-header>
+    <el-container class="main-panel">
         <el-main>
             <router-view>
             </router-view>
@@ -22,9 +21,14 @@ export default {
 </script>
 
 <style scoped>
-.el-header{
-    background-color:#adf;
-    height:84px !important;
-    line-height: 84px;
+.main-panel{
+    position: absolute;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    left:250px;
+    overflow: auto;
 }
+
+
 </style>

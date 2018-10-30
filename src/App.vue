@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container min-height="100%">
+    <el-container>
       <el-aside width="300px">
          <Sider></Sider>
       </el-aside>
@@ -39,9 +39,6 @@ beforeCreate:function(){
   margin:0px;
   padding:0px;
 }
-html,body,#app{
-  height:100%;
-}
 #app {
   font-family: '微软雅黑','Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -51,6 +48,7 @@ html,body,#app{
   margin-top: 0px;
   height:100%;
 }
+
 .el-main{
   padding:0px;
 
