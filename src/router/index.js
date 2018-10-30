@@ -9,10 +9,5 @@ Vue.use(Router);
 
 export default new Router({
     mode:'hash',
-<<<<<<< HEAD
     routes:[].concat(xtwh,xxtx,zyxx)
 })
-=======
-    routes:[].concat(xtwh,xxtx)
-})
->>>>>>> d393cb7c1651f8484196211444bf8c717855bc67
