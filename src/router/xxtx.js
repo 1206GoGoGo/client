@@ -1,8 +1,8 @@
 //消息提醒路由配置文件
 
-import sjx from '@/components/xxtx/sjx'
-import fjx from '@/components/xxtx/fjx'
-import select from '@/components/xxtx/select'
+import sjx from '@/components/xxtx/sjx/sjx'
+import fjx from '@/components/xxtx/fjx/fjx'
+import select from '@/components/xxtx/sjx/select'
 
 
 export default [
