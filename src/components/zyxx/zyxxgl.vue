@@ -24,18 +24,17 @@
                                     </el-select>
                                 </el-col>
                             </el-row>
-                        
-                        
+
                         </el-col>
                         <el-col :span="5">
                              <el-row>
                                 <el-col :span="11">按学院查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="xq" size="small">
-                                        <el-option v-for="xqItem in xqList"
-                                            :key="xqItem.value"
-                                            :label="xqItem.label"
-                                            :value="xqItem.value">
+                                    <el-select v-model="xy" size="small">
+                                        <el-option v-for="xyItem in xyList"
+                                            :key="xyItem.value"
+                                            :label="xyItem.label"
+                                            :value="xyItem.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
@@ -45,11 +44,11 @@
                              <el-row>
                                 <el-col :span="11">按年级查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="xq" size="small">
-                                        <el-option v-for="xqItem in xqList"
-                                            :key="xqItem.value"
-                                            :label="xqItem.label"
-                                            :value="xqItem.value">
+                                    <el-select v-model="nj" size="small">
+                                        <el-option v-for="njItem in njList"
+                                            :key="njItem.value"
+                                            :label="njItem.label"
+                                            :value="njItem.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
@@ -59,11 +58,11 @@
                              <el-row>
                                 <el-col :span="11">按状态查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="xq" size="small">
-                                        <el-option v-for="xqItem in xqList"
-                                            :key="xqItem.value"
-                                            :label="xqItem.label"
-                                            :value="xqItem.value">
+                                    <el-select v-model="zt" size="small">
+                                        <el-option v-for="ztItem in ztList"
+                                            :key="ztItem.value"
+                                            :label="ztItem.label"
+                                            :value="ztItem.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
@@ -120,6 +119,7 @@ export default {
     name:"zyxxgl",
     data:function(){
         return{
+            xyList:[{label:"鉴湖",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
             xqList:[{label:"鉴湖",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
             xq:0,
             kcList:[

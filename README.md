@@ -1,21 +1,13 @@
 # jwc
 
-> A Vue.js project
+>- 教务处教研管理软件，powered by Vue.js & Electron
 
-## Build Setup
+1. 系统维护
+2. 专业管理
+3. 课程库管理
+4. 培养计划管理
+5. 系统权限
+6. 课程简介管理
+7. 综合查询
+8. 消息提醒 
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
