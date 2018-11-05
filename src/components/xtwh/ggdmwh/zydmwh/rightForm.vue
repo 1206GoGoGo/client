@@ -4,7 +4,9 @@
         <div style="margin: 20px;"></div>
         <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign" size="mini">
             <el-form-item label="专业代码">
-                <el-input v-model="formLabelAlign.zydm" placeholder="添加新的校区信息"></el-input>
+                <el-input v-model="formLabelAlign.zydm"
+                :disabled="true"
+                placeholder="自动生成ID"></el-input>
             </el-form-item>
             <el-form-item label="专业名称">
                 <el-input v-model="formLabelAlign.zymc"></el-input>
@@ -13,7 +15,7 @@
                 <el-input v-model="formLabelAlign.zyywmc"></el-input>
             </el-form-item>
             <el-form-item label="学制">
-                <el-input v-model="formLabelAlign.xz" placeholder="添加新的校区信息"></el-input>
+                <el-input v-model="formLabelAlign.xz"></el-input>
             </el-form-item>
             <el-form-item label="学位">
                 <el-input v-model="formLabelAlign.xw"></el-input>
@@ -22,7 +24,7 @@
                 <el-input v-model="formLabelAlign.zyqc"></el-input>
             </el-form-item>
             <el-form-item label="专业培养目标">
-                <el-input v-model="formLabelAlign.zypymb" placeholder="添加新的校区信息"></el-input>
+                <el-input v-model="formLabelAlign.zypymb"></el-input>
             </el-form-item>
             <el-form-item label="专业培养要求">
                 <el-input v-model="formLabelAlign.zypyyq"></el-input>
@@ -31,7 +33,7 @@
                 <el-input v-model="formLabelAlign.ssxydm"></el-input>
             </el-form-item>
             <el-form-item label="所属系代码">
-                <el-input v-model="formLabelAlign.ssxdm" placeholder="添加新的校区信息"></el-input>
+                <el-input v-model="formLabelAlign.ssxdm"></el-input>
             </el-form-item>
             <el-form-item label="国家专业代码">
                 <el-input v-model="formLabelAlign.gjzydm"></el-input>
@@ -41,7 +43,7 @@
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
-        <el-button type="primary" plain @click="cancel()">取消</el-button>
+        <el-button type="primary" plain @click="cancel_hide()">取消</el-button>
     </div>
 </template>
 
@@ -85,7 +87,7 @@ export default {
         };
     },
     methods: {
-        cancel(){
+        cancel_hide(){
             document.getElementById("isshow").style.display="none";
             //只需隐藏，不用清空输入框内容，因为在重新打开时会处理该问题
         }
@@ -94,4 +96,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin-bottom: 8px;
+}
+</style>

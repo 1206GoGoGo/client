@@ -4,7 +4,9 @@
         <div style="margin: 20px;"></div>
         <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign">
             <el-form-item label="学科类别代码">
-                <el-input v-model="formLabelAlign.xklbdm" placeholder="添加新的学科代码"></el-input>
+                <el-input v-model="formLabelAlign.xklbdm"
+                :disabled="true"
+                placeholder="自动生成ID"></el-input>
             </el-form-item>
             <el-form-item label="学科类别名称">
                 <el-input v-model="formLabelAlign.xklbmc"></el-input>
@@ -14,7 +16,7 @@
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
-        <el-button type="primary" plain>取消</el-button>
+        <el-button type="primary" plain v-on:click="cancel_hide()">取消</el-button>
     </div>
 </template>
 
@@ -49,6 +51,9 @@ export default {
         };
     },
     methods: {
+        cancel_hide(){
+            document.getElementById("isshow").style.visibility="hidden";
+        }
 
     }
 };

@@ -13,7 +13,7 @@
             </el-form-item>
         </el-form>
         <el-button type="primary" plain>{{optype}}</el-button>
-        <el-button type="primary" plain>取消</el-button>
+        <el-button type="primary" plain v-on:click="cancel_hide()">取消</el-button>
     </div>
 </template>
 
@@ -49,6 +49,9 @@ export default {
         };
     },
     methods: {
+        cancel_hide(){
+            document.getElementById("isshow").style.visibility="hidden";
+        }
 
     }
 };
