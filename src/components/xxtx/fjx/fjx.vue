@@ -10,10 +10,9 @@
 <!-- 显示当前页面路径 结束 -->
 
 <!-- 菜单栏 开始 -->
-<el-row :gutter="20" style="width: 100%" class="time"> 
-  <el-col :span="14">
-    <!-- <div class="grid-content bg-purple"> -->
-      <!-- <div> class="demonstration"-->
+<el-row :gutter="0" style="width: 100%" class="time"> 
+  <el-col :span="12">
+      <div> 
         <span>按时间查询：</span>
         <el-date-picker
           v-model="value1" 
@@ -25,13 +24,9 @@
           end-placeholder="结束日期"
           :picker-options="pickerOptions2">
         </el-date-picker>
-      <!-- </div> -->
-    <!-- </div> -->
+      </div>
   </el-col>
-  </el-row>
-
-  <el-row>
-  <el-col :span="14">
+  <el-col :span="12">
     <div class="grid-content bg-purple">
       <el-row> 
         <el-button type="primary" plain @click="cle">清空</el-button>
