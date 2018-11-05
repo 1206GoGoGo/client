@@ -75,7 +75,7 @@
             <el-row class="fun-button-area" :gutter="20">
                 <el-col :span="10">
                     <el-row :gutter="5">
-                        <el-col :span="6"><el-button size="small" type="primary" plain>新增</el-button></el-col>
+                        <el-col :span="6"><el-button @click="addZy" size="small" type="primary" plain>新增</el-button></el-col>
                         <el-col :span="6"><el-button size="small" type="primary" plain>查看</el-button></el-col>
                         <el-col :span="6"><el-button size="small" type="primary" plain>删除</el-button></el-col>
                         <el-col :span="6"><el-button size="small" type="primary" plain>导出</el-button></el-col>
@@ -87,7 +87,7 @@
                 </el-col>
             </el-row>
 
-            <el-table :data="kcList" border   highlight-current-row :header-cell-style="{background:'#fcfcfc'}" style="width:100%;margin-top:20px;">
+            <el-table :data="kcList" border size="small"  stripe highlight-current-row  style="width:100%;margin-top:20px;">
                 <el-table-column prop="zt" label="状态" width="100" sortable></el-table-column>
                 <el-table-column prop="jxjhh" label="教学计划号" width="100" sortable></el-table-column>
                 <el-table-column prop="nj" label="年级" width="100" sortable></el-table-column>
@@ -119,9 +119,14 @@ export default {
     name:"zyxxgl",
     data:function(){
         return{
-            xyList:[{label:"鉴湖",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
-            xqList:[{label:"鉴湖",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
+            xyList:[{label:"不限学院",value:0},{label:"计算机",value:1},{label:"材料",value:2}],
+            xqList:[{label:"不限校区",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
+            ztList:[{label:"不限状态",value:0},{label:"正常",value:1},{label:"弃用",value:2}],
+            njList:[{label:"不限年级",value:0},{label:"2018",value:1},{label:"2019",value:2}],
             xq:0,
+            xy:0,
+            zt:0,
+            nj:0,
             kcList:[
                 {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"},
                 {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"},
@@ -129,6 +134,14 @@ export default {
                 {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"}
                 ],
         }
+    },
+    methods:{
+        addZy:function(){
+            this.$router.push({path:'/addzy'});
+        }
+
+
+
     }
 }
 </script>
