@@ -16,7 +16,7 @@
             <el-button type="primary" plain>导入</el-button>
             <el-button type="primary" plain>导出</el-button>
             <span style="margin-left:10px;">
-                <el-select v-model="select" slot="prepend" placeholder="请选择学院" style="width:150px">
+                <el-select v-model="select" placeholder="请选择学院" style="width:150px">
                     <el-option label="计算机" value="1"></el-option>
                     <el-option label="管理" value="2"></el-option>
                     <el-option label="信息" value="3"></el-option>
