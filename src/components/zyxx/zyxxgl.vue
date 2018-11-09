@@ -1,4 +1,5 @@
 <template>
+<div>
     <el-container>
         <el-header class="header-path">
             <el-breadcrumb separator="/">
@@ -76,7 +77,7 @@
                 <el-col :span="10">
                     <el-row :gutter="5">
                         <el-col :span="6"><el-button @click="addZy" size="small" type="primary" plain>新增</el-button></el-col>
-                        <el-col :span="6"><el-button size="small" type="primary" plain>查看</el-button></el-col>
+                        <el-col :span="6"><el-button @click="editZy" size="small" type="primary" plain>查看</el-button></el-col>
                         <el-col :span="6"><el-button size="small" type="primary" plain>删除</el-button></el-col>
                         <el-col :span="6"><el-button size="small" type="primary" plain>导出</el-button></el-col>
                     </el-row>
@@ -112,13 +113,24 @@
             </el-table>
         </el-main>
     </el-container>
+    <add-zy :dialog-visible="dialogVisible.addZy" @closeDialog="doCloseDialog"></add-zy>
+    <edit-zy :dialog-visible="dialogVisible.editZy" @closeDialog="doCloseDialog"></edit-zy>
+</div>
 </template>
 
 <script>
+import AddZy from '@/components/zyxx/addZy'
+import EditZy from '@/components/zyxx/editZy'
+
+
 export default {
     name:"zyxxgl",
     data:function(){
         return{
+            dialogVisible:{
+                addZy:false,    //添加专业
+                editZy:false,   //编辑查看专业
+            },    //弹框标记数据对象
             xyList:[{label:"不限学院",value:0},{label:"计算机",value:1},{label:"材料",value:2}],
             xqList:[{label:"不限校区",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
             ztList:[{label:"不限状态",value:0},{label:"正常",value:1},{label:"弃用",value:2}],
@@ -135,12 +147,26 @@ export default {
                 ],
         }
     },
+    components:{
+        AddZy,
+        EditZy
+    },
+    
     methods:{
         addZy:function(){
-            this.$router.push({path:'/addzy'});
+            this.dialogVisible.addZy=true;
+        },
+        editZy:function(){
+            this.dialogVisible.editZy=true;
+        },
+        doCloseDialog:function(msg){
+            if(msg=="addZy"){
+                this.dialogVisible.addZy=false;
+            }
+            else if(msg=="editZy"){
+                this.dialogVisible.editZy=false;
+            }
         }
-
-
 
     }
 }
