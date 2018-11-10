@@ -16,8 +16,8 @@
                             <el-row>
                                 <el-col :span="11">按校区查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="xq" size="small">
-                                        <el-option v-for="xqItem in xqList"
+                                    <el-select v-model="queryTerms.xqObj.xq" size="small">
+                                        <el-option v-for="xqItem in queryTerms.xqObj.xqList"
                                             :key="xqItem.value"
                                             :label="xqItem.label"
                                             :value="xqItem.value">
@@ -31,8 +31,8 @@
                              <el-row>
                                 <el-col :span="11">按学院查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="xy" size="small">
-                                        <el-option v-for="xyItem in xyList"
+                                    <el-select v-model="queryTerms.xyObj.xy" size="small">
+                                        <el-option v-for="xyItem in queryTerms.xyObj.xyList"
                                             :key="xyItem.value"
                                             :label="xyItem.label"
                                             :value="xyItem.value">
@@ -45,8 +45,8 @@
                              <el-row>
                                 <el-col :span="11">按年级查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="nj" size="small">
-                                        <el-option v-for="njItem in njList"
+                                    <el-select v-model="queryTerms.njObj.nj" size="small">
+                                        <el-option v-for="njItem in queryTerms.njObj.njList"
                                             :key="njItem.value"
                                             :label="njItem.label"
                                             :value="njItem.value">
@@ -59,8 +59,8 @@
                              <el-row>
                                 <el-col :span="11">按状态查询</el-col>
                                 <el-col :span="13"> 
-                                    <el-select v-model="zt" size="small">
-                                        <el-option v-for="ztItem in ztList"
+                                    <el-select v-model="queryTerms.ztObj.zt" size="small">
+                                        <el-option v-for="ztItem in queryTerms.ztObj.ztList"
                                             :key="ztItem.value"
                                             :label="ztItem.label"
                                             :value="ztItem.value">
@@ -88,7 +88,7 @@
                 </el-col>
             </el-row>
 
-            <el-table :data="kcList" border size="small"  stripe highlight-current-row  style="width:100%;margin-top:20px;">
+            <el-table :data="kcData.kcList" border size="small"  stripe highlight-current-row  @current-change="getCurrent" style="width:100%;margin-top:20px;">
                 <el-table-column prop="zt" label="状态" width="100" sortable></el-table-column>
                 <el-table-column prop="jxjhh" label="教学计划号" width="100" sortable></el-table-column>
                 <el-table-column prop="nj" label="年级" width="100" sortable></el-table-column>
@@ -127,24 +127,57 @@ export default {
     name:"zyxxgl",
     data:function(){
         return{
+            //弹框标记数据对象
             dialogVisible:{
                 addZy:false,    //添加专业
                 editZy:false,   //编辑查看专业
-            },    //弹框标记数据对象
-            xyList:[{label:"不限学院",value:0},{label:"计算机",value:1},{label:"材料",value:2}],
-            xqList:[{label:"不限校区",value:0},{label:"南湖",value:1},{label:"西院",value:2}],
-            ztList:[{label:"不限状态",value:0},{label:"正常",value:1},{label:"弃用",value:2}],
-            njList:[{label:"不限年级",value:0},{label:"2018",value:1},{label:"2019",value:2}],
-            xq:0,
-            xy:0,
-            zt:0,
-            nj:0,
-            kcList:[
+            },    
+            //查询条件对象
+            queryTerms:{
+                xyObj:{
+                    xy:0,
+                    xyList:[
+                        {
+                            label:"不限校区",
+                            value:0
+                        }
+                    ]
+                },
+                xqObj:{
+                    xq:0,
+                    xqList:[
+                        {
+                            label:"不限学院",
+                            value:0
+                        },
+                    ]
+                },
+                ztObj:{
+                    zt:0,
+                    ztList:[
+                        {
+                            label:"不限状态",
+                            value:0
+                        }
+                    ]
+                },
+                njObj:{
+                    nj:0,
+                    njList:[
+                        {
+                            label:"不限年级",
+                            value:0
+                        }
+                    ]
+                }
+            },
+            //课程对象
+            kcData:{
+                currentKc:null,   //当前选中课程对象
+                kcList:[
                 {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"},
-                {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"},
-                {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"},
-                {zt:"测试数据",jxjhh:"1",nj:"1",xq:"1",zymc:"1",rs:"1",cc:"1",zskcs:"1",xfyq:"1",ggbx:"1",ggxx:"1",xkbx:"1",zybx:"1",zyxx:"1",zyxxxf:"1",shkcxf:"1",fssjxf:"1",jqsjxf:"1",yybxxf:"1",tybxxf:"1"}
                 ],
+            }
         }
     },
     components:{
@@ -157,8 +190,24 @@ export default {
             this.dialogVisible.addZy=true;
         },
         editZy:function(){
-            this.dialogVisible.editZy=true;
+            //判断是否选中了数据
+            if(this.kcData.currentKc){
+                this.dialogVisible.editZy=true;
+            }
+            else{
+                //展示提醒-element-UI-message
+                this.$message({
+                    showClose:true,
+                    message:'错误，当前未选中数据，请先在表格中选择需要查看的数据项。',
+                    type:'error',
+                    duration:5000
+                });
+                
+            }
+
         },
+
+        //关闭对话框
         doCloseDialog:function(msg){
             if(msg=="addZy"){
                 this.dialogVisible.addZy=false;
@@ -166,7 +215,15 @@ export default {
             else if(msg=="editZy"){
                 this.dialogVisible.editZy=false;
             }
+        },
+        //获取表格中当前选中项
+        getCurrent:function(val){
+
+            this.kcData.currentKc=val;
+
+            console.log("当前"+this.kcData.currentKc.jxjhh);
         }
+
 
     }
 }
@@ -191,4 +248,5 @@ export default {
 .el-table__header{
     background-color: #acb !important;
 }
+
 </style>

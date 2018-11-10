@@ -1,11 +1,15 @@
 <template>
 <el-dialog 
-    title="编辑专业"
     :visible.sync="visible"
-    width="70%"
+    width="80%"
+    top="7vh"
     :before-close="comeback"
     :center="true"
+    
     >
+    <div slot="title">
+        编辑查看专业信息
+    </div>
     <el-container>
         <el-main>
             <el-tabs type="border-card">
@@ -79,5 +83,25 @@ export default {
 </script>
 
 <style scoped>
+/deep/ .el-dialog__header{
+    padding:10px 0 10px 0px;
+    margin:0 20px;
+    border-bottom:2px dashed #409EFF;
+    font-size:17px;
+    font-weight:bold;
+}
+/deep/ .el-dialog__headerbtn{
+    top:15px;
+}
+/deep/ .el-dialog__body{
+    padding-top:2px;
+}
+/deep/ .el-dialog__body .el-container .el-main{
+    padding:15px 10px 10px 10px;
+}
 
+/deep/.el-tabs--border-card>.el-tabs__content{
+    padding:0px;
+    min-height:500px;
+}
 </style>

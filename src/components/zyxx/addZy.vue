@@ -3,9 +3,11 @@
     title="新增专业"
     :visible.sync="visible"
     width="70%"
+    top="7vh"
     :before-close="comeback"
     :center="true"
     >
+    <el-form></el-form>
     <el-row>
         <el-col :span="20" :offset="2">
             <el-row :gutter="10">
