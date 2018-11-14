@@ -1,23 +1,23 @@
-
 <template>
-    <div class="main-panel">
+   <div class="main-panel">
         <div class="textarea-width-label">
-            <div class="label">业务培养目标</div>
+            <div class="label">课程修读指导建议:</div>
             <el-input type="textarea" :rows="3"  resize="none"></el-input>
         </div>
         <div class="textarea-width-label">
-            <div class="label">Educational Objectives:</div>
+            <div class="label">Recommendations on Course Studies:</div>
             <el-input type="textarea" :rows="3" resize="none"></el-input>
         </div>
         <div class="textarea-width-label">
-            <div class="label">业务培养要求</div>
+            <div class="label">其它要求:</div>
             <el-input type="textarea" :rows="3" resize="none"></el-input>
         </div>
         <div class="textarea-width-label">
-            <div class="label">Educational Requirement:</div>
+            <div class="label">Other Demands:</div>
             <el-input type="textarea" :rows="3" resize="none"></el-input>
         </div>
-    </div>
+    </div>  
+
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
         return{
 
         }
-    },
+    }
 }
 </script>
 

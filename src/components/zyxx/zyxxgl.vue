@@ -78,8 +78,8 @@
                     <el-row :gutter="5">
                         <el-col :span="6"><el-button @click="addZy" size="small" type="primary" plain>新增</el-button></el-col>
                         <el-col :span="6"><el-button @click="editZy" size="small" type="primary" plain>查看</el-button></el-col>
-                        <el-col :span="6"><el-button size="small" type="primary" plain>删除</el-button></el-col>
-                        <el-col :span="6"><el-button size="small" type="primary" plain>导出</el-button></el-col>
+                        <el-col :span="6"><el-button @click="delZy" size="small" type="primary" plain>删除</el-button></el-col>
+                        <el-col :span="6"><el-button @click="output" size="small" type="primary" plain>导出</el-button></el-col>
                     </el-row>
                 </el-col>
                 <el-col :span="4"><el-button size="small" type="primary" plain>全年级复制</el-button></el-col>
@@ -186,9 +186,11 @@ export default {
     },
     
     methods:{
+        //添加专业
         addZy:function(){
             this.dialogVisible.addZy=true;
         },
+        //查看编辑
         editZy:function(){
             //判断是否选中了数据
             if(this.kcData.currentKc){
@@ -206,7 +208,27 @@ export default {
             }
 
         },
-
+        //删除
+        delZy:function(){
+             if(this.kcData.currentKc){
+                
+                alert("删除专业");
+            }
+            else{
+                //展示提醒-element-UI-message
+                this.$message({
+                    showClose:true,
+                    message:'错误，当前未选中数据，请先在表格中选择需要删除的数据项。',
+                    type:'error',
+                    duration:5000
+                });
+                
+            }
+        },
+        output:function(){
+            //导出，此处需要调用三方库
+            alert("导出表格数据");
+        },
         //关闭对话框
         doCloseDialog:function(msg){
             if(msg=="addZy"){
