@@ -4,24 +4,23 @@
       <el-header class="header-path">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>系统维护</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <el-breadcrumb-item>课程库</el-breadcrumb-item>
+          <el-breadcrumb-item>课程库变更管理</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-container>
         <el-header>
           <el-row style="text-align:left; padding-bottom:20px; padding-top:20px;">
             <el-button type="primary" plain v-on:click="goto('add')">学院新建</el-button>
-            <el-button type="primary" plain disabled>学院修改</el-button>
-            <el-button type="primary" plain>课程对比</el-button>
+            <el-button type="primary" plain v-on:click="goto('change')">学院修改</el-button>
+            <el-button type="primary" plain v-on:click="goto('contrast')" id="showContrast">课程对比</el-button>
             <el-select v-model="select" placeholder="请选择学院" style="width:150px;margin-left:30px;">
                 <el-option label="计算机" value="1"></el-option>
                 <el-option label="管理" value="2"></el-option>
                 <el-option label="信息" value="3"></el-option>
             </el-select>
             <el-input v-model="input" placeholder="请输入课程名称" style="width:150px;"></el-input>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="goto('search')">查询</el-button>
           </el-row>          
         </el-header>
         <el-container>
@@ -34,14 +33,18 @@
         </el-container>
       </el-container>
     </el-container>
+    <div class="contrast" id="contrast">
+      <contrast></contrast>
+    </div>
   </div>
 </template>
 
 <script>
 import mainTable from "./mainTable.vue"
+import contrast from "./contrastCourse.vue"
 export default {
   name: "kckbggl",
-  components: {mainTable},
+  components: {mainTable,contrast},
   computed: {
       key() {
           //解决同一组件路由跳转，数据不刷新问题
@@ -49,9 +52,15 @@ export default {
       }
   },
   methods: {
-      goto(kinf){
-          document.getElementById("isshow").style.visibility="visible";
-          //this.$router.push({name: 'kclbdmRightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
+      goto(kind){
+        if(kind=="add"){
+          document.getElementById("showContrast").disabled=true;
+        }else if(kind=='change'){
+          document.getElementById("showContrast").disabled=false;
+        }else if(kind=='search'){
+        }else if(kind=='contrast'){
+          document.getElementById("contrast").style.display="inline";
+        }
       }
   },
   data() {
@@ -66,6 +75,17 @@ export default {
 </script>
 
 <style scoped>
+.contrast{
+  position:absolute;
+  top: 50px;
+  left: 190px;
+  min-width: 500px;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:1px;
+  border-color: #000000;
+  display: none;
+}
 .header-path{
     height:14px !important;;
     margin-top:10px;

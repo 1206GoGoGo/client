@@ -6,6 +6,8 @@ import kckbgglRightForm from '@/components/kck/kckbggl/rightForm'
 import kckglRightForm from '@/components/kck/kckgl/rightForm'
 
 import kckglAdd from '@/components/kck/kckgl/addCourse'
+import kckglView from '@/components/kck/kckgl/viewCourse'
+import kckglChange from '@/components/kck/kckgl/changeCourse'
 
 export default [
     {
@@ -36,4 +38,14 @@ export default [
         name:"kckglAdd",
         component:kckglAdd
     },
+    {
+        path:"/kckgl/view",
+        name:"kckglView",
+        component:kckglView
+    },
+    {
+        path:"/kckgl/change",
+        name:"kckglChange",
+        component:kckglChange
+    }
 ]

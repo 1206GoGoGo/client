@@ -51,7 +51,8 @@
 
           <el-row style="text-align:left; padding-bottom:10px; ">
             <el-button type="primary" plain v-on:click="goto('add')">添加</el-button>
-            <el-button type="primary" plain>查看</el-button>
+            <el-button type="primary" plain v-on:click="goto('view')">查看</el-button>
+            <el-button type="primary" plain v-on:click="goto('change')">修改</el-button>
             <el-button type="primary" plain>弃用</el-button>
             <el-button type="primary" plain>删除</el-button>
             <el-button type="primary" plain>导出</el-button>
@@ -82,6 +83,10 @@ export default {
       goto(kind){
         if(kind=='add'){
           this.$router.push({name: 'kckglAdd'});
+        }else if(kind=='view'){
+          this.$router.push({name: 'kckglView'});
+        }else if(kind=='change'){
+          this.$router.push({name: 'kckglChange'});
         }
       },
       add_query(op_kind){

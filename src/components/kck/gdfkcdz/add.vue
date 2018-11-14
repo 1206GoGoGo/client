@@ -13,7 +13,7 @@
                             <el-input v-model="sizeForm.name" style="width: 110px;"></el-input>
                         </el-col>
                         <el-col :span="6">
-                            <el-button icon="el-icon-search" style="width: 40px;"></el-button>
+                            <el-button icon="el-icon-search" style="width: 40px;" @click="search('id')"></el-button>
                         </el-col>
                     </el-form-item>
                     <el-form-item label="课程中文名：">
@@ -21,7 +21,7 @@
                             <el-input v-model="sizeForm.name" style="width: 110px;"></el-input>
                         </el-col>
                         <el-col :span="6">
-                            <el-button icon="el-icon-search" style="width: 40px;"></el-button>
+                            <el-button icon="el-icon-search" style="width: 40px;" @click="search('name')"></el-button>
                         </el-col>
                     </el-form-item>                    
                     <el-form-item label="课程英文名：">
@@ -125,11 +125,17 @@
     <el-button type="primary">确认添加对照</el-button>
     <el-button type="primary" @click="return_back">返回</el-button>
   </el-main>
+  <div class="query_course" id="query_course">
+    <!--添加对照时输入编号或者中文名称后查询课程，然后将选中的课程添加到对应的对照输入框中-->
+    <query-course></query-course>
+  </div>
 </el-container>
 </template>
 
 <script>
+import queryCourse from "./queryCourse.vue"
 export default {
+    components: {queryCourse},
     data() {
         return {
             sizeForm: {
@@ -147,6 +153,10 @@ export default {
     methods: {
         return_back(){
           document.getElementById("add").style.display="none";
+        },
+        search(way){
+            //if()
+            document.getElementById("query_course").style.display="inline";
         }
 
     }
@@ -154,7 +164,17 @@ export default {
 </script>
 
 <style scoped>
-
+.query_course{
+  position:absolute;
+  top: 50px;
+  left: 50px;
+  max-width: 900px;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:1px;
+  border-color: #000000;
+  display: none;
+}
 .border-thin{
     margin:10px;
     padding: 10px;
