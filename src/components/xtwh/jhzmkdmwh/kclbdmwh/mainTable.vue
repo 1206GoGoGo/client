@@ -20,7 +20,7 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="state"
+            prop="zt"
             label="是否停用"
             :formatter="stateFormatter"
             sortable>
@@ -43,21 +43,12 @@
 
 <script>
 export default {
+    mounted(){
+        this.getData(); //获取数据前先取数据
+    },
     data() {
       return {
-         tableData: [{
-          kclbdm: '001',
-          kclbmc: '实验课',
-          state: '0'
-          },{
-          kclbdm: '002',
-          kclbmc: '公共课',
-          state: '0'
-          },{
-          kclbdm: '003',
-          kclbmc: '鉴湖',
-          state: '0'
-          } ]
+         tableData: []
       }
     },
     methods: {
@@ -80,6 +71,21 @@ export default {
       },
       handleDelete(index, row) {
         alert(index);
+      },
+      getData(){
+        var _this=this;
+        //需要处理异步请求的问题
+        this.axios.get('DmKclb/getAll')
+            .then(function (response) {
+                //将response获得的数据进行处理
+                //将获取到的数据以数组形式传递出去
+                var dataList=response.data;
+                _this.tableData=dataList;
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+            });
       }
     }
 }

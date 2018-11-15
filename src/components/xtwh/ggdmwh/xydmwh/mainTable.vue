@@ -15,7 +15,7 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xyjc"
+            prop="xymc"
             label="学院简称"
             sortable>
         </el-table-column>
@@ -30,7 +30,7 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="state"
+            prop="zt"
             label="是否停用"
             :formatter="stateFormatter"
             sortable>
@@ -53,27 +53,12 @@
 
 <script>
 export default {
+    mounted(){
+        this.getData(); //获取数据前先取数据
+    },
     data() {
       return {
-         tableData: [{
-          xydm: '001',
-          xyjc: '计算机',
-          xyqc: '计算机科学与技术学院',
-          xyywmc: 'computer science and technology',
-          state: '1'
-          }, {
-          xydm: '001',
-          xyjc: '鉴湖',
-          xyqc: 'jh',
-          xyywmc: '',
-          state: '0'
-          }, {
-          xydm: '001',
-          xyjc: '鉴湖',
-          xyqc: 'jh',
-          xyywmc: '',
-          state: '0'
-          }]
+         tableData: []
       }
     },
     methods: {
@@ -96,6 +81,21 @@ export default {
       },
       handleDelete(index, row) {
         alert(index);
+      },
+      getData(){
+        var _this=this;
+        //需要处理异步请求的问题
+        this.axios.get('SysXy/getAllList')
+            .then(function (response) {
+                //将response获得的数据进行处理
+                //将获取到的数据以数组形式传递出去
+                var dataList=response.data;
+                _this.tableData=dataList;
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+            });
       }
     }
 }

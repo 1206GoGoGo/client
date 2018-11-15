@@ -12,19 +12,17 @@
       <el-container>
         <el-main>
           <el-row style="text-align:left; padding-bottom:20px; ">
-            <el-button type="primary" plain v-on:click="goto('add')">添加</el-button>
+            <el-button type="primary" plain v-on:click="add()">添加</el-button>
             <el-button type="primary" plain disabled>导入</el-button>
             <el-button type="primary" plain>导出</el-button>
-            <el-input v-model="formInline.user" placeholder="请输入课程名称" style="width:150px;margin-left:20px;"></el-input>
-            <el-button type="primary" @click="onSubmit">按课程名称查询</el-button>
+            <el-input v-model="kcmSearch.kcm" placeholder="请输入课程名称" style="width:150px;margin-left:20px;"></el-input>
+            <el-button type="primary" @click="search()">按课程名称查询</el-button>
           </el-row>
-          <main-table></main-table>
+          <main-table :kcm-search="kcmSearch.isSearch" :kcm-search-value="kcmSearch"></main-table>
         </el-main>
       </el-container>
     </el-container>
-    <div class="add" id="add">
-      <add></add>
-    </div>
+    <add :dialog-visible="dialogVisible.add" @closeDialog="doCloseDialog"></add>
   </div>
 </template>
 
@@ -35,15 +33,33 @@ export default {
   name: "gdfkcdz",
   components: {mainTable,add},
   methods: {
-      goto(kinf){
-          document.getElementById("add").style.display="inline";
-          //this.$router.push({name: 'kclbdmRightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
+      add(){
+          this.dialogVisible.add=true;
+      },
+      //关闭对话框
+      doCloseDialog(msg){
+          if(msg=="add"){
+              this.dialogVisible.add=false;
+          }
+      },
+      //查找输入的课程
+      search(){
+        if(this.kcmSearch.isSearch){
+          this.kcmSearch.isSearch=false;
+        }else {
+          this.kcmSearch.isSearch=true;
+        }
       }
   },
   data() {
     return {
-      formInline: {
-        user: ''
+      kcmSearch:{//查找框中的数据
+          kcm:'',
+          isSearch:false//是否点了查找按钮
+      },
+      //弹框标记数据对象
+      dialogVisible:{
+          add:false    //添加课程对照
       }
     }
   }
@@ -54,15 +70,10 @@ export default {
 
 <style scoped>
 .add{
-  position:absolute;
-  top: 50px;
-  left: 10px;
-  min-width: 1000px;
   background-color: #ffffff;
   border-style: solid;
   border-width:1px;
   border-color: #000000;
-  display: none;
 }
 .header-path{
     height:14px !important;;

@@ -25,7 +25,7 @@
         </el-table-column>
         <el-table-column
             :formatter="stateFormatter"
-            prop="state"
+            prop="zt"
             label="是否停用"
             sortable>
         </el-table-column>
@@ -49,7 +49,6 @@
 export default {
     mounted(){
         this.getData(); //获取数据前先取数据
-        this.tableData=[];
     },
     data() {
         return {
@@ -76,37 +75,21 @@ export default {
       //将数据库存储的状态数值，格式化为汉字
       stateFormatter(row,column){
         let state = row.state;
-        if(state === '0'){return '否'} else {return '是'}
+        if(state === '0'){return '是'} else {return '否'}
       },
       getData(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('ald')
+            this.axios.get('SysXq/getAll')
                 .then(function (response) {
                     //将response获得的数据进行处理
-                    //alert(response.config.url)
                     //将获取到的数据以数组形式传递出去
-                    var dataList=[{
-                        xqdm: '001',
-                        xqmc: '鉴湖',
-                        xqjp: 'jh',
-                        state: '0'
-                        }, {
-                        xqdm: '002',
-                        xqmc: '南湖',
-                        xqjp: 'jh',
-                        state: '0'
-                        }, {
-                        xqdm: '003',
-                        xqmc: '马房山',
-                        xqjp: 'jh',
-                        state: '1'
-                        }];
-                        _this.tableData=dataList;
+                    var dataList=response.data;
+                    _this.tableData=dataList;
                 })
                 .catch(function (error) {
-                    alert(error);
-                    _this.tableData=[];
+                    console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }
     }

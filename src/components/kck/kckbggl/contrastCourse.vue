@@ -1,5 +1,11 @@
 <template>
-<el-container>
+<el-dialog
+    title="调整课程对比"
+    :visible="visible"
+    width="70%"
+    top="7vh"
+    :before-close="handleClose"
+    :center="true">
   <el-header style="background-color:#87D4FE; padding:10px; font-size:20px;">调整课程对比</el-header>
   <el-main>
     <el-form ref="form" :model="sizeForm" label-width="100px" size="mini">
@@ -84,13 +90,26 @@
     </el-form>
     <el-button type="primary" @click="return_back">返回</el-button>
   </el-main>
-</el-container>
+</el-dialog>
 </template>
 
 <script>
 export default {
+    props:{
+        dialogVisible:{
+            type:Boolean,
+            default:false,
+            require:true
+        }
+    },
+    watch:{
+        dialogVisible:function(val){
+            this.visible=val;
+        }
+    },
     data() {
         return {
+            visible:this.dialogVisible,
             sizeForm: {
                 name: 'haha',
                 region: 'xxxxxxxxxxxxxx',
@@ -105,7 +124,17 @@ export default {
     },
     methods: {
         return_back(){
-          document.getElementById("contrast").style.display="none";
+            //冒泡传递事件到上层组件，同步visible
+            this.$emit("closeDialog","contrast");
+        },
+        handleClose(done) {
+            var _this=this;
+            this.$confirm('确认关闭？')
+            .then(_ => {
+                this.return_back();
+                //done();
+            })
+            .catch(_ => {});
         }
     }
 }

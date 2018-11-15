@@ -15,17 +15,17 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xklbmc"
+            prop="xklbzwmc"
             label="学科类别名称"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xklbywm"
+            prop="xklbywmc"
             label="学科类别英文名"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="state"
+            prop="zt"
             label="是否停用"
             :formatter="stateFormatter"
             sortable>
@@ -48,24 +48,12 @@
 
 <script>
 export default {
+    mounted(){
+        this.getData(); //获取数据前先取数据
+    },
     data() {
       return {
-         tableData: [{
-          xklbdm: '001',
-          xklbmc: '理学',
-          xklbywm: 'jh',
-          state: '0'
-          },{
-          xklbdm: '002',
-          xklbmc: '工学',
-          xklbywm: 'jh',
-          state: '0'
-          },{
-          xklbdm: '003',
-          xklbmc: '文学',
-          xklbywm: 'jh',
-          state: '0'
-          }]
+         tableData: []
       }
     },
     methods: {
@@ -89,6 +77,21 @@ export default {
       },
       handleDelete(index, row) {
         alert(index);
+      },
+      getData(){
+        var _this=this;
+        //需要处理异步请求的问题
+        this.axios.get('DmXklb/getAll')
+            .then(function (response) {
+                //将response获得的数据进行处理
+                //将获取到的数据以数组形式传递出去
+                var dataList=response.data;
+                _this.tableData=dataList;
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+            });
       }
     }
 }

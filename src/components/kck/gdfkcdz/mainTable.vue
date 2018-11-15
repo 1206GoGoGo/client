@@ -9,17 +9,17 @@
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
-            prop="jkcdm"
+            prop="kcdm"
             label="旧课程代码"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="jkcmc"
+            prop="sysKcByKcdm.kczwmc"
             label="旧课程名称"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="jxf"
+            prop="sysKcByKcdm.xf"
             label="旧学分"
             sortable>
         </el-table-column>
@@ -29,18 +29,18 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xkcmc"
+            prop="sysKcByXkcdm.kczwmc"
             label="新课程名称"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xxf"
+            prop="sysKcByXkcdm.xf"
             label="新学分"
             sortable>
         </el-table-column>
         <el-table-column
             :formatter="stateFormatter"
-            prop="state"
+            prop="zt"
             label="是否停用"
             sortable>
         </el-table-column>
@@ -62,13 +62,26 @@
 
 <script>
 export default {
+    //处理父窗口传来的查询------------------------------------------
+    props:{
+        kcmSearch:{},
+        kcmSearchValue:{}
+    },
+    watch:{
+        kcmSearch:function(val){
+            //alert(this.kcmSearchValue.kcm);
+            //通过父页传入的数据进行搜索
+            this.getData(this.kcmSearchValue.kcm);  //将父传递的数据显示出来
+        }
+    },
+    //-------------------------------------------------------------
+
     mounted(){
-        this.getData(); //获取数据前先取数据
-        this.tableData=[];
+        this.getData('java课程设计'); //获取数据前先取数据
     },
     data() {
         return {
-            tableData:[],
+            tableData:[]
         }
     },
     methods: {
@@ -93,47 +106,25 @@ export default {
         let state = row.state;
         if(state === '0'){return '否'} else {return '是'}
       },
-      getData(){
+      //通过kcm查询
+      getData(kcm){
+            //alert('开始获取数据');
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('ald')
+            this.axios.get('JyGdxfdz/get?kcm='+kcm)
+            //这里获取全部内容会出问题的。。。。。。。太多了
                 .then(function (response) {
                     //将response获得的数据进行处理
-                    //alert(response.config.url)
                     //将获取到的数据以数组形式传递出去
-                    var dataList=[];
-                        _this.tableData=dataList;
+                    var dataList=response.data;
+                    _this.tableData=dataList;
                 })
                 .catch(function (error) {
-                    //alert(error);
-                    _this.tableData=[];
-                    var dataList=[{
-                    jkcdm: '002',
-                    jkcmc: '老鹰以',
-                    jxf: '2',
-                    xkcdm: '003',
-                    xkcmc: '新辣道是',
-                    xxf: '3',
-                    state: '0'
-                    }, {
-                    jkcdm: '003',
-                    jkcmc: '老鹰以',
-                    jxf: '2',
-                    xkcdm: '003',
-                    xkcmc: '新辣道是',
-                    xxf: '3',
-                    state: '0'
-                    }, {
-                    jkcdm: '004',
-                    jkcmc: '老鹰以',
-                    jxf: '2',
-                    xkcdm: '003',
-                    xkcmc: '新辣道是',
-                    xxf: '3',
-                    state: '0'
-                    }];
-                    _this.tableData=dataList;
+                    console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
+
+            //alert('成功获取数据');
       }
     }
 }

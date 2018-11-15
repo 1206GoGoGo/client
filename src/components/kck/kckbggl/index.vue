@@ -33,9 +33,7 @@
         </el-container>
       </el-container>
     </el-container>
-    <div class="contrast" id="contrast">
-      <contrast></contrast>
-    </div>
+    <contrast :dialog-visible="dialogVisible.contrast" @closeDialog="doCloseDialog"></contrast>
   </div>
 </template>
 
@@ -52,6 +50,7 @@ export default {
       }
   },
   methods: {
+      //button的操作
       goto(kind){
         if(kind=="add"){
           document.getElementById("showContrast").disabled=true;
@@ -59,12 +58,22 @@ export default {
           document.getElementById("showContrast").disabled=false;
         }else if(kind=='search'){
         }else if(kind=='contrast'){
-          document.getElementById("contrast").style.display="inline";
+          this.dialogVisible.contrast=true;
         }
-      }
+      },
+      //关闭对话框
+      doCloseDialog:function(msg){
+          if(msg=="contrast"){
+              this.dialogVisible.contrast=false;
+          }
+      },
   },
   data() {
     return {
+      //弹框标记数据对象
+      dialogVisible:{
+          contrast:false,    //对比课程
+      },
       input: '',
       select: ''
     }
@@ -75,17 +84,6 @@ export default {
 </script>
 
 <style scoped>
-.contrast{
-  position:absolute;
-  top: 50px;
-  left: 190px;
-  min-width: 500px;
-  background-color: #ffffff;
-  border-style: solid;
-  border-width:1px;
-  border-color: #000000;
-  display: none;
-}
 .header-path{
     height:14px !important;;
     margin-top:10px;
