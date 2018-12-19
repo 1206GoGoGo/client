@@ -9,83 +9,114 @@
         </el-breadcrumb>
       </el-header>
       <main style="text-align:left;">
-        <el-form :label-position="labelPosition" label-width="110px" :inline="true" :model="formLabelAlign">
-            <el-form-item label="课程代码:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
+        <el-form :label-position="labelPosition" label-width="110px" :inline="true" :model="kcChange">
+            <el-form-item label="课程代码">
+                <el-input v-model="kcChange.kcdm" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="课程中文名称:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqjp}}</span>
+            <el-form-item label="课程中文名称">
+                <el-input v-model="kcChange.kczwmc"></el-input>
             </el-form-item>
-            <el-form-item label="课程英文名称:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
+            <el-form-item label="课程英文名称">
+                <el-input v-model="kcChange.kcywmc"></el-input>
+            </el-form-item>
+        </el-form>
+        <el-form :inline="true">
+            <el-form-item label="总学时" label-width="110px">
+                <el-input v-model="kcChange.zhxs"></el-input>
+            </el-form-item>
+            <el-form-item label="课程类别">
+                <el-select v-model="kcChange.dmKclb.kclbdm" placeholder="选择课程类别" class="el_select">
+                    <el-option v-for="item in kclbList"
+                        :key="item.kclbdm"
+                        :label="item.kclbmc"
+                        :value="item.kclbdm">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="学分" label-width="110px">
+                <el-input v-model="kcChange.xf"></el-input>
+            </el-form-item>
+            <el-form-item label="课程性质">
+                <el-select v-model="kcChange.kcxz" placeholder="选择课程性质" class="el_select">
+                    <el-option v-for="item in kcxzList"
+                        :key="item.kcxzmc"
+                        :label="item.kcxzmc"
+                        :value="item.kcxzmc">
+                    </el-option>
+                </el-select>
             </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
-            <el-form-item label="课程类别:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
+            <el-form-item label="实践学时">
+                <el-input v-model="kcChange.sjxs2"></el-input>
             </el-form-item>
-            <el-form-item label="开课部门:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
+            <el-form-item label="课外学时">
+                <el-input v-model="kcChange.kwxs"></el-input>
             </el-form-item>
-            <el-form-item label="课程性质:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-        </el-form>
-        <el-form :inline="true" label-width="110px">
-            <el-form-item label="学分:" label-width="110px">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-            <el-form-item label="总学时:" label-width="110px">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-            <el-form-item label="理论学时:">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-            <el-form-item label="实验学时:">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
+            <el-form-item label="选修归属">
+                <el-select v-model="kcChange.jyXxgs" placeholder="选择选修归属" class="el_select">
+                    <el-option v-for="item in xxgsList"
+                        :key="item.xxgsdm"
+                        :label="item.xxgsmc"
+                        :value="item.xxgsdm">
+                    </el-option>
+                </el-select>
             </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
-            <el-form-item label="实践学时:">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
+            <el-form-item label="理论学时">
+                <el-input v-model="kcChange.llxs"></el-input>
             </el-form-item>
-            <el-form-item label="课外学时:">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
+            <el-form-item label="实验学时">
+                <el-input v-model="kcChange.syxs"></el-input>
             </el-form-item>
-            <el-form-item label="上机学时:">
-                <span class="span_for_view span_for_number">{{courseInfo.xqmc}}</span>
+            <el-form-item label="开课学院代码">
+                <el-input v-model="kcChange.xydm"></el-input>
+            </el-form-item>
+
+        </el-form>
+        <el-form :inline="true" label-width="110px">
+            <el-form-item label="课程停开">
+                <el-select v-model="kcChange.zt" class="el_select">
+                    <el-option v-for="item in ztList"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="上机学时">
+                <el-input v-model="kcChange.sjxs"></el-input>
+            </el-form-item>
+            <el-form-item label="实践周数">
+                <el-input v-model="kcChange.sjzs"></el-input>
+            </el-form-item>
+            <el-checkbox v-model="kcChange.sfqy">是否重点课程</el-checkbox>
+        </el-form>
+        <el-form :inline="true" label-width="110px">
+            <el-form-item label="课程简介">
+                <el-input type="textarea" style="width:380px;" v-model="kcChange.kcjj"></el-input>
+            </el-form-item>
+            <el-form-item label="课程英文简介">
+                <el-input type="textarea" style="width:380px;" v-model="kcChange.kcywjj"></el-input>
             </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
-            <el-form-item label="选修归属:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
+            <el-form-item label="课程需要与目的">
+                <el-input type="textarea" style="width:380px;" v-model="kcChange.kczyzyjmd"></el-input>
             </el-form-item>
-            <el-form-item label="课程停开:">
-                <span class="span_for_view span_for_word">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-        </el-form>
-        <el-form :inline="true" label-width="110px">
-            <el-form-item label="课程简介:">
-                <span class="span_for_view" style="width:380px">{{courseInfo.xqjp}}</span>
-            </el-form-item>
-            <el-form-item label="课程英文简介:">
-                <span class="span_for_view" style="width:380px">{{courseInfo.xqmc}}</span>
+            <el-form-item label="主要参考书">
+                <el-input type="textarea" style="width:380px;" v-model="kcChange.zycks"></el-input>
             </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
-            <el-form-item label="课程需要/目的:">
-                <span class="span_for_view" style="width:380px">{{courseInfo.xqjp}}</span>
-            </el-form-item>
-            <el-form-item label="主要参考书:">
-                <span class="span_for_view" style="width:380px">{{courseInfo.xqmc}}</span>
-            </el-form-item>
-        </el-form>
-        <el-form :inline="true" label-width="110px">
-            <el-form-item label="备注:">
-                <span class="span_for_view" style="width:380px">{{courseInfo.xqmc}}</span>
+            <el-form-item label="备注">
+                <el-input type="textarea" style="width:700px;" :rows="2" cols="20" autosize v-model="kcChange.bz"></el-input>
             </el-form-item>
         </el-form>
         <el-form :inline="true" size="mini" style="text-align:center;">
+            <!--el-button type="primary" @click="button_click('submit')">提交</el-button>
+            <el-button type="primary" @click="button_click('reset')">重置</el-button-->
             <el-button type="primary" @click="button_click('return')">返回</el-button>
         </el-form>
       </main>
@@ -95,15 +126,29 @@
 <script>
 
 export default {
+//上面选修课程性质用的都是名称！！！！！！！！！！-----------json数据中是名称，数据库中存的什么待处理
     name: "kckglAdd",
+    //初始化下拉列表信息
+    mounted(){
+        this.initList(); //学院,课程类别，课程性质
+    },
     data() {
         return {
             labelPosition: 'right',
-            courseInfo: {
-                xqdm: "",
-                xqmc: "12h",
-                xqjp: "243weUI无法无法的收款方耗时间发货"
-            }
+            kcChange: this.$route.params.val,
+            kclbList:[],
+            kcxzList:[],
+            xxgsList:[],
+            xyList:[],
+            ztList:[
+                {
+                    label:"课程停开" ,
+                    value:0
+                },{
+                    label:"正常开课" ,
+                    value:1
+                }
+            ]
         };
     },
     methods: {
@@ -112,23 +157,69 @@ export default {
                 this.$router.push({name: 'kckgl'});
                 return;
             }
-        }
+        },
+
+        //初始化下拉列表信息 //学院,课程类别，课程性质
+        initList(){
+                //alert('开始获取数据');
+                var _this=this;
+                //需要处理异步请求的问题
+                this.axios.get("SysXy/getAllList")
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        var dataList=response.data;
+                        _this.xyList=dataList;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    });
+                //课程类别
+                this.axios.get("DmKclb/getAll")
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        var dataList=response.data;
+                        _this.kclbList=dataList;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    });
+                //课程性质
+                this.axios.get("DmKcxz/getAll")
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        var dataList=response.data;
+                        _this.kcxzList=dataList;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    });
+                //选修归属
+                this.axios.get("JyXxgs/getAll")
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        var dataList=response.data;
+                        _this.xxgsList=dataList;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    });
+        },
+
+
     }
 };
 </script>
 
 <style scoped>
-.span_for_view {
-    display:inline-block;
-    border-color:#409EFF;
-    border-width:1px;
-    border-style:solid;
-    padding-left:2px;
-}
-.span_for_number{
-    width:80px;
-}
-.span_for_word{
+.el_select {
     width:150px;
 }
 .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {

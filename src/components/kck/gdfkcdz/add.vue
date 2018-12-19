@@ -34,7 +34,7 @@
                         <el-input v-model="oldCourse.kcywmc" style="width: 150px;"></el-input>
                     </el-form-item> 
                     <el-form-item label="开课部门：">
-                        <el-input v-model="oldCourse.xdm" style="width: 150px;"></el-input>
+                        <el-input v-model="oldCourse.xydm" style="width: 150px;"></el-input>
                     </el-form-item>   
                     <el-form-item label="课程性质：">
                         <el-input v-model="oldCourse.kcxz" style="width: 150px;"></el-input>
@@ -92,7 +92,7 @@
                         <el-input v-model="newCourse.kcywmc" style="width: 150px;"></el-input>
                     </el-form-item> 
                     <el-form-item label="开课部门：">
-                        <el-input v-model="newCourse.xdm" style="width: 150px;"></el-input>
+                        <el-input v-model="newCourse.xydm" style="width: 150px;"></el-input>
                     </el-form-item>   
                     <el-form-item label="课程性质：">
                         <el-input v-model="newCourse.kcxz" style="width: 150px;"></el-input>

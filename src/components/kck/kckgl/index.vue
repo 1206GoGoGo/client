@@ -59,7 +59,8 @@
             <el-button type="primary" plain>课程简介导入</el-button>
           </el-row>
           <el-container>
-            <el-main><main-table></main-table></el-main>
+            <el-main><main-table :kc-search="searchValue.isSearch" :kc-search-value="searchValue"
+                @selectBack="returnSelect" ></main-table></el-main>
             <el-aside width="300px"><router-view :key="key"></router-view></el-aside>
           </el-container>
         </el-main>
@@ -80,13 +81,19 @@ export default {
       }
   },
   methods: {
+      returnSelect(value){
+        this.selectRow = value;//点查看和修改时会用到(包含一条课程的所有信息)
+      },
       goto(kind){
+        var _this=this;
         if(kind=='add'){
           this.$router.push({name: 'kckglAdd'});
         }else if(kind=='view'){
-          this.$router.push({name: 'kckglView'});
+          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要查看的课程");return;}
+          this.$router.push({name: 'kckglView',params:{ val: _this.selectRow } });
         }else if(kind=='change'){
-          this.$router.push({name: 'kckglChange'});
+          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要修改的课程");return;}
+          this.$router.push({name: 'kckglChange',params:{ val: _this.selectRow } });
         }
       },
       add_query(op_kind){
@@ -127,6 +134,14 @@ export default {
               //对已添加的条件进行查询
             }
             //处理查询操作
+
+            this.searchValue.hql="from SysKc where xydm = 412 and kczwmc like '%数据结构%'";
+            //拼接hql语句后向子组件传递
+            if(this.searchValue.isSearch){
+              this.searchValue.isSearch=false;
+            }else {
+              this.searchValue.isSearch=true;
+            }            
           }
         }else if(op_kind==="and"){
             if(query_name!='' && query_op!='' && query_value!=''){
@@ -141,10 +156,12 @@ export default {
               alert("请选择正确的查询条件");
             }
         }
-      }
+      },
+
   },
   data() {
     return {
+      selectRow:{},//表格中选中的行
       query: {
         name: '',
         op: '',
@@ -183,7 +200,11 @@ export default {
           name: '<',
           value: '4'
         }
-      ]
+      ],
+      searchValue:{//传递给子组件的查询条件
+        hql:'',
+        isSearch:false//是否点了查找按钮
+      }
     }
   }
 

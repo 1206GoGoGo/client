@@ -7,7 +7,7 @@
                 <el-input v-model="formLabelAlign.kcywmc" ></el-input>
             </el-form-item>
             <el-form-item label="开课部门">
-                <el-input v-model="formLabelAlign.xdm"></el-input>
+                <el-input v-model="formLabelAlign.xydm"></el-input>
             </el-form-item>
             <el-form-item label="课程简拼">
                 <el-input type="textarea" v-model="formLabelAlign.kcjp"></el-input>
@@ -36,7 +36,7 @@ export default {
             labelPosition: 'right',
             formLabelAlign: {
                 kcywmc: this.$route.params.val.kcywmc,
-                xdm: this.$route.params.val.xdm,
+                xydm: this.$route.params.val.xydm,
                 kcjp: this.$route.params.val.kcjp,
                 kcywjp: this.$route.params.val.kcywjp,
                 kczyzyjmd: this.$route.params.val.kczyzyjmd,

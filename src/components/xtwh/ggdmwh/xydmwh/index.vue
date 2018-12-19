@@ -41,7 +41,7 @@ export default {
   methods: {
         goto(kinf){
             document.getElementById("isshow").style.visibility="visible";
-            this.$router.replace({name: 'xydmRightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
+            this.$router.replace({name: 'xydmRightForm',params:{ val:null ,change_id: '000'+new Date().getSeconds()  ,type: 'add'}});
         }
   }
 

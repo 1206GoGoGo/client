@@ -42,7 +42,7 @@
                 <el-input v-model="formLabelAlign.cc"></el-input>
             </el-form-item>
         </el-form>
-        <el-button type="primary" plain>{{optype}}</el-button>
+        <el-button type="primary" plain v-on:click="submitdate()">{{optype}}</el-button>
         <el-button type="primary" plain @click="cancel_hide()">取消</el-button>
     </div>
 </template>
@@ -50,7 +50,13 @@
 <script>
 
 export default {
-    name: "xt",
+    name: "xt",  
+    mounted(){
+        if(this.$route.params.type=="add"){
+            //初始化数据，自动生成新的id
+            this.formLabelAlign.xqdm = this.getZydmInit();
+        }
+    },
     data() {
         var type;
         if(this.$route.params.type=="add"){
@@ -90,6 +96,75 @@ export default {
         cancel_hide(){
             document.getElementById("isshow").style.display="none";
             //只需隐藏，不用清空输入框内容，因为在重新打开时会处理该问题
+        },
+        getZydmInit(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('SysXq/getZydm')
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    var InitData=response.data;
+                    _this.formLabelAlign.zydm = InitData;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+        },
+        addZydm(){
+            var _this=this;
+            //需要处理异步请求的问题
+
+            this.axios.post('SysZy/add',
+                {
+
+                zydm: this.formLabelAlign.zydm,
+                sysX: {
+                    xdm: ssxdm
+                },
+                zymc: this.formLabelAlign.zymc,
+                xw: this.formLabelAlign.xw,
+                zypymb: this.formLabelAlign.zypymb,
+                zypyyq: this.formLabelAlign.zypyyq,
+                xydm: this.formLabelAlign.ssxydm,
+                zyqc: this.formLabelAlign.zyqc,
+                tjzydm,
+                cc: this.formLabelAlign.cc,
+                zt : "1",
+                xz: this.formLabelAlign.xz,
+                ssxqdm,
+                zyywmc: this.formLabelAlign.zyywmc,
+
+                //gjzydm: this.formLabelAlign.gjzydm,//国家专业代码无效
+
+                })
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    var dataList=response.data;
+                    _this.tableData=dataList;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+        },
+        submitdate(){
+            if(this.optype=='添加'){
+                if(!this.formLabelAlign.zydm){
+                    alert("获取专业代码失败！");
+                }else if(!this.formLabelAlign.zymc){
+                    alert("请输入专业名称！");
+                }else{
+                    this.addZydm();
+                    alert("添加成功！");
+                    this.$router.go(0);
+                }
+
+            }else if(this.optype=='修改'){
+                alert(this.formLabelAlign.xqdm);
+            }
         }
 
     }

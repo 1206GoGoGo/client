@@ -91,8 +91,21 @@
 
 <script>
 export default {
+    //处理父窗口传来的查询------------------------------------------
+    props:{
+        kcSearch:{},
+        kcSearchValue:{}
+    },
+    watch:{
+        kcSearch:function(val){
+            //通过父页传入的数据进行搜索
+            this.getData(this.kcSearchValue.xydm,this.kcSearchValue.zy);  //将父传递的数据显示出来xydm,kcm
+        }
+    },
+    //-------------------------------------------------------------
+
     mounted(){
-        this.getData(); //获取数据前先取数据
+        this.getData("",""); //初始化数据，待处理
     },
     data() {
       return {
@@ -120,10 +133,18 @@ export default {
       handleDelete(index, row) {
         alert(index);
       },
-      getData(){
+      getData(xydm,zy){
+            if(!xydm){
+                xydm=0;
+            }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysZy/getAll')
+            this.axios.get('SysZy/whsearch', {//通过这种方式解决模糊匹配后台报空指针异常的问题
+                params: {
+                    ssxydm: xydm,
+                    zymc:zy,
+                }
+            })
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去

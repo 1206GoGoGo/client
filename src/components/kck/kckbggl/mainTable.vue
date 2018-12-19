@@ -75,9 +75,21 @@
 
 <script>
 export default {
+    //处理父窗口传来的查询------------------------------------------
+    props:{
+        kcSearch:{},
+        kcSearchValue:{}
+    },
+    watch:{
+        kcSearch:function(val){
+            //通过父页传入的数据进行搜索
+            this.getData(this.kcSearchValue.xydm,this.kcSearchValue.kcm,this.kcSearchValue.state);  //将父传递的数据显示出来xydm,kcm
+        }
+    },
+    //-------------------------------------------------------------
+
     mounted(){
-        this.getData(412,'数据结构'); //获取数据前先取数据
-        this.tableData=[];
+        this.getData('412','数据结构',0); //获取数据前先取数据
     },
     data() {
         return {
@@ -97,11 +109,17 @@ export default {
       },
 
       //通过学院代码和课程名获取数据
-      getData(xydm,kcm){
+      getData(xydm,kcm,state){
             //alert('开始获取数据');
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get("SysKc/kcSearch?all=from SysKc where KCZWMC like '"+kcm+"' and XYDM = "+xydm)
+            this.axios.get('SysKc/getKcListforbg', {//通过这种方式解决模糊匹配后台报空指针异常的问题
+                params: {
+                    xydm: xydm,
+                    kczwmc:kcm,
+                    state:state
+                }
+            })
             //这里获取全部内容会出问题的。。。。。。。太多了
                 .then(function (response) {
                     //将response获得的数据进行处理
