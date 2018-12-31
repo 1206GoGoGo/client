@@ -40,19 +40,14 @@ export default {
                 labelPosition: 'right',
                 formLabelAlign: {
                     xqdm: '',
-                    xqmc: '',
-                    xqjp: ''
+                    zt: '1'
                 },
                 optype: type
             };
         }
         return {
             labelPosition: 'right',
-            formLabelAlign: {
-                xqdm: this.$route.params.val.xqdm,
-                xqmc: this.$route.params.val.xqmc,
-                xqjp: this.$route.params.val.xqjp
-            },
+            formLabelAlign: this.$route.params.val,
             optype: type
         };
     },
@@ -79,22 +74,32 @@ export default {
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysXq/add',
-                {
-                    xqdm : _this.formLabelAlign.xqdm,
-                    xqmc : _this.formLabelAlign.xqmc,
-                    xqjp : _this.formLabelAlign.xqjp,
-                    zt : "1"
-                })
+            this.axios.post('SysXq/add', _this.formLabelAlign)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    var dataList=response.data;
-                    _this.tableData=dataList;
+                    alert(response.data);
+                    _this.$router.go(0);
                 })
                 .catch(function (error) {
                     console.log(error);
                 alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+        },
+        modifyXqdm(){
+            var _this=this;
+            //需要处理异步请求的问题
+
+            this.axios.post('SysXq/modify', _this.formLabelAlign)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    _this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
         },
         submitdate(){
@@ -105,12 +110,14 @@ export default {
                     alert("请输入校区名称！");
                 }else{
                     this.addXqdm();
-                    alert("添加成功！");
-                    this.$router.go(0);
                 }
 
             }else if(this.optype=='修改'){
-                alert(this.formLabelAlign.xqdm);
+                if(!this.formLabelAlign.xqmc){
+                    alert("请输入校区名称！");
+                }else{
+                    this.modifyXqdm();
+                }
             }
         }
     }

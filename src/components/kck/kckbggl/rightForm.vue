@@ -3,6 +3,9 @@
         <div style="text-align:left">更多信息</div>
         <div style="margin: 20px;"></div>
         <el-form :label-position="labelPosition" label-width="120px" :model="formLabelAlign">
+            <el-form-item label="课程代码">
+                <el-input v-model="formLabelAlign.kcdm" disabled="true"></el-input>
+            </el-form-item>
             <el-form-item label="英文名称">
                 <el-input v-model="formLabelAlign.kcywmc" ></el-input>
             </el-form-item>
@@ -22,8 +25,8 @@
                 <el-input type="textarea" v-model="formLabelAlign.zycks"></el-input>
             </el-form-item>
         </el-form>
-        <el-button type="primary" plain>通过</el-button>
-        <el-button type="primary" plain v-on:click="cancel_hide()">拒绝</el-button>
+        <el-button type="primary" plain v-on:click="pass_hide()">通过</el-button>
+        <el-button type="primary" plain v-on:click="nopass_hide()">拒绝</el-button>
     </div>
 </template>
 
@@ -34,19 +37,39 @@ export default {
     data() {
         return {
             labelPosition: 'right',
-            formLabelAlign: {
-                kcywmc: this.$route.params.val.kcywmc,
-                xydm: this.$route.params.val.xydm,
-                kcjp: this.$route.params.val.kcjp,
-                kcywjp: this.$route.params.val.kcywjp,
-                kczyzyjmd: this.$route.params.val.kczyzyjmd,
-                zycks: this.$route.params.val.zycks
-            }
+            formLabelAlign: this.$route.params.val
         };
     },
     methods: {
-        cancel_hide(){
-            document.getElementById("isshow").style.visibility="hidden";
+        nopass_hide(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.post('SysKc/del', _this.formLabelAlign)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });  
+        },
+        pass_hide(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.post('SysKc/passforkcsh', _this.formLabelAlign)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });  
         }
     }
 };

@@ -59,7 +59,7 @@ export default {
       },
       //弹框标记数据对象
       dialogVisible:{
-          add:false    //添加课程对照
+          add:false,    //添加课程对照
       }
     }
   }

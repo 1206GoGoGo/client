@@ -6,6 +6,7 @@
         @row-click="handleCurrentChange"
         :data="tableData"
         style="width: 100%"
+        height="500px"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
             prop="kcdm"

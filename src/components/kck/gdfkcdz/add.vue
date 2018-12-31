@@ -128,7 +128,7 @@
         </el-col>            
     </el-row>
     </el-form>
-    <el-button type="primary">确认添加对照</el-button>
+    <el-button type="primary" @click="addData">确认添加对照</el-button>
     <el-button type="primary" @click="return_back">返回</el-button>
   </el-main>
   <query :dialog-visible-query="dialogVisibleQuery.query" :dialog-parameter="dialogVisibleQuery"
@@ -169,6 +169,41 @@ export default {
         };
     },
     methods: {
+        //处理新添加对照信息
+        addData(){
+            //不满足添加条件，跳出
+            if(!this.oldCourse.kcdm || !this.newCourse.kcdm){
+                alert('请选择两门对照课程');
+                return;
+            }
+            if(this.oldCourse.kcdm == this.newCourse.kcdm){
+                alert('请选择两门不同的课程对照');
+                return;
+            }
+            var _this=this;
+            //需要处理异步请求的问题
+
+            this.axios.post('JyGdxfdz/add',
+                {
+                    sysKcByKcdm: _this.oldCourse,
+                    sysKcByXkcdm: _this.newCourse,
+                    id: null,
+                    kcdm: _this.oldCourse.kcdm,
+                    xkcdm: _this.newCourse.kcdm,
+                    zt: 1
+                }
+            )
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    _this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });  
+        },
         //处理和父级的关系---------------------------------------------------------
         return_back(){
             //冒泡传递事件到上层组件，同步visible

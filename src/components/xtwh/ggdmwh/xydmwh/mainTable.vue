@@ -68,7 +68,7 @@ export default {
       //将数据库存储的状态数值，格式化为汉字
       stateFormatter(row,column){
         let state = row.state;
-        if(state === '0'){return '否'} else {return '是'}
+        if(state == '1'){return '否'} else {return '是'}
       },
       handleCurrentChange(val) {
         this.currentRow = val;
@@ -80,7 +80,22 @@ export default {
             params:{ val:row ,change_id: row.xydm+new Date().getSeconds(), type: 'change'}});
       },
       handleDelete(index, row) {
-        alert(index);
+        this.deleteData(row.xydm);
+      },
+      deleteData(xydm){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('SysXy/delete?id='+xydm)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    _this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
       },
       getData(){
         var _this=this;

@@ -1,10 +1,11 @@
 <template>
+  <div id="app">
     <el-table
         stripe
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="86%"
+        height="500px"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
@@ -54,10 +55,125 @@
                         size="mini"
                         type="danger"
                         @click="handleDelete(scope.$index, scope.row)">删除</el-button></el-col>
+                    <el-col :span="12"><el-button
+                        size="mini"
+                        @click="viewDetail(scope.row)">查看详情</el-button></el-col>
                 </el-row>
             </template>
         </el-table-column>
     </el-table>
+<!--**********************************对照的对话框**************************-->
+    <el-dialog
+        title="高低分课程对照详情"
+        :visible.sync="dialogVisibleScrap"
+        top="7vh"
+        width="70%">
+  <el-main>
+    <el-form ref="form" :model="sizeForm" label-width="100px" size="mini">
+    <el-row>
+        <el-col :span="12">
+            旧课程基本信息
+            <el-row class="border-thin">
+                <el-col :span="14">
+                    <el-form-item label="课程编码：">
+                        <el-input v-model="oldCourse.kcdm" style="width: 150px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="课程中文名：">
+                        <el-input v-model="oldCourse.kczwmc" style="width: 150px;"></el-input>
+                    </el-form-item>                    
+                    <el-form-item label="课程英文名：">
+                        <el-input v-model="oldCourse.kcywmc" style="width: 150px;"></el-input>
+                    </el-form-item> 
+                    <el-form-item label="开课部门：">
+                        <el-input v-model="oldCourse.xydm" style="width: 150px;"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="课程性质：">
+                        <el-input v-model="oldCourse.kcxz" style="width: 150px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="课程类别：">
+                        <el-input v-model="oldCourse.dmKclb.kclbmc" style="width: 150px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="总学时：">
+                        <el-input v-model="oldCourse.zhxs" style="width: 150px;"></el-input>
+                    </el-form-item>              
+                </el-col>
+                <el-col :span="10">              
+                    <el-form-item label="课程学分：">
+                        <el-input v-model="oldCourse.xf" style="width: 80px;"></el-input>
+                    </el-form-item> 
+                    <el-form-item label="理论学时：">
+                        <el-input v-model="oldCourse.llxs" style="width: 80px;"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="课外学时：">
+                        <el-input v-model="oldCourse.kwxs" style="width: 80px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="上机学时：">
+                        <el-input v-model="oldCourse.sjxs" style="width: 80px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="实验学时：">
+                        <el-input v-model="oldCourse.syxs" style="width: 80px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="实践学时：">
+                        <el-input v-model="oldCourse.sjxs2" style="width: 80px;"></el-input>
+                    </el-form-item>  
+                </el-col>
+            </el-row>
+        </el-col>
+        <el-col :span="12">
+            新课程基本信息
+            <el-row class="border-thin">
+                <el-col :span="14">
+                    <el-form-item label="课程编码：">
+                        <el-input v-model="newCourse.kcdm" style="width: 150px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="课程中文名：">
+                        <el-input v-model="newCourse.kczwmc" style="width: 150px;"></el-input>
+                    </el-form-item>                    
+                    <el-form-item label="课程英文名：">
+                        <el-input v-model="newCourse.kcywmc" style="width: 150px;"></el-input>
+                    </el-form-item> 
+                    <el-form-item label="开课部门：">
+                        <el-input v-model="newCourse.xydm" style="width: 150px;"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="课程性质：">
+                        <el-input v-model="newCourse.kcxz" style="width: 150px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="课程类别：">
+                        <el-input v-model="newCourse.dmKclb.kclbmc" style="width: 150px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="总学时：">
+                        <el-input v-model="newCourse.zhxs" style="width: 150px;"></el-input>
+                    </el-form-item>    
+                </el-col>
+                <el-col :span="10">                
+                    <el-form-item label="课程学分：">
+                        <el-input v-model="newCourse.xf" style="width: 80px;"></el-input>
+                    </el-form-item> 
+                    <el-form-item label="理论学时：">
+                        <el-input v-model="newCourse.llxs" style="width: 80px;"></el-input>
+                    </el-form-item>   
+                    <el-form-item label="课外学时：">
+                        <el-input v-model="newCourse.kwxs" style="width: 80px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="上机学时：">
+                        <el-input v-model="newCourse.sjxs" style="width: 80px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="实验学时：">
+                        <el-input v-model="newCourse.syxs" style="width: 80px;"></el-input>
+                    </el-form-item>      
+                    <el-form-item label="实践学时：">
+                        <el-input v-model="newCourse.sjxs2" style="width: 80px;"></el-input>
+                    </el-form-item>  
+                </el-col>
+            </el-row>
+        </el-col>            
+    </el-row>
+    </el-form>
+    <el-button type="primary" @click="closeDetail">返回</el-button>
+  </el-main>
+    </el-dialog>   
+<!--*********************************对照的对话框*******************************************-->
+  </div>
 </template>
 
 <script>
@@ -81,12 +197,23 @@ export default {
     },
     data() {
         return {
-            tableData:[]
+            tableData:[],
+            dialogVisibleScrap: false,
+            oldCourse: {dmKclb:{kclbmc:''}},    //表单里的值,初始化三重的数据
+            newCourse: {dmKclb:{kclbmc:''}},
         }
     },
     methods: {
       formatter(row, column) {
         return row.address;
+      },
+      viewDetail(row){
+          this.dialogVisibleScrap = true;
+          this.oldCourse = row.sysKcByKcdm;
+          this.newCourse = row.sysKcByXkcdm;
+      },
+      closeDetail(){
+          this.dialogVisibleScrap = false;
       },
       handleCurrentChange(val) {
         this.currentRow = val;
@@ -99,8 +226,23 @@ export default {
             ////通过改变每次的参数解决路由跳转失效的问题
       },
       handleDelete(index, row) {
-        alert(index);
+         this.deleteData(row.id);
       },
+      deleteData(dm){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('JyGdxfdz/clear?id='+dm)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+      },  
       //将数据库存储的状态数值，格式化为汉字
       stateFormatter(row,column){
         let state = row.state;
@@ -130,4 +272,5 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

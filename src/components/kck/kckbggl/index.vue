@@ -13,7 +13,7 @@
           <el-row style="text-align:left; padding-bottom:20px; padding-top:20px;">
             <el-button type="primary" plain v-on:click="goto('add')">学院新建</el-button>
             <el-button type="primary" plain v-on:click="goto('change')">学院修改</el-button>
-            <el-button type="primary" plain v-on:click="contrast()" id="showContrast">课程对比</el-button>
+            <el-button type="primary" plain v-on:click="contrast()" :disabled=showContrast>学院修改类目才有课程对比-不知道要对比什么</el-button>
             <el-select v-model="searchValue.xydm" placeholder="请选择学院" style="width:150px;margin-left:30px;">
                 <el-option v-for="xyItem in xyList"
                     :key="xyItem.xydm"
@@ -67,10 +67,10 @@ export default {
           }
           if(kind=="add"){  //新增课程查询，并不是去新增课程
             this.searchValue.state=1;
-            document.getElementById("showContrast").disabled=true;
+            this.showContrast = true;
           }else if(kind=='change'){ //修改过的课程查询，并不是去修改课程
             this.searchValue.state=2;
-            document.getElementById("showContrast").disabled=false;
+            this.showContrast = false;
           }else if(kind=='search'){
             this.searchValue.state=0;
           }
@@ -123,7 +123,8 @@ export default {
         kcm:'',
         state:'',
         isSearch:false//是否点了查找按钮
-      }
+      },
+      showContrast:true
     }
   }
 

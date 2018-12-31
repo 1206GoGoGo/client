@@ -54,7 +54,7 @@
                 <el-input v-model="kcChange.kwxs"></el-input>
             </el-form-item>
             <el-form-item label="选修归属">
-                <el-select v-model="kcChange.jyXxgs" placeholder="选择选修归属" class="el_select">
+                <el-select v-model="kcChange.jyXxgs" placeholder="选修归属不能修改" class="el_select" disabled="true">
                     <el-option v-for="item in xxgsList"
                         :key="item.xxgsdm"
                         :label="item.xxgsmc"
@@ -91,7 +91,7 @@
             <el-form-item label="实践周数">
                 <el-input v-model="kcChange.sjzs"></el-input>
             </el-form-item>
-            <el-checkbox v-model="kcChange.sfqy">是否重点课程</el-checkbox>
+            <el-checkbox >是否重点课程(没有找到对应字段)</el-checkbox>
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="课程简介">
@@ -116,7 +116,7 @@
         </el-form>
         <el-form :inline="true" size="mini" style="text-align:center;">
             <el-button type="primary" @click="button_click('submit')">提交</el-button>
-            <el-button type="primary" @click="button_click('reset')">重置</el-button>
+            <!--el-button type="primary" @click="button_click('reset')">重置</el-button-->
             <el-button type="primary" @click="button_click('return')">取消</el-button>
         </el-form>
       </main>
@@ -156,7 +156,21 @@ export default {
             if(kind=='return'){
                 this.$router.push({name: 'kckgl'});
                 return;
+            }else if(kind=='submit'){
+                this.changeData();
             }
+        },
+        changeData(){
+            var _this=this;    
+            this.axios.post('SysKc/modify', _this.kcChange)
+                .then(function (response) {
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });                
         },
 
         //初始化下拉列表信息 //学院,课程类别，课程性质

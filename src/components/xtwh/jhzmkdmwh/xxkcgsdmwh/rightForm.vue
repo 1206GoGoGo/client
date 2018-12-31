@@ -4,15 +4,15 @@
         <div style="margin: 20px;"></div>
         <el-form :label-position="labelPosition" label-width="180px" :model="formLabelAlign">
             <el-form-item label="选修课程归属代码">
-                <el-input v-model="formLabelAlign.xxkcgsdm" 
+                <el-input v-model="formLabelAlign.xxgsdm" 
                 :disabled="true"
                 placeholder="自动生成ID"></el-input>
             </el-form-item>
             <el-form-item label="选修课程归属名称">
-                <el-input v-model="formLabelAlign.xxkcgsmc"></el-input>
+                <el-input v-model="formLabelAlign.xxgsmc"></el-input>
             </el-form-item>
         </el-form>
-        <el-button type="primary" plain>{{optype}}</el-button>
+        <el-button type="primary" plain v-on:click="submitdate()">{{optype}}</el-button>
         <el-button type="primary" plain v-on:click="cancel_hide()">取消</el-button>
     </div>
 </template>
@@ -22,7 +22,13 @@
 //待处理，若是自动生成，则无需区分
 
 export default {
-    name: "xt",
+    name: "xt",   
+    mounted(){
+        if(this.$route.params.type=="add"){
+            //初始化数据，自动生成新的id
+            this.getdmInit();
+        }
+    },
     data() {
         var type;
         if(this.$route.params.type=="add"){
@@ -32,26 +38,90 @@ export default {
             return {
                 labelPosition: 'right',
                 formLabelAlign: {
-                    xqdm: '',
-                    xqmc: '',
-                    xqjp: ''
+                    xxgsdm: '',
+                    xxgsmc: '',
+                    zt: 1
                 },
                 optype: type
             };
         }
         return {
             labelPosition: 'right',
-            formLabelAlign: {
-                xxkcgsdm: this.$route.params.val.xxkcgsdm,
-                xxkcgsmc: this.$route.params.val.xxkcgsmc
-            },
+            formLabelAlign: this.$route.params.val,
             optype: type
         };
     },
     methods: {
         cancel_hide(){
             document.getElementById("isshow").style.visibility="hidden";
-        }
+        },
+        submitdate(){
+            if(this.optype=='添加'){
+                if(!this.formLabelAlign.xxgsdm){
+                    alert("获取选修课程归属代码失败！");
+                }else if(!this.formLabelAlign.xxgsmc){
+                    alert("请输入选修课程归属代码全称！");
+                }else{
+                    this.add();
+                }
+
+            }else if(this.optype=='修改'){
+                if(!this.formLabelAlign.xxgsmc){
+                    alert("请输入选修课程归属代码全称！");
+                }else{
+                    this.modify();
+                }
+            }
+        },
+        modify(){
+            var _this=this;
+            //需要处理异步请求的问题
+
+            this.axios.post('JyXxgs/modify', _this.formLabelAlign)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    _this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });            
+        },
+        add(){
+            var _this=this;
+            //需要处理异步请求的问题
+
+            this.axios.post('JyXxgs/add', _this.formLabelAlign)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    _this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });            
+        },
+
+        getdmInit(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('JyXxgs/getXxgsdm')
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    var dmInitData=response.data;
+                    _this.formLabelAlign.xxgsdm = dmInitData;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+        },
+
 
     }
 };

@@ -76,8 +76,23 @@ export default {
             params:{ val:row ,change_id: row.xklbdm+new Date().getSeconds(), type: 'change'}});
       },
       handleDelete(index, row) {
-        alert(index);
+        this.deleteData(row.xklbdm);
       },
+      deleteData(dm){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('DmXklb/delete?xklbdm='+dm)
+                .then(function (response) {
+                    //将response获得的数据进行处理
+                    //将获取到的数据以数组形式传递出去
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+      }, 
       getData(){
         var _this=this;
         //需要处理异步请求的问题

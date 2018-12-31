@@ -131,15 +131,29 @@ export default {
       //  this.$router.replace({name: 'zydmRightForm',params:{ val:row ,change_id: row.zydm, type: 'change'}});
       //},
       handleDelete(index, row) {
-        alert(index);
+          this.deleteData(row.zydm);
       },
+    deleteData(zydm){
+        var _this=this;
+        //需要处理异步请求的问题
+        this.axios.get('SysZy/delete?zydm='+ zydm)
+            .then(function (response) {
+                //将response获得的数据进行处理
+                //将获取到的数据以数组形式传递出去
+                alert(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+            });
+    },
       getData(xydm,zy){
             if(!xydm){
                 xydm=0;
             }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysZy/whsearch', {//通过这种方式解决模糊匹配后台报空指针异常的问题
+            this.axios.get('SysZy/WhSearch', {//通过这种方式解决模糊匹配后台报空指针异常的问题
                 params: {
                     ssxydm: xydm,
                     zymc:zy,

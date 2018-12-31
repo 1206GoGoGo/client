@@ -20,7 +20,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="课程类别">
-                <el-select v-model="kcAdd.dmKclb" placeholder="选择课程类别">
+                <el-select v-model="kcAdd.dmKclb.kclbdm" placeholder="选择课程类别">
                     <el-option v-for="item in kclbList"
                         :key="item.kclbdm"
                         :label="item.kclbmc"
@@ -40,10 +40,10 @@
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="课程代码">
-                <el-input v-model="kcAdd.kcdm1" disabled="true" placeholder="选择学院后自动生成"></el-input>
+                <el-input v-model="kcdm1" disabled="true" placeholder="选择学院后自动生成"></el-input>
             </el-form-item>+
             <el-form-item label="">
-                <el-input v-model="kcAdd.kcdm2"></el-input>
+                <el-input v-model="kcdm2"></el-input>
             </el-form-item>
             <el-tag type="warning">注：最后一位为校区代码(一共三位)，+前的七位在选择学院后自动生成</el-tag>
         </el-form>
@@ -62,6 +62,14 @@
             </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
+            <el-form-item label="课程中文名称">
+                <el-input v-model="kcAdd.kczwmc"></el-input>
+            </el-form-item>
+            <el-form-item label="课程英文名称">
+                <el-input v-model="kcAdd.kcywmc"></el-input>
+            </el-form-item>
+        </el-form>
+        <el-form :inline="true" label-width="110px">
             <el-form-item label="总学时">
                 <el-input v-model="kcAdd.zhxs"></el-input>
             </el-form-item>
@@ -71,7 +79,7 @@
             <el-form-item label="课外学时">
                 <el-input v-model="kcAdd.kwxs"></el-input>
             </el-form-item>
-            <el-checkbox v-model="kcAdd.sfqy">是否重点课程</el-checkbox>
+            <el-checkbox>是否重点课程没找到对应字段</el-checkbox>
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="课程简介">
@@ -115,28 +123,52 @@ export default {
     data() {
         return {
             labelPosition: 'right',
+            kcdm1:'',
+            kcdm2:'',
 
             //表单中的内容
             kcAdd: {
-                xydm: '',
-                dmKclb: '',
-                kcxz: '',
-                kcdm1: '',
-                kcdm2: '',
-                kcdm: '',
-                llxs: '',
-                sjxs: '',
-                sjxs2: '',
-                sjzs: '',
-                zhxs: '',
-                syxs: '',
-                kwxs: '',
-                sfqy: '',   //是否重点课程待确定
-                kcjj: '',
-                kcywjj: '',
-                kczyzyjmd: '',
-                zycks: '',
-                bz: ''
+
+                "kcdm":null,
+                "dmKclb": {
+                    "kclbdm": null,
+                    "kclbmc": null,
+                    "zt": null
+                },
+                "jyXxgs": null,
+                "kczwmc": null,
+                "kcywmc": null,
+                "xf": null,
+                "kcxz": null,
+                "xydm": null,
+                "xdm": null,
+                "yxyqdm": null,
+                "kcjj": null,
+                "kcywjj": null,
+                "zhxs": null,
+                "llxs": null,
+                "syxs": null,
+                "sjxs": null,
+                "kczyzyjmd": null,
+                "zycks": null,
+                "bz": null,
+                "kcqmc": null,
+                "kclbmc": null,
+                "kwxs": null,
+                "sjxs2": null,
+                "kcyl1": null,
+                "kcyl2": null,
+                "sfqy": null,
+                "kcyl4": null,
+                "kcyl5": null,
+                "kcyl6": null,
+                "kcyl7": null,
+                "kcyl8": null,
+                "kcyl9": null,
+                "kcyl10": null,
+                "sjzs": null,
+                "zt": 1
+
             },
 
             //下拉列表数据
@@ -162,7 +194,7 @@ export default {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
-                    _this.kcAdd.kcdm1=dataList;
+                    _this.kcdm1=dataList;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -173,7 +205,44 @@ export default {
             if(kind=='return'){
                 this.$router.push({name: 'kckgl'});
                 return;
+            }else if(kind=='submit'){
+                this.kcAdd.kcdm = this.kcdm1 + '' + this.kcdm2;
+                if(!this.kcAdd.kcdm){
+                    alert("请输入课程代码");
+                    return;
+                }
+                if(!this.kcAdd.dmKclb.kclbdm){
+                    alert("请输入课程类别");
+                    return;
+                }
+                if(!this.kcAdd.kcxz){
+                    alert("请输入课程性质");
+                    return;
+                }
+                if(!this.kcAdd.xydm){
+                    alert("请输入学院代码");
+                    return;
+                }
+                if(!this.kcAdd.kczwmc){
+                    alert("请输入课程中文名称");
+                    return;
+                }
+                //验证输入信息
+                this.add();
             }
+        },
+
+        add(){
+            var _this=this;    
+            this.axios.post('SysKc/add', _this.kcAdd)
+                .then(function (response) {
+                    alert(response.data);
+                    //_this.$router.go(0);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });  
         },
 
 

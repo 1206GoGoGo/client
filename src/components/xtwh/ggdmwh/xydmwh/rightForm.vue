@@ -9,7 +9,7 @@
                 placeholder="自动生成ID"></el-input>
             </el-form-item>
             <el-form-item label="学院简称">
-                <el-input v-model="formLabelAlign.xyjc"></el-input>
+                <el-input v-model="formLabelAlign.xymc"></el-input>
             </el-form-item>
             <el-form-item label="学院全称">
                 <el-input v-model="formLabelAlign.xyqc"></el-input>
@@ -30,7 +30,7 @@ export default {
     mounted(){
         if(this.$route.params.type=="add"){
             //初始化数据，自动生成新的id
-            this.formLabelAlign.xydm = this.getXydmInit();
+            this.getXydmInit();
         }
     },
     data() {
@@ -42,21 +42,16 @@ export default {
             return {
                 labelPosition: 'right',
                 formLabelAlign: {
-                    xqdm: '',
-                    xqmc: '',
-                    xqjp: ''
+                    xydm: '',
+                    xyqc: '',
+                    zt: '1',
                 },
                 optype: type
             };
         }
         return {
             labelPosition: 'right',
-            formLabelAlign: {
-                xydm: this.$route.params.val.xydm,
-                xyjc: this.$route.params.val.xyjc,
-                xyqc: this.$route.params.val.xyqc,
-                xyywmc: this.$route.params.val.xyywmc
-            },
+            formLabelAlign: this.$route.params.val,
             optype: type
         };
     },
@@ -64,58 +59,78 @@ export default {
         cancel_hide(){
             document.getElementById("isshow").style.visibility="hidden";
         },
-        getXydmInit(){
+        //自动生成3位随机数然后交后台验证可用性
+        getXydmInit(){            
+            var _this=this;
+            var canuse = false;
+            while(!canuse){
+                canuse = true;
+                var this_re = Math.round(100+Math.random()*900);
+                //需要处理异步请求的问题
+                this.axios.get('SysXy/checkXydm?xydm='+this_re)
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        if(response.data == 'noexist'){
+                            canuse = true;
+                            _this.formLabelAlign.xydm = this_re;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    });
+            }
+
+        },
+        addXydm(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXy/getXqdm')
+
+            this.axios.post('SysXy/add', _this.formLabelAlign)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    var InitData=response.data;
-                    _this.formLabelAlign.xydm = mInitData;
+                    alert(response.data);
+                    _this.$router.go(0);
                 })
                 .catch(function (error) {
                     console.log(error);
                     alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
         },
-        addXydm(){
+        modifyXydm(){
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysXy/add',
-                {
-                    xydm : _this.formLabelAlign.xydm,
-                    xymc : _this.formLabelAlign.xymc,
-                    xyqc : _this.formLabelAlign.xyqc, 
-                    xyywmc : _this.formLabelAlign.xyywmc,
-                    zt : "1"
-                })
+            this.axios.post('SysXy/modify', _this.formLabelAlign)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    var dataList=response.data;
-                    _this.tableData=dataList;
+                    alert(response.data);
+                    _this.$router.go(0);
                 })
                 .catch(function (error) {
                     console.log(error);
-                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
         },
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.xydm){
                     alert("获取学院代码失败！");
-                }else if(!this.formLabelAlign.xymc){
-                    alert("请输入学院名称！");
+                }else if(!this.formLabelAlign.xyqc){
+                    alert("请输入学院全称！");
                 }else{
                     this.addXydm();
-                    alert("添加成功！");
-                    this.$router.go(0);
                 }
 
             }else if(this.optype=='修改'){
-                alert(this.formLabelAlign.xydm);
+                if(!this.formLabelAlign.xyqc){
+                    alert("请输入学院全称！");
+                }else{
+                    this.modifyXydm();
+                }
             }
         }
     }
