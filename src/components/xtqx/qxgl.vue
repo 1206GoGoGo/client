@@ -7,7 +7,7 @@
     <el-breadcrumb-item>系统权限</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 显示当前页面路径 结束 -->  
-  <el-row :gutter="0" style="padding:10px">
+  <el-row :gutter="0" style="padding-top:10px; padding-left:5px">
     <el-col :span="10">
         <div>
             <!--下拉列表框 开始-->
@@ -41,7 +41,7 @@
                 :value="item.value">
                 </el-option>
             </el-select>
-    <!--下拉列表框 结束-->
+            <!--下拉列表框 结束-->
         </div>
     </el-col>
     <el-col :span="7">
