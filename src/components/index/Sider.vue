@@ -112,6 +112,11 @@ export default {
 
                 case "5-1":locthis.$router.push({path:'/qxgl'});break;
 
+                case "6-1":locthis.$router.push({path:'/zykc'});break;
+                case "6-2":locthis.$router.push({path:'/tskc'});break;
+
+                case "7-1":locthis.$router.push({path:'/pyjhkcxx'});break;
+
                 case "8-1":locthis.$router.push({path:'/sjx'});break;
                 case "8-1":locthis.$router.push({path:'/select'});break;
                 case "8-2":locthis.$router.push({path:'/fjx'});break;

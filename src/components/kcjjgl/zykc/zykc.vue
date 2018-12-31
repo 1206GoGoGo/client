@@ -1,7 +1,6 @@
 <template>
-
-<!-- 显示当前页面路径 开始 -->
-<div >
+<div>
+    <!-- 显示当前页面路径 开始 -->
     <div class="order">
         <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -9,7 +8,7 @@
         <el-breadcrumb-item>专业课程</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
-<!-- 显示当前页面路径 结束 -->
+    <!-- 显示当前页面路径 结束 -->
 <!--菜单栏-->
 <el-tabs type="border-card">
     <el-tab-pane label="基本信息查询">
@@ -65,6 +64,35 @@
     </el-tab-pane>
 </el-tabs>
 
+<el-container>
+    <el-main>
+        <el-row style="text-align:left; padding-bottom:20px; padding-left:0px;">
+           <el-button type="primary" plain>课程简介管理</el-button>
+        </el-row>
+        <main-table>
+            <el-table
+                stripe
+                border
+                highlight-current-row
+                @row-click="handleCurrentChange"
+                height="350px"
+                :data="tableData"
+                style="width: 100%"
+                :default-sort = "{prop: 'xqdm', order: 'descending'}">
+                <el-table-column
+                    prop="xqdm"
+                    label="序号"
+                    sortable>
+                </el-table-column>
+                <el-table-column
+                    prop="xqmc"
+                    label="标题"
+                    sortable>
+                </el-table-column>
+            </el-table>
+        </main-table>
+    </el-main>
+</el-container>
 
 </div>
     
