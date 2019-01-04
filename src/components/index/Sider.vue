@@ -161,6 +161,7 @@ export default {
     }
     .el-menu{
         text-align: left;
+        border-right-width: 0px !important;
     }
     .el-menu.el-submenu{
         background-color:white;

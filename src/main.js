@@ -18,7 +18,14 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueAxios,axios);
 //axios相关配置 //更多配置待处理
-axios.defaults.baseURL = 'http://localhost:8080/jwc/';
+//axios.defaults.baseURL = 'http://localhost:8080/jwc/';
+
+axios.defaults.baseURL = process.env.BASE_API;
+
+
+Vue.prototype.storage=window.localStorage;
+
+
 
 new Vue({
   el: '#app',
