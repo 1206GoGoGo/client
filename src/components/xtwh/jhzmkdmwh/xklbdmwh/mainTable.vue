@@ -3,8 +3,9 @@
         stripe=true
         border=true
         highlight-current-row
+        v-loading="loading"
         @row-click="handleCurrentChange"
-        height="350px"
+        :height="tableHeight"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}"
@@ -53,7 +54,9 @@ export default {
     },
     data() {
       return {
-         tableData: []
+         tableData: [],
+         tableHeight: window.innerHeight * 0.75 ,
+         loading: true,
       }
     },
     methods: {
@@ -76,7 +79,19 @@ export default {
             params:{ val:row ,change_id: row.xklbdm+new Date().getSeconds(), type: 'change'}});
       },
       handleDelete(index, row) {
-        this.deleteData(row.xklbdm);
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.deleteData(row.xklbdm);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+        
       },
       deleteData(dm){
             var _this=this;
@@ -85,17 +100,18 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
+                    //alert(response.data);
                     //_this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功删除学科类别', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '删除学科类别失败', type: 'error' });
                 });
       }, 
       getData(){
         var _this=this;
+        _this.loading = true;
         //需要处理异步请求的问题
         this.axios.get('jwc/DmXklb/getAll')
             .then(function (response) {
@@ -103,11 +119,13 @@ export default {
                 //将获取到的数据以数组形式传递出去
                 var dataList=response.data;
                 _this.tableData=dataList;
-                _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                _this.$notify({title:"获取学科类别", message:"获取学科类别成功", type:"success"});
+                _this.loading = false;
             })
             .catch(function (error) {
                 console.log(error);
-                _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                _this.$notify({title:"获取学科类别", message:"获取学科类别失败", type:"success"});
+                _this.loading = false;
             });
       }
     }

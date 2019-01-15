@@ -83,11 +83,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
                     _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功修改选修课程归属代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '修改选修课程归属代码失败', type: 'error' });
                 });            
         },
         add(){
@@ -98,13 +98,13 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //alert(response.data);
+                    //_this.$router.go(0);
+                    _this.$message({ message: '成功添加选修课程归属代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加选修课程归属代码失败', type: 'error' });
                 });            
         },
 
@@ -117,11 +117,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dmInitData=response.data;
                     _this.formLabelAlign.xxgsdm = dmInitData;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功初始化选修课程归属代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '初始化选修课程归属代码失败', type: 'error' });
                 });
         },
 

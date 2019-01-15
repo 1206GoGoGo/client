@@ -80,12 +80,12 @@ export default {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //_this.$router.go(0);
+                    _this.$message({ message: '成功修改课程类别', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '修改课程类别失败', type: 'error' });
                 });            
         },
         add(){
@@ -97,12 +97,12 @@ export default {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //_this.$router.go(0);
+                    _this.$message({ message: '成功添加课程类别', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加课程类别失败', type: 'error' });
                 });            
         },
 
@@ -115,11 +115,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.kclbdm = xqdmInitData;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '课程列表代码初始化成功', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '课程类别代码初始化失败', type: 'error' });
                 });
         },
 

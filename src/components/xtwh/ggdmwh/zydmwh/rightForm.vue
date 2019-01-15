@@ -116,11 +116,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var InitData=response.data;
                     _this.formLabelAlign.zydm = InitData;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功生成专业代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '生成专业代码失败', type: 'error' });
                 });
         },
         //初始化下拉列表调用的学院信息
@@ -134,11 +134,11 @@ export default {
                       //将获取到的数据以数组形式传递出去
                       var dataList=response.data;
                       _this.xyList=dataList;
-                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
                   })
                   .catch(function (error) {
                       console.log(error);
-                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
                   });
 
               //alert('成功获取数据');
@@ -150,11 +150,11 @@ export default {
             this.axios.post('jwc/SysZy/add', this.formLabelAlign)
                 .then(function (response) {
                     alert(response.data);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功添加专业信息', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加专业信息失败', type: 'error' });
                 });
         },
         modifyZydm(){
@@ -174,16 +174,16 @@ export default {
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.zydm){
-                    alert("获取专业代码失败！");
+                    _this.$message({ message: '获取专业代码失败', type: 'error' });
                 }else if(!this.formLabelAlign.zymc){
-                    alert("请输入专业名称！");
+                    _this.$message({ message: '请输入专业名称', type: 'error' });
                 }else{
                     this.addZydm();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.zymc){
-                    alert("请输入专业名称！");
+                    _this.$message({ message: '请输入专业名称', type: 'error' });
                 }else{
                     this.modifyZydm();
                 }

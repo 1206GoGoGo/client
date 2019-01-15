@@ -64,11 +64,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.xqdm = xqdmInitData;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '校区代码成功生成',showClose: true,type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '生成校区代码失败',showClose: true,type: 'error' });
                 });
         },
         addXqdm(){
@@ -79,13 +79,13 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //alert(response.data);
+                    //_this.$router.go(0);
+                    _this.$message({ message: '校区代码成功添加',showClose: true,type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '校区代码添加失败',showClose: true,type: 'error' });
                 });
         },
         modifyXqdm(){
@@ -96,28 +96,28 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //alert(response.data);
+                    //_this.$router.go(0);
+                    _this.$message({ message: '校区代码修改成功',showClose: true,type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '校区代码修改失败',showClose: true,type: 'error' });
                 });
         },
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.xqdm){
-                    alert("获取校区代码失败！");
+                    this.$message({ message: '获取校区代码失败，点击添加按钮重新获取！',showClose: true,type: 'error' });
                 }else if(!this.formLabelAlign.xqmc){
-                    alert("请输入校区名称！");
+                    this.$message({ message: '请输入校区名称',showClose: true,type: 'error' });
                 }else{
                     this.addXqdm();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.xqmc){
-                    alert("请输入校区名称！");
+                    this.$message({ message: '请输入校区名称',showClose: true,type: 'error' });
                 }else{
                     this.modifyXqdm();
                 }

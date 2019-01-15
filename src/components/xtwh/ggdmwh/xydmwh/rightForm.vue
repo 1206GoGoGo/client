@@ -75,11 +75,11 @@ export default {
                             canuse = true;
                             _this.formLabelAlign.xydm = this_re;
                         }
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$message({ message: '成功生成学院代码', type: 'success' });
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$message({ message: '生成学院代码失败', type: 'error' });
                     });
             }
 
@@ -93,12 +93,12 @@ export default {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //_this.$router.go(0);
+                    _this.$message({ message: '成功添加学院代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加学院代码失败', type: 'error' });
                 });
         },
         modifyXydm(){
@@ -111,26 +111,26 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
                     _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功修改学院代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '修改学院代码失败', type: 'error' });
                 });
         },
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.xydm){
-                    alert("获取学院代码失败！");
+                    this.$message({ message: '获取学院代码失败', type: 'error' });
                 }else if(!this.formLabelAlign.xyqc){
-                    alert("请输入学院全称！");
+                    _this.$message({ message: '请输入学院全称', type: 'error' });
                 }else{
                     this.addXydm();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.xyqc){
-                    alert("请输入学院全称！");
+                    _this.$message({ message: '请输入学院全称', type: 'error' });
                 }else{
                     this.modifyXydm();
                 }

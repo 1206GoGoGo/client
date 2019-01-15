@@ -5,8 +5,8 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>系统维护</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <el-breadcrumb-item>公共代码维护</el-breadcrumb-item>
+          <el-breadcrumb-item>专业代码维护</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-container>
@@ -77,11 +77,11 @@ export default {
                       //将获取到的数据以数组形式传递出去
                       var dataList=response.data;
                       _this.xyList=dataList;
-                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
                   })
                   .catch(function (error) {
                       console.log(error);
-                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
                   });
               //alert('成功获取数据');
         }
