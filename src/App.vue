@@ -40,7 +40,7 @@ beforeCreate:function(){
   padding:0px;
 }
 #app {
-  font-family:'Microsoft YaHei','Avenir', Helvetica, Arial, sans-serif;
+  font-family:'Microsoft YaHei','Avenir', Helvetica, Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

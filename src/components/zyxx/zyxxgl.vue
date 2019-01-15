@@ -87,7 +87,7 @@
                     <el-button size="small" type="primary" plain>确定</el-button>
                 </el-col>
             </el-row>
-
+           
             <el-table :data="kcData.kcList" border size="small"  stripe highlight-current-row  @current-change="getCurrent" style="width:100%;margin-top:20px;">
                 <el-table-column prop="zt" label="状态" width="100" sortable></el-table-column>
                 <el-table-column prop="jxjhh" label="教学计划号" width="100" sortable></el-table-column>
@@ -111,6 +111,7 @@
                 <el-table-column prop="yybxxf" label="英语必修学分" width="100" sortable></el-table-column>
                 <el-table-column prop="tybxxf" label="体育必修学分" width="100" sortable></el-table-column>
             </el-table>
+            
         </el-main>
     </el-container>
     <add-zy :dialog-visible="dialogVisible.addZy" @closeDialog="doCloseDialog"></add-zy>
