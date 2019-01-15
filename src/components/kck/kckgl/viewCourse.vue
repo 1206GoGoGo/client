@@ -164,52 +164,56 @@ export default {
                 //alert('开始获取数据');
                 var _this=this;
                 //需要处理异步请求的问题
-                this.axios.get("SysXy/getAllList")
+                this.axios.get("jwc/SysXy/getAllList")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
                 //课程类别
-                this.axios.get("DmKclb/getAll")
+                this.axios.get("jwc/DmKclb/getAll")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
                 //课程性质
-                this.axios.get("DmKcxz/getAll")
+                this.axios.get("jwc/DmKcxz/getAll")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
                 //选修归属
-                this.axios.get("JyXxgs/getAll")
+                this.axios.get("jwc/JyXxgs/getAll")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xxgsList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
         },
 

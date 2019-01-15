@@ -110,16 +110,17 @@ export default {
         getZydmInit(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysZy/getZydmByXydm?xydm='+ _this.formLabelAlign.xydm)
+            this.axios.get('jwc/SysZy/getZydmByXydm?xydm='+ _this.formLabelAlign.xydm)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var InitData=response.data;
                     _this.formLabelAlign.zydm = InitData;
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         //初始化下拉列表调用的学院信息
@@ -127,16 +128,17 @@ export default {
               //alert('开始获取数据');
               var _this=this;
               //需要处理异步请求的问题
-              this.axios.get("SysXy/getAllList")
+              this.axios.get("jwc/SysXy/getAllList")
                   .then(function (response) {
                       //将response获得的数据进行处理
                       //将获取到的数据以数组形式传递出去
                       var dataList=response.data;
                       _this.xyList=dataList;
+                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                   })
                   .catch(function (error) {
                       console.log(error);
-                      alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                      _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                   });
 
               //alert('成功获取数据');
@@ -145,26 +147,28 @@ export default {
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysZy/add', this.formLabelAlign)
+            this.axios.post('jwc/SysZy/add', this.formLabelAlign)
                 .then(function (response) {
                     alert(response.data);
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         modifyZydm(){
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysZy/modify', this.formLabelAlign)
+            this.axios.post('jwc/SysZy/modify', this.formLabelAlign)
                 .then(function (response) {
                     alert(response.data);
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         submitdate(){

@@ -149,17 +149,18 @@ export default {
         getData(way,key){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysKc/getMHKcList?text='+key+'&cb='+way)
+            this.axios.get('jwc/SysKc/getMHKcList?text='+key+'&cb='+way)
             //这里获取全部内容会出问题的。。。。。。。太多了
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         }
     }

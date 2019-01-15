@@ -182,7 +182,7 @@ export default {
         initKcdm(){
              var _this=this;
             //需要处理异步请求的问题
-            this.axios.get("SysKc/recommendBydm", {//通过这种方式解决模糊匹配后台报空指针异常的问题
+            this.axios.get("jwc/SysKc/recommendBydm", {//通过这种方式解决模糊匹配后台报空指针异常的问题
                 params: {
                     //通过学院代码或系代码获取按照规则生成的课程代码
 	                //flag  标识是学院代码还是系代码   dm代码    按照规则生成课程代码前七位数
@@ -195,10 +195,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.kcdm1=dataList;
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         button_click(kind){
@@ -234,14 +235,15 @@ export default {
 
         add(){
             var _this=this;    
-            this.axios.post('SysKc/add', _this.kcAdd)
+            this.axios.post('jwc/SysKc/add', _this.kcAdd)
                 .then(function (response) {
                     alert(response.data);
                     //_this.$router.go(0);
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });  
         },
 
@@ -251,40 +253,43 @@ export default {
                 //alert('开始获取数据');
                 var _this=this;
                 //需要处理异步请求的问题
-                this.axios.get("SysXy/getAllList")
+                this.axios.get("jwc/SysXy/getAllList")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
                 //课程类别
-                this.axios.get("DmKclb/getAll")
+                this.axios.get("jwc/DmKclb/getAll")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
                 //课程性质
-                this.axios.get("DmKcxz/getAll")
+                this.axios.get("jwc/DmKcxz/getAll")
                     .then(function (response) {
                         //将response获得的数据进行处理
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                     });
         },
 

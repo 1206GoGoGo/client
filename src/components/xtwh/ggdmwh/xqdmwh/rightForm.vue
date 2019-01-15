@@ -58,48 +58,51 @@ export default {
         getXqdmInit(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getXqdm')
+            this.axios.get('jwc/SysXq/getXqdm')
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.xqdm = xqdmInitData;
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         addXqdm(){
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysXq/add', _this.formLabelAlign)
+            this.axios.post('jwc/SysXq/add', _this.formLabelAlign)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
                     _this.$router.go(0);
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         modifyXqdm(){
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysXq/modify', _this.formLabelAlign)
+            this.axios.post('jwc/SysXq/modify', _this.formLabelAlign)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     alert(response.data);
                     _this.$router.go(0);
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
                 });
         },
         submitdate(){
