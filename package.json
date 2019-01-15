@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "client of jwc manager system which is powered by Vue.js an Electron",
   "author": "cRinzler <530565181@qq.com>",
+  "main":"./build/electron.js",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
