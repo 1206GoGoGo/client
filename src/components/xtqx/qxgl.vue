@@ -1,5 +1,4 @@
 <template>
-
 <div class="order">
     <!-- 显示当前页面路径 开始 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -31,7 +30,7 @@
     </el-col>
     <el-col :span="7">
         <div>
-            权限：<el-input style="width:100px" v-model="input2"></el-input>
+           <el-input style="width:100px" v-model="input2"></el-input>
             <!--下拉列表框 开始-->
             <el-select style="width:110px" v-model="value2" clearable placeholder="请选择">
                 <el-option
@@ -54,8 +53,6 @@
         </div>
     </el-col>
   </el-row>  
-
-
     <div id="qxgl">
         <el-table
           :data="tableData"
@@ -106,9 +103,6 @@
           </el-table-column>
         </el-table>
     </div>
-
-
-
 
 </div>
 </template>

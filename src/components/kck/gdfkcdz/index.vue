@@ -40,7 +40,7 @@ export default {
       doCloseDialog(msg){
           if(msg=="add"){
               this.dialogVisible.add=false;
-          }
+          }     
       },
       //查找输入的课程
       search(){

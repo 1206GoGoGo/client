@@ -82,7 +82,6 @@ export default {
                       console.log(error);
                       alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                   });
-
               //alert('成功获取数据');
         }
   },

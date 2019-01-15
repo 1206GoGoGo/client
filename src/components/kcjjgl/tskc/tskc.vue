@@ -1,5 +1,4 @@
 <template>
-
 <div>
     <!-- 显示当前页面路径 开始 -->
     <div class="order">
@@ -13,17 +12,16 @@
 <!--菜单栏-->
 <el-tabs type="border-card">
     <el-tab-pane label="基本信息查询">
-        <el-row :gutter="20" class="cxtj"> 
-
+        <el-row :gutter="20">
             <el-col :span="9" >
                 <el-row>
                     <el-col :span="11">学院</el-col>
                     <el-col :span="13"> 
-                        <el-select v-model="xq" size="small">
-                            <el-option v-for="xqItem in xqList"
-                                :key="xqItem.value"
-                                :label="xqItem.label"
-                                :value="xqItem.value">
+                        <el-select v-model="xy" size="small">
+                            <el-option v-for="xyItem in xyList"
+                                :key="xyItem.xydm"
+                                :label="xyItem.xymc"
+                                :value="xyItem.xydm">
                             </el-option>
                         </el-select>
                     </el-col>
@@ -45,7 +43,7 @@
                 </el-row>
             </el-col>
 
-            <el-col :span="6"><el-button size="small" type="primary" plain>查询</el-button></el-col>
+            <el-col :span="6"><el-button size="small" type="primary" plain @click="query">查询</el-button></el-col>
         </el-row>
     </el-tab-pane>
 </el-tabs>
@@ -56,38 +54,39 @@
            <el-button type="primary" plain>课程简介管理</el-button>
         </el-row>
         <main-table>
+            <!-- @row-click="handleCurrentChange" -->
             <el-table
                 stripe
                 border
                 highlight-current-row
-                @row-click="handleCurrentChange"
                 height="350px"
                 :data="tableData"
                 style="width: 100%"
-                :default-sort = "{prop: 'xqdm', order: 'descending'}">
+                :default-sort = "{prop: 'index', order: 'descending'}">
                 <el-table-column
-                    prop="xqdm"
+                    prop="index"
                     label="序号"
                     sortable>
                 </el-table-column>
                 <el-table-column
-                    prop="xqmc"
+                    prop="title"
                     label="标题"
                     sortable>
                 </el-table-column>
                 <el-table-column
-                    prop="xqjp"
+                    prop="xy"
                     label="学院"
                     sortable>
                 </el-table-column>
+                <!-- :formatter="stateFormatter" -->
                 <el-table-column
-                    :formatter="stateFormatter"
-                    prop="zt"
+                    
+                    prop="nj"
                     label="年级"
                     sortable>
                 </el-table-column>
                 <el-table-column
-                    :formatter="stateFormatter"
+                    
                     prop="zt"
                     label="流程状态"
                     sortable>
@@ -102,10 +101,86 @@
 </template>
 <script>
    export default {
-       data:{
+        mounted:function(){
+            this.init();
+        },
+       data(){
+           return {
+            xy:"",
+            nj:"",
+            xyList:[],
+            njList:[],
+            tableData:[],
+           }
 
        },
        methods:{
+           query(){
+               this.axios({
+                    method:'get',
+                    url:'/jwc/SysXy/getAllList', 
+                })
+                .then(function(rep){
+                    _this.xyList=rep.data;
+                    // _this.$notify({
+                    //     title:"初始化学院",
+                    //     message:"初始化学院成功",
+                    //     type:"success"
+                    // })
+                })
+                .catch(function(e){
+                // _this.$notify({
+                //         title:"初始化学院",
+                //         dangerouslyUseHTMLString: true,
+                //         message:"初始化学院失败</br>"+e,
+                //         type:"error"
+                //     })
+                });
+           },
+
+
+            //页面初始化
+            init:function(){
+                var _this=this;
+
+                //学院
+                this.axios({
+                    method:'get',
+                    url:'/jwc/SysXy/getAllList', 
+                })
+                .then(function(rep){
+                    _this.xyList=rep.data;
+                    // _this.$notify({
+                    //     title:"初始化学院",
+                    //     message:"初始化学院成功",
+                    //     type:"success"
+                    // })
+                })
+                .catch(function(e){
+                // _this.$notify({
+                //         title:"初始化学院",
+                //         dangerouslyUseHTMLString: true,
+                //         message:"初始化学院失败</br>"+e,
+                //         type:"error"
+                //     })
+                });
+
+                //年级
+                var date=new Date;
+                var now_year=date.getFullYear();
+                for(var i=now_year;i>=2002;i--)
+                {
+                    _this.njList.push({label:i+'',value:i+''});
+                }
+
+
+                // CurrentRow:function(val){
+                //     this.kcData.currentKc=val;
+                //     console.log("当前"+this.kcData.currentKc.jxjhh);
+                // }
+
+                
+            },
 
        }
    }

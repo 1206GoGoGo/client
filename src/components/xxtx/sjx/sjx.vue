@@ -30,10 +30,10 @@
   <el-col :span="12">
     <div>
       <el-row> 
-        <el-button type="primary" plain @click="cle">清空</el-button>
-        <el-button type="primary" plain @click="sel">查询</el-button>
-        <el-button type="primary" plain @click="del">删除</el-button>
-        <el-button type="primary" plain @click="look">查看</el-button>
+        <el-button type="primary" plain @click="clear()">清空</el-button>
+        <el-button type="primary" plain @click="query()">查询</el-button>
+        <el-button type="primary" plain @click="del()">删除</el-button>
+        <el-button type="primary" plain @click="look()">查看</el-button>
       </el-row>
     </div>
   </el-col>
@@ -149,10 +149,10 @@ export default {
       look(){
             this.$router.push('/select')
          },
-      cle(id){
+      clear(id){
 
       },
-      sel(id){
+      query(id){
 
       },
       del(id){

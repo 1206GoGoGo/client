@@ -1,5 +1,4 @@
 <template>
-
 <!-- 显示当前页面路径 开始 -->
 <div class="order">
 <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -15,7 +14,7 @@
       <div> 
         <span>按时间查询：</span>
         <el-date-picker
-          v-model="value1" 
+          v-model="value1"
           type="daterange" 
           align="right" 
           unlink-panels 
@@ -29,33 +28,30 @@
   <el-col :span="12">
     <div class="grid-content bg-purple">
       <el-row> 
-        <el-button type="primary" plain @click="cle">清空</el-button>
-        <el-button type="primary" plain @click="sel">查询</el-button>
-        <el-button type="primary" plain @click="del">删除</el-button>
-        <el-button type="primary" plain @click="look">查看</el-button>
+        <el-button type="primary" plain @click="clear">清空</el-button>
+        <el-button type="primary" plain @click="query">查询</el-button>
+        <el-button type="primary" plain @click="del(selectRow.news)">删除</el-button>
+        <el-button type="primary" plain @click="search()">查看</el-button>
       </el-row>
     </div>
   </el-col>
 </el-row>
-<!-- 菜单栏 结束 -->
+<!-- 菜单栏 结束-->
 
 <!-- 表格 -->
 <el-container>
-  <!-- <el-aside width="200px">Aside</el-aside> @row-click="row1" v-for ="(item,items) in positionList[0]" :key="item.id"-->
   <el-main class="tmain">
     <div id="hsx">
         <el-table
+          @selectBack="returnSelect"
           :data="tableData"
           border
           highlight-current-row
-          
           class="t1"
           height="500" 
           style="width: 100%"
           :default-sort = "{prop: 'time', order: 'descending'}" >
-          <!-- :label-class-name="positionKey[prop].label" -->
           <el-table-column
-            
             prop="receive"
             header-align="center"
             label="接受方"
@@ -79,31 +75,28 @@
             sortable>
           </el-table-column>
         </el-table>
+        <search  @closeDialog="doCloseDialog" :xx-search="Search.isSearch" :xx-search-value="Search"></search>
     </div>
+    <!-- //:dialog-visible="dialogVisible.search" -->
   </el-main>
 </el-container>
- 
 </div>
 </template>
 
 <script>
-
+import search from '@/components/xxtx/search.vue'
 export default {
+    name: "fjx",
+    components: {search},
+    mounted(){
+      //this.query(); 获取数据前先取数据
+    },
     data() {
       return {
-        // positionKey:[
-        // {prop:"status",label:"状态"},
-        // {prop:"new",label:"消息来源"},
-        // {prop:"title",label:"标题"},
-        // {prop:"content",label:"内容概要"},
-        // {prop:"time",label:"发送时间"}
-        // ],
-        // tableData: [{
-        //   receive: '机电学院',
-        //   title: '学年计划表',
-        //   content:'系统为C/S结构，客户端采用electron使用网页前端技术来编写。',
-        //   time:'2016-08-01'
-        // }],
+        tableData:[],
+        isSearch:false,
+        Search:false,
+        
     //日期选择
     pickerOptions2: {
           shortcuts: [{
@@ -135,33 +128,70 @@ export default {
         value1: ''
       }
     },
-     //日期选择结束
+    //日期选择结束
 
+    //查看详细的内容
     methods: {
-      formatter(row, column) {
-        return row.address;
-        //return column.address;
+      returnSelect(value){
+        this.selectRow = value;//点查看和删除时会用到(包含一条课程的所有信息)
       },
-      look(id){
-            // this.$router.push('/select')
-         },
-      cle(id){
+
+      search(){
+        //this.dialogVisible.search=true;
+         if(this.Search.isSearch){
+          this.Search.isSearch=false;
+        }else {
+          this.Search.isSearch=true;
+        }
 
       },
-      sel(id){
-
+      doCloseDialog(msg){
+          if(msg=="search"){
+              //this.dialogVisible.search=false;
+              this.Search.isSearch=false;
+          }
       },
+
+      //查询
+      query(){
+        var _this=this;
+        //需要处理异步请求的问题
+         var sj1='01/08/2012'
+         var sj2='02/08/2012'
+         var jyb=''
+        this.axios.get('/jwc/JyXxtx/getXxtxByfsf?fsf='+jyb+'&sj1='+sj1+'&sj2='+sj2).then(function (response) 
+        {
+          //将获取到的数据以数组形式传递出去
+          var dataList=response.data;
+          _this.tableData=dataList;
+        }).catch(function (error) {
+            console.log(error);
+            alert("数据获取失败！");
+          });
+      },
+      //清空
+      clear(){
+        this.value1=""
+        this.query=[]
+      },
+      //删除
       del(id){
-
+        if(!id)
+        {alert("请从下面表格中选择需要删除的消息");return;}
+        //将课程列表中被选中的(获取选中的课程代码kcdm)某课程逻辑删除（课程状态改为0）
+        var _this=this;
+        //需要处理异步请求的问题
+        this.axios.get('/jwc/JyXxtx/RealDeleteMse')//未给？？？？？？？？？？？？？？？？？？？？
+          .then(function (response) {
+              //将response获得的数据进行处理
+              //将获取到的数据以数组形式传递出去
+              alert(response.data);
+          })
+          .catch(function (error) {
+              console.log(error);
+              alert("此接口尚未配置成功");
+          });
       }
-
-      // row1(row, event, column){
-          
-      // },
-      // del(id){
-      //     this.$http.get(''+id).then(){
-
-      //     }
       
     },
   
@@ -170,6 +200,7 @@ export default {
 </script>
 
 <style scoped>
+
   .tmain{
     background-color:azure;
   }

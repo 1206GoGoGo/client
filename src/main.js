@@ -19,6 +19,8 @@ Vue.use(ElementUI);
 Vue.use(VueAxios,axios);
 //axios相关配置 //更多配置待处理
 //axios.defaults.baseURL = 'http://localhost:8080/jwc/';
+//axios.defaults.baseURL = 'http://10.141.1.206:8081/';
+//axios.defaults.baseURL = 'http://10.139.51.112:8080/';
 
 axios.defaults.baseURL = process.env.BASE_API;
 

@@ -99,7 +99,7 @@ export default {
           if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要查看的课程");return;}
           this.nouse(_this.selectRow.kcdm);
         }else if(kind=='delect'){//删除
-          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要修改的课程");return;}
+          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要删除的课程");return;}
           this.delect(_this.selectRow.kcdm);
         }
       },
