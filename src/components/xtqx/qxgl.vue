@@ -9,13 +9,15 @@
   <el-row :gutter="0" style="padding-top:10px; padding-left:5px">
     <el-col :span="10">
         <div>
-            <!--下拉列表框 开始-->
+            <!--下拉列表框(教师姓名、教务用户) 开始-->
             <el-select style="width:120px" v-model="value1" clearable placeholder="请选择">
                 <el-option
                 v-for="item in options1"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
+                :value="item.value"
+                @click="toggle(label)"
+                >
                 </el-option>
             </el-select>
             <el-input
@@ -24,23 +26,24 @@
             v-model="input1"
             clearable>
             </el-input>
-            <!--下拉列表框 结束-->
+            <!--下拉列表框(教师姓名、教务用户)  结束-->
             <el-button type="primary" plain>查询</el-button>
         </div>
     </el-col>
     <el-col :span="7">
         <div>
-           <el-input style="width:100px" v-model="input2"></el-input>
-            <!--下拉列表框 开始-->
+           权限：<el-input readonly="readonly" style="width:100px" v-model="input2"></el-input>
+            <!--下拉列表框（教师、学生） 开始-->
             <el-select style="width:110px" v-model="value2" clearable placeholder="请选择">
                 <el-option
                 v-for="item in options2"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
+                :value="item.value"
+                >
                 </el-option>
             </el-select>
-            <!--下拉列表框 结束-->
+            <!--下拉列表框（教师、学生） 结束-->
         </div>
     </el-col>
     <el-col :span="7">
@@ -55,6 +58,7 @@
   </el-row>  
     <div id="qxgl">
         <el-table
+          v-if="hideRow1"
           :data="tableData"
           border
           highlight-current-row
@@ -104,12 +108,44 @@
         </el-table>
     </div>
 
+    <div id="qxgl">
+        <el-table
+          v-if="hideRow2"
+          :data="tableData"
+          border
+          highlight-current-row
+          class="t1"
+          height="500" 
+          style="width: 100%"
+          :default-sort = "{prop: 'name', order: 'descending'}" >
+          <el-table-column
+            prop="name"
+            header-align="center"
+            label="姓名"
+            height="50"
+            width="100"
+             sortable>
+          </el-table-column>
+          <el-table-column
+            prop="permission"
+            header-align="center"
+            label="权限"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="belong"
+            header-align="center"
+            label="所属单位">
+          </el-table-column>
+        </el-table>
+    </div>
+
 </div>
 </template>
 
 <script>
     export default {
-        data() {
+        data(){
             return{
                 options1: [{
                     value: '选项1',
@@ -129,11 +165,25 @@
                 }],
                 value2: '',
                 input1: '',
-
+                input2: '',
+                hideRow1:true,
+                hideRow2:false,
+                tableData:'',
             }
         },
-        methods(){
+        methods:{
+            toggle(){
+                var _this=this;
+                if(_this.value1=='选项1')
+                {   _this.hideRow1=false;
+                    _this.hideRow2=true;
+                }
+                else
+                {   _this.hideRow1=true;
+                    _this.hideRow2=false;
 
+                }
+            }
         }
     }
 </script>
