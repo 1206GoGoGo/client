@@ -13,7 +13,7 @@
           <el-row style="text-align:left; padding-bottom:20px; padding-top:20px;">
             <el-button type="primary" plain v-on:click="goto('add')">学院新建</el-button>
             <el-button type="primary" plain v-on:click="goto('change')">学院修改</el-button>
-            <el-button type="primary" plain v-on:click="contrast()" :disabled=showContrast>学院修改类目才有课程对比-不知道要对比什么</el-button>
+            <el-button type="primary" plain v-on:click="contrast()" :disabled=showContrast>学院修改类目下的课程对比</el-button>
             <el-select v-model="searchValue.xydm" placeholder="请选择学院" style="width:150px;margin-left:30px;">
                 <el-option v-for="xyItem in xyList"
                     :key="xyItem.xydm"
@@ -27,7 +27,7 @@
         </el-header>
         <el-container>
           <el-main>
-            <main-table :kc-search="searchValue.isSearch" :kc-search-value="searchValue"></main-table>
+            <main-table :kc-search="searchValue.isSearch" :kc-search-value="searchValue" @selectBack="returnSelect"></main-table>
           </el-main>
           <el-aside width="300px">
             <router-view :key="key"></router-view>
@@ -35,7 +35,7 @@
         </el-container>
       </el-container>
     </el-container>
-    <contrast :dialog-visible="dialogVisible.contrast" @closeDialog="doCloseDialog"></contrast>
+    <contrast :dialog-visible="dialogVisible.contrast"  :dialog-val="selectRow" @closeDialog="doCloseDialog"></contrast>
   </div>
 </template>
 
@@ -57,9 +57,12 @@ export default {
   },
   methods: {
       //button的操作
+      returnSelect(value){
+        this.selectRow = value;//点查看和修改时会用到(包含一条课程的所有信息)
+      },
       goto(kind){
           if(!this.searchValue.xydm){
-            alert("请选择学院！");
+            this.$message({ message: '请选择学院', type: 'error' });
             return;
           }
           if(!this.searchValue.kcm){
@@ -73,6 +76,7 @@ export default {
             this.showContrast = false;
           }else if(kind=='search'){
             this.searchValue.state=0;
+            this.showContrast = true;
           }
           //参数设置完后，向子组件传递信息
           if(this.searchValue.isSearch){
@@ -81,8 +85,11 @@ export default {
             this.searchValue.isSearch=true;
           }
       },
-      contrast(){ //待处理
+      contrast(){
+          if(!this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要查看的课程', type: 'error' });return;} //待处理
           this.dialogVisible.contrast=true;
+          //alert(this.selectRow.kcdm);
+          //this.$router.push({name: 'kckglView',params:{ val: this.selectRow } });
       },
       //关闭对话框
       doCloseDialog:function(msg){
@@ -102,11 +109,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.xyList=dataList;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
                 });
 
             //alert('成功获取数据');
@@ -114,6 +121,7 @@ export default {
   },
   data() {
     return {
+      selectRow:{},//表格中选中的行
       //弹框标记数据对象
       dialogVisible:{
           contrast:false,    //对比课程

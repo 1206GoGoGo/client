@@ -98,11 +98,8 @@ export default {
             //需要处理异步请求的问题
             this.axios.get('jwc/DmXklb/delete?xklbdm='+dm)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
                     _this.$message({ message: '成功删除学科类别', type: 'success' });
+                    _this.getData();
                 })
                 .catch(function (error) {
                     console.log(error);

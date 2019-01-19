@@ -12,77 +12,83 @@
     <el-row>
         <el-col :span="12">
             学院调整课程
-            <el-form label-width="110px" size="mini">            
+            <el-form label-width="110px" size="mini">              
+                <el-form-item label="课程代码：">
+                    <span class="span_for_view ">{{newCourse.kcdm}}</span>
+                </el-form-item>           
                 <el-form-item label="课程英文名：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.kcywmc}}</span>
                 </el-form-item> 
                 <el-form-item label="开课部门：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.xydm}}</span>
                 </el-form-item>   
                 <el-form-item label="课程性质：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.kcxz}}</span>
                 </el-form-item>      
                 <el-form-item label="课程类别：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.kclbmc}}</span>
                 </el-form-item>
                 <el-form-item label="总学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.zhxs}}</span>
                 </el-form-item>                    
                 <el-form-item label="课程学分：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.xf}}</span>
                 </el-form-item> 
                 <el-form-item label="理论学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.llxs}}</span>
                 </el-form-item>   
                 <el-form-item label="课外学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.kwxs}}</span>
                 </el-form-item>      
                 <el-form-item label="上机学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.sjxs}}</span>
                 </el-form-item>
                 <el-form-item label="实验学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.syxs}}</span>
                 </el-form-item>      
                 <el-form-item label="实践学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{newCourse.sjxs2}}</span>
                 </el-form-item>  
             </el-form>
         </el-col>
         <el-col :span="12">
             原课程
             <el-form label-width="110px" size="mini">            
+                <el-form-item label="课程代码：">
+                    <span class="span_for_view ">{{oldCourse.kcdm}}</span>
+                </el-form-item>             
                 <el-form-item label="课程英文名：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.kcywmc}}</span>
                 </el-form-item> 
                 <el-form-item label="开课部门：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.xydm}}</span>
                 </el-form-item>   
                 <el-form-item label="课程性质：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.kcxz}}</span>
                 </el-form-item>      
                 <el-form-item label="课程类别：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.kclbmc}}</span>
                 </el-form-item>
                 <el-form-item label="总学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.zhxs}}</span>
                 </el-form-item>                    
                 <el-form-item label="课程学分：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.xf}}</span>
                 </el-form-item> 
                 <el-form-item label="理论学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.llxs}}</span>
                 </el-form-item>   
                 <el-form-item label="课外学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.kwxs}}</span>
                 </el-form-item>      
                 <el-form-item label="上机学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.sjxs}}</span>
                 </el-form-item>
                 <el-form-item label="实验学时：">
-                    <span class="span_for_view ">{{sizeForm.name}}</span>
+                    <span class="span_for_view ">{{oldCourse.syxs}}</span>
                 </el-form-item>      
                 <el-form-item label="实践学时：">
-                    <span class="span_for_view ">{{sizeForm.region}}</span>
+                    <span class="span_for_view ">{{oldCourse.sjxs2}}</span>
                 </el-form-item>  
             </el-form>
         </el-col>            
@@ -100,26 +106,29 @@ export default {
             type:Boolean,
             default:false,
             require:true
-        }
+        },
+        dialogVal:{
+            type:Object,
+            default:[],
+            require:true
+        },
     },
     watch:{
         dialogVisible:function(val){
             this.visible=val;
+            if(val){
+                this.getData();
+            }
+        },
+        dialogVal:function(val){
+            this.newCourse=val;
         }
     },
     data() {
         return {
             visible:this.dialogVisible,
-            sizeForm: {
-                name: 'haha',
-                region: 'xxxxxxxxxxxxxx',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
-            }
+            newCourse:this.dialogVal,
+            oldCourse:[]
         };
     },
     methods: {
@@ -135,6 +144,24 @@ export default {
                 //done();
             })
             .catch(_ => {});
+        },
+        getData(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('jwc/SysKc/getKcById', {//通过这种方式解决模糊匹配后台报空指针异常的问题
+                params: {
+                    kcdm: _this.newCourse.kcyl1,
+                }
+            }).then(function (response) {
+                    _this.oldCourse=response.data;
+                    _this.$message({ message: '成功获取旧课程数据', type: 'success' });
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    _this.$message({ message: '获取旧课程数据失败', type: 'error' });
+                });
+
         }
     }
 }

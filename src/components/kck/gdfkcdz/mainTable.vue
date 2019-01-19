@@ -4,8 +4,9 @@
         stripe
         border
         highlight-current-row
+        v-loading="loading"
         @row-click="handleCurrentChange"
-        height="500px"
+        :height="tableHeight"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
@@ -69,7 +70,7 @@
         top="7vh"
         width="70%">
   <el-main>
-    <el-form ref="form" :model="sizeForm" label-width="100px" size="mini">
+    <el-form ref="form" label-width="100px" size="mini">
     <el-row>
         <el-col :span="12">
             旧课程基本信息
@@ -197,6 +198,8 @@ export default {
     },
     data() {
         return {
+            loading: true ,
+            tableHeight: window.innerHeight * 0.77 ,
             tableData:[],
             dialogVisibleScrap: false,
             oldCourse: {dmKclb:{kclbmc:''}},    //表单里的值,初始化三重的数据
@@ -226,7 +229,18 @@ export default {
             ////通过改变每次的参数解决路由跳转失效的问题
       },
       handleDelete(index, row) {
-         this.deleteData(row.id);
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.deleteData(row.id);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
       },
       deleteData(dm){
             var _this=this;
@@ -235,13 +249,13 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
                     //_this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功删除对照数据，后台返回'+response.data, type: 'success' });
+                    _this.getData(_this.kcmSearchValue.kcm);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '删除对照数据失败', type: 'error' });
                 });
       },  
       //将数据库存储的状态数值，格式化为汉字
@@ -253,6 +267,7 @@ export default {
       getData(kcm){
             //alert('开始获取数据');
             var _this=this;
+            _this.loading = true;
             //需要处理异步请求的问题
             this.axios.get('jwc/JyGdxfdz/get?kcm='+kcm)
             //这里获取全部内容会出问题的。。。。。。。太多了
@@ -261,11 +276,13 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '高低分课程对照数据获取成功', type: 'success' });
+                    _this.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.loading = false;
+                    _this.$message({ message: '高低分课程对照数据获取失败', type: 'error' });
                 });
 
             //alert('成功获取数据');

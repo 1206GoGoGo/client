@@ -3,6 +3,8 @@
         stripe
         border
         highlight-current-row
+        v-loading="loading"
+        :height="tableHeight"
         @row-click="handleCurrentChange"
         :data="tableData"
         style="width: 100%"
@@ -93,6 +95,8 @@ export default {
     },
     data() {
         return {
+            loading: true,
+            tableHeight: window.innerHeight * 0.55 ,
             tableData:[],
 
         }
@@ -124,6 +128,7 @@ export default {
       getData(hql){
             //alert('开始获取数据');
             var _this=this;
+            _this.loading = true;
             //需要处理异步请求的问题
             this.axios.get('jwc/SysKc/kcSearch', {//通过这种方式解决模糊匹配后台报空指针异常的问题
                 params: {
@@ -136,11 +141,13 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.loading = false;
+                    _this.$message({ message: '成功获取课程信息', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '获取课程信息失败', type: 'error' });
+                    _this.loading = false;
                 });
 
       }

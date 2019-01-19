@@ -90,47 +90,82 @@ export default {
         if(kind=='add'){
           this.$router.push({name: 'kckglAdd'});
         }else if(kind=='view'){
-          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要查看的课程");return;}
+          if(!_this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要查看的课程', type: 'error' });return;}
           this.$router.push({name: 'kckglView',params:{ val: _this.selectRow } });
         }else if(kind=='change'){
-          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要修改的课程");return;}
+          if(!_this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要修改的课程', type: 'error' });return;}
           this.$router.push({name: 'kckglChange',params:{ val: _this.selectRow } });
         }else if(kind=='nouse'){//弃用
-          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要查看的课程");return;}
+          if(!_this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要弃用的课程', type: 'error' });return;}
           this.nouse(_this.selectRow.kcdm);
         }else if(kind=='delect'){//删除
-          if(!_this.selectRow.kcdm){alert("请从下面表格中选择需要删除的课程");return;}
+          if(!_this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要删除的课程', type: 'error' });return;}
           this.delect(_this.selectRow.kcdm);
         }
       },
       nouse(id){
+            this.$confirm('此操作将弃用或恢复课程, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //确认后继续
+                    this.nouse_ok(id);
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消操作'
+                    });
+                });
+
+      },
+      nouse_ok(id){
             //将课程对象的Sfqy(是否弃用)设置为0
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysKc/depKc?kcdm='+id)
+            this.axios.get('jwc/SysKc/depKc?kcdm='+id)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
+                    _this.$message({ message: '成功弃用课程'+response.data, type: 'success' });
+                    _this.add_query('query');
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    _this.$message({ message: '弃用课程失败'+error, type: 'error' });
                 });
       },
       delect(id){
-          //将课程列表中被选中的(获取选中的课程代码kcdm)某课程逻辑删除（课程状态改为0）
+            this.$confirm('此操作将删除课程, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //确认后继续
+                    this.delect_ok(id);
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消操作'
+                    });
+                });
+
+      },
+      delect_ok(id){
+            //将课程列表中被选中的(获取选中的课程代码kcdm)某课程逻辑删除（课程状态改为0）
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysKc/chackKc?kcdm='+id)
+            this.axios.get('jwc/SysKc/chackKc?kcdm='+id)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
+                    _this.$message({ message: '成功删除课程'+response.data, type: 'success' });
+                    _this.add_query('query');
                 })
                 .catch(function (error) {
                     console.log(error);
                     alert("此接口尚未配置成功");
+                    _this.$message({ message: '删除课程失败'+error, type: 'error' });
                 });
       },
       add_query(op_kind){
@@ -146,7 +181,7 @@ export default {
 
         if(op_kind==="query"){
             if(!this.query_view){
-              alert("请选择正确的查询条件");
+              _this.$message({ message: '请选择正确的查询条件', type: 'success' });
               return;
             }
             this.searchValue.hql="from SysKc where "+this.query_view;
@@ -159,7 +194,7 @@ export default {
         }else if(op_kind==="and" || op_kind==="or"){
             var isnew = ' '+op_kind+' ';  if(!this.query_view){isnew = ' ';} //处理逻辑关系
             if(this.query.name=='' || this.query.op=='' || this.query.value==''){
-                alert("请选择正确的查询条件");
+                _this.$message({ message: '请选择正确条件', type: 'error' });
                 return;
             }
 

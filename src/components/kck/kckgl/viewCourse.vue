@@ -170,11 +170,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
                     });
                 //课程类别
                 this.axios.get("jwc/DmKclb/getAll")
@@ -183,11 +183,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败", type:"error"})
                     });
                 //课程性质
                 this.axios.get("jwc/DmKcxz/getAll")
@@ -196,11 +196,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败", type:"error"})
                     });
                 //选修归属
                 this.axios.get("jwc/JyXxgs/getAll")

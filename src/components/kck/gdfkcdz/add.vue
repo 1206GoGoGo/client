@@ -196,13 +196,13 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    //alert(response.data);
+                    //_this.$router.go(0);
+                    _this.$message({ message: '添加对比数据成功', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加对比数据失败'+error, type: 'error' });
                 });  
         },
         //处理和父级的关系---------------------------------------------------------

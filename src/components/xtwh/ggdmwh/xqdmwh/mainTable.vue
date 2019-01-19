@@ -93,6 +93,7 @@ export default {
                 .then(function (response) {
                     //refresh
                     _this.$message({ message: '删除校区代码成功',showClose: true,type: 'success' });
+                    _this.getData();
                 })
                 .catch(function (error) {
                     console.log(error);

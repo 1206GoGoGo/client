@@ -5,8 +5,9 @@
         highlight-current-row
         @row-click="handleCurrentChange"
         :data="tableData"
+        v-loading="loading"
         style="width: 100%"
-        height="500px"
+        :height="tableHeight"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
             prop="kcdm"
@@ -94,6 +95,8 @@ export default {
     },
     data() {
         return {
+            loading: true,
+            tableHeight: window.innerHeight * 0.75 ,
             tableData:[],
         }
     },
@@ -104,15 +107,14 @@ export default {
       handleCurrentChange(val) {
         this.currentRow = val;
         this.$router.replace({name: 'kckbgglRightForm',params:{ val:val ,change_id: val.kcdm+new Date().getSeconds()}});
-      },
-      handleDelete(index, row) {
-        alert(index);
+        this.$emit("selectBack",val);   //直接选中的行信息传递给父组件
       },
 
       //通过学院代码和课程名获取数据
       getData(xydm,kcm,state){
             //alert('开始获取数据');
             var _this=this;
+            _this.loading = true;
             //需要处理异步请求的问题
             this.axios.get('jwc/SysKc/getKcListforbg', {//通过这种方式解决模糊匹配后台报空指针异常的问题
                 params: {
@@ -127,11 +129,13 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功获取变更课程数据', type: 'success' });
+                    _this.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.loading = false;
+                    _this.$message({ message: '获取变更课程数据失败', type: 'error' });
                 });
 
             //alert('成功获取数据');

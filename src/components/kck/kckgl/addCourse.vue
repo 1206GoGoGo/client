@@ -68,6 +68,15 @@
             <el-form-item label="课程英文名称">
                 <el-input v-model="kcAdd.kcywmc"></el-input>
             </el-form-item>
+            <el-form-item label="选修归属">
+                <el-select v-model="kcAdd.jyXxgs" placeholder="字段类型待确认，暂时不能改" class="el_select" disabled="true">
+                    <el-option v-for="item in xxgsList"
+                        :key="item.xxgsdm"
+                        :label="item.xxgsmc"
+                        :value="item.xxgsdm">
+                    </el-option>
+                </el-select>
+            </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="总学时">
@@ -174,6 +183,7 @@ export default {
             //下拉列表数据
             xyList:[],
             kclbList:[],
+            xxgsList:[],
             kcxzList:[]
         };
     },
@@ -195,11 +205,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.kcdm1=dataList;
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功获取课程代码', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '获取课程代码失败', type: 'error' });
                 });
         },
         button_click(kind){
@@ -209,41 +219,44 @@ export default {
             }else if(kind=='submit'){
                 this.kcAdd.kcdm = this.kcdm1 + '' + this.kcdm2;
                 if(!this.kcAdd.kcdm){
-                    alert("请输入课程代码");
+                    this.$message({ message: '请输入课程代码', type: 'success' });
                     return;
                 }
                 if(!this.kcAdd.dmKclb.kclbdm){
-                    alert("请输入课程类别");
+                    this.$message({ message: '请输入课程类别', type: 'success' });
                     return;
                 }
                 if(!this.kcAdd.kcxz){
-                    alert("请输入课程性质");
+                    this.$message({ message: '请输入课程性质', type: 'success' });
                     return;
                 }
                 if(!this.kcAdd.xydm){
-                    alert("请输入学院代码");
+                    this.$message({ message: '请输入学院代码', type: 'success' });
                     return;
                 }
                 if(!this.kcAdd.kczwmc){
-                    alert("请输入课程中文名称");
+                    this.$message({ message: '请输入课程中文名称', type: 'success' });
                     return;
                 }
                 //验证输入信息
                 this.add();
+            }else if(kind=='reset'){
+                //this.kcAdd=null;
+                this.$message({ message: '重置表单,请手动删除，或重新进入添加页面！', type: 'error' });
             }
         },
 
         add(){
-            var _this=this;    
+            var _this=this;
             this.axios.post('jwc/SysKc/add', _this.kcAdd)
                 .then(function (response) {
-                    alert(response.data);
+                    //alert(response.data);
                     //_this.$router.go(0);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '成功添加数据', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                    _this.$message({ message: '添加数据失败', type: 'error' });
                 });  
         },
 
@@ -259,11 +272,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
                     });
                 //课程类别
                 this.axios.get("jwc/DmKclb/getAll")
@@ -272,11 +285,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败", type:"error"})
                     });
                 //课程性质
                 this.axios.get("jwc/DmKcxz/getAll")
@@ -285,16 +298,26 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败", type:"error"})
+                    });
+                //选修归属
+                this.axios.get("jwc/JyXxgs/getAll")
+                    .then(function (response) {
+                        //将response获得的数据进行处理
+                        //将获取到的数据以数组形式传递出去
+                        var dataList=response.data;
+                        _this.xxgsList=dataList;
+                        _this.$notify({title:"获取课程归属", message:"获取课程归属成功", type:"success"})
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        _this.$notify({title:"获取课程归属", message:"获取课程归属失败", type:"error"})
                     });
         },
-
-
-
 
     }
 };

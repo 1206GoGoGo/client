@@ -4,9 +4,8 @@
       <el-header class="header-path">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>系统维护</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <el-breadcrumb-item>课程库</el-breadcrumb-item>
+          <el-breadcrumb-item>高低分课程对照</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <el-container>
@@ -40,6 +39,7 @@ export default {
       doCloseDialog(msg){
           if(msg=="add"){
               this.dialogVisible.add=false;
+              this.search();
           }     
       },
       //查找输入的课程
