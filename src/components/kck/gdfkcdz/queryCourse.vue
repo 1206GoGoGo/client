@@ -156,11 +156,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$message({ message: '获取课程数据成功', type: 'success' });
+                    _this.$message({ message: '获取课程数据成功 ('+response.data.length+')', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '获取课程数据失败', type: 'error' });
+                    _this.$message({ message: '获取课程数据失败: '+error, type: 'error' });
                 });
         }
     }

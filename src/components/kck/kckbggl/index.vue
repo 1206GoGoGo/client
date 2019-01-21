@@ -88,8 +88,6 @@ export default {
       contrast(){
           if(!this.selectRow.kcdm){this.$message({ message: '请从下面表格中选择需要查看的课程', type: 'error' });return;} //待处理
           this.dialogVisible.contrast=true;
-          //alert(this.selectRow.kcdm);
-          //this.$router.push({name: 'kckglView',params:{ val: this.selectRow } });
       },
       //关闭对话框
       doCloseDialog:function(msg){
@@ -100,23 +98,18 @@ export default {
 
       //初始化下拉列表调用的学院信息
       getXy(){
-            //alert('开始获取数据');
             var _this=this;
             //需要处理异步请求的问题
             this.axios.get("jwc/SysXy/getAllList")
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.xyList=dataList;
-                    _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
+                    _this.$notify({title:"获取学院信息", message:"获取学院信息成功 ("+response.data.length+')', type:"success"})
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
+                    _this.$notify({title:"获取学院信息", message:"获取学院信息失败: "+error, type:"error"})
                 });
-
-            //alert('成功获取数据');
       }
   },
   data() {

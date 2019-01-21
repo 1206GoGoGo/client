@@ -54,7 +54,7 @@
                 <el-input v-model="kcChange.kwxs"></el-input>
             </el-form-item>
             <el-form-item label="选修归属">
-                <el-select v-model="kcChange.jyXxgs" placeholder="选择选修归属" class="el_select">
+                <el-select v-model="kcChange.jyXxgs.xxgsdm" placeholder="选择选修归属" class="el_select">
                     <el-option v-for="item in xxgsList"
                         :key="item.xxgsdm"
                         :label="item.xxgsmc"
@@ -91,7 +91,9 @@
             <el-form-item label="实践周数">
                 <el-input v-model="kcChange.sjzs"></el-input>
             </el-form-item>
-            <el-checkbox v-model="kcChange.sfqy">是否重点课程</el-checkbox>
+            <el-form-item label="是否为重点课程">
+                <el-switch v-model="kcChange.sfqy" active-value="1" off-value="0"></el-switch>
+            </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="课程简介">
@@ -131,6 +133,9 @@ export default {
     //初始化下拉列表信息
     mounted(){
         this.initList(); //学院,课程类别，课程性质
+        if(!this.kcChange.jyXxgs){
+            this.kcChange.jyXxgs={xxgsdm:''};
+        }
     },
     data() {
         return {
@@ -161,20 +166,17 @@ export default {
 
         //初始化下拉列表信息 //学院,课程类别，课程性质
         initList(){
-                //alert('开始获取数据');
                 var _this=this;
                 //需要处理异步请求的问题
                 this.axios.get("jwc/SysXy/getAllList")
                     .then(function (response) {
-                        //将response获得的数据进行处理
-                        //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
-                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败: "+error, type:"error"})
                     });
                 //课程类别
                 this.axios.get("jwc/DmKclb/getAll")
@@ -183,11 +185,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
-                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败", type:"error"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败: "+error, type:"error"})
                     });
                 //课程性质
                 this.axios.get("jwc/DmKcxz/getAll")
@@ -196,11 +198,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
-                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败", type:"error"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败: "+error, type:"error"})
                     });
                 //选修归属
                 this.axios.get("jwc/JyXxgs/getAll")
@@ -209,15 +211,13 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xxgsList=dataList;
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                        _this.$notify({title:"获取专业信息", message:"获取专业信息失败: "+error, type:"error"})
                     });
         },
-
-
     }
 };
 </script>

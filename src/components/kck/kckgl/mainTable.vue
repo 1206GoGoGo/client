@@ -116,9 +116,6 @@ export default {
             params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
             ////通过改变每次的参数解决路由跳转失效的问题
       },
-      handleDelete(index, row) {
-        alert(index);
-      },
       //将数据库存储的状态数值，格式化为汉字
       stateFormatter(row,column){
         let state = row.state;
@@ -126,7 +123,6 @@ export default {
       },
       //通过学院代码和课程名获取数据
       getData(hql){
-            //alert('开始获取数据');
             var _this=this;
             _this.loading = true;
             //需要处理异步请求的问题
@@ -137,16 +133,14 @@ export default {
             })
             //这里获取全部内容会出问题的。。。。。。。太多了
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
                     _this.loading = false;
-                    _this.$message({ message: '成功获取课程信息', type: 'success' });
+                    _this.$message({ message: '成功获取课程信息 ('+response.data.length+')', type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '获取课程信息失败', type: 'error' });
+                    _this.$message({ message: '获取课程信息失败: '+error, type: 'error' });
                     _this.loading = false;
                 });
 

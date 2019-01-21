@@ -173,11 +173,11 @@ export default {
         addData(){
             //不满足添加条件，跳出
             if(!this.oldCourse.kcdm || !this.newCourse.kcdm){
-                alert('请选择两门对照课程');
+                this.$message({ message: '请选择两门对照课程', type: 'error' });
                 return;
             }
             if(this.oldCourse.kcdm == this.newCourse.kcdm){
-                alert('请选择两门不同的课程对照');
+                this.$message({ message: '请选择两门不同的课程对照', type: 'error' });
                 return;
             }
             var _this=this;
@@ -194,15 +194,11 @@ export default {
                 }
             )
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '添加对比数据成功', type: 'success' });
+                    _this.$message({ message: '添加对比数据成功: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加对比数据失败'+error, type: 'error' });
+                    _this.$message({ message: '添加对比数据失败: '+error, type: 'error' });
                 });  
         },
         //处理和父级的关系---------------------------------------------------------

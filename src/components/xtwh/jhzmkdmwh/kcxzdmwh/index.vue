@@ -16,10 +16,10 @@
             <el-button type="primary" plain>导入</el-button>
             <el-button type="primary" plain>导出</el-button>
           </el-row>
-          <main-table></main-table>
+          <main-table :is-op="isOp"></main-table>
         </el-main>
         <el-aside id="isshow">
-          <router-view :key="key"></router-view>
+          <router-view :key="key" @opBack="opBack"></router-view>
         </el-aside>
       </el-container>
     </el-container>
@@ -38,11 +38,23 @@ export default {
           return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date()
       }
   },
+  data() {
+    return{
+      isOp:false,
+    }
+  },
   methods: {
          goto(kinf){
              document.getElementById("isshow").style.visibility="visible";
              this.$router.replace({name: 'kcxzdmRightForm',params:{ val:null ,change_id: '000' ,type: 'add'}});
-         }
+         },
+        opBack(val){
+          if(this.isOp){
+            this.isOp = false;
+          }else{
+            this.isOp = true;
+          }
+        }
   }
 
 };

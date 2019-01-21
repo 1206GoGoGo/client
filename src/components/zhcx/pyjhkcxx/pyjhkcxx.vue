@@ -16,26 +16,20 @@
                 <el-col :span="12">
                     <div class="grid-content bg-purple left">
                         <!--下拉列表框 开始-->
-                        <el-select style="width:120px" v-model="value1" clearable placeholder="请选择">
-                            <el-option
-                            v-for="item in options1"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                        <el-select style="width:120px" v-model="query.name" placeholder="请选择">
+                            <el-option v-for="item in select_name" 
+                                :key="item.name" :value="item.value" :label="item.name">
                             </el-option>
                         </el-select>
-                        <el-select style="width:120px" v-model="value1" clearable placeholder="请选择">
-                            <el-option
-                            v-for="item in options1"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                        <el-select style="width:120px" v-model="query.op" placeholder="请选择">
+                            <el-option v-for="item in select_op" 
+                                :key="item.name" :value="item.name" :label="item.name">
                             </el-option>
                         </el-select>
                         <el-input
                         style="width:120px"
                         placeholder="请输入内容"
-                        v-model="input1"
+                        v-model="query.value"
                         clearable>
                         </el-input>
                         <!--下拉列表框 结束-->
@@ -155,6 +149,73 @@
 export default {
     data () {
       return {
+    query: {
+        name: '',
+        op: '',
+        value: ''
+      },
+        select_name: [
+            {
+            name: '年级',
+            value: 'jxjhh14'
+            },
+            {
+            name: '学院代码',
+            value: 'jxjhh53'
+            },
+            {
+            name: '学院名称',
+            value: 'xymc'
+            },
+            {
+            name: '专业代码',
+            value: 'jxjhh54'
+            },
+            {
+            name: '专业名称',
+            value: 'zymc'
+            },
+            {
+            name: '课程代码',
+            value: 'kcdm'
+            },
+            {
+            name: '课程名称',
+            value: 'kczwmc'
+            },
+            {
+            name: '开课学院代码',
+            value: 'xydm'
+            },
+            {
+            name: '开课学院名称',
+            value: 'xymc'
+            },
+            {
+            name: '开课学期',
+            value: 'jykkxq'
+            },
+            {
+            name: '考核方式',
+            value: 'khfs'
+            },
+            {
+            name: '课程性质',
+            value: 'kcxz'
+            },
+            {
+            name: '状态',
+            value: 'zt'
+            }
+        ],
+        select_op: [
+            { name: 'like' },
+            { name: '=' },
+            { name: '>' },
+            { name: '<' },
+            { name: '>=' },
+            { name: '<=' }
+        ],
         checkList: ['','']
       };
     }

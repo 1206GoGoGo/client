@@ -112,7 +112,6 @@ export default {
 
       //通过学院代码和课程名获取数据
       getData(xydm,kcm,state){
-            //alert('开始获取数据');
             var _this=this;
             _this.loading = true;
             //需要处理异步请求的问题
@@ -125,20 +124,16 @@ export default {
             })
             //这里获取全部内容会出问题的。。。。。。。太多了
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$message({ message: '成功获取变更课程数据', type: 'success' });
+                    _this.$message({ message: '成功获取变更课程数据 ('+response.data.length+')', type: 'success' });
                     _this.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
                     _this.loading = false;
-                    _this.$message({ message: '获取变更课程数据失败', type: 'error' });
+                    _this.$message({ message: '获取变更课程数据失败: '+error, type: 'error' });
                 });
-
-            //alert('成功获取数据');
       }
     }
 }

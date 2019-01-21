@@ -65,15 +65,11 @@ export default {
             //需要处理异步请求的问题
             this.axios.post('jwc/SysKc/del', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '已通过新建或者修改的课程', type: 'success' });
+                    _this.$message({ message: '已通过新建或者修改的课程: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '通过新建或者修改的课程失败！', type: 'error' });
+                    _this.$message({ message: '通过新建或者修改的课程失败: '+error, type: 'error' });
                 });  
 
         },
@@ -100,15 +96,11 @@ export default {
             //需要处理异步请求的问题
             this.axios.post('jwc/SysKc/passforkcsh', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '已拒绝课程的修改或删除', type: 'success' });
+                    _this.$message({ message: '已拒绝课程的修改或删除: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '拒绝课程的修改或删除失败！', type: 'error' });
+                    _this.$message({ message: '拒绝课程的修改或删除失败: '+error, type: 'error' });
                 });  
         }
     }

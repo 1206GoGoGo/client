@@ -154,12 +154,12 @@ export default {
                 }
             }).then(function (response) {
                     _this.oldCourse=response.data;
-                    _this.$message({ message: '成功获取旧课程数据', type: 'success' });
+                    _this.$message({ message: '成功获取旧课程数据 ('+response.data.length+')', type: 'success' });
 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '获取旧课程数据失败', type: 'error' });
+                    _this.$message({ message: '获取旧课程数据失败: '+error, type: 'error' });
                 });
 
         }

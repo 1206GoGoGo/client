@@ -56,16 +56,16 @@ export default {
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.kclbdm){
-                    alert("获取课程类别代码失败！");
-                }else if(!this.formLabelAlign.kclbmc){
-                    alert("请输入课程类别全称！");
+                    this.$message({ message: '获取课程类别代码失败！', type: 'error' });
+                }else if(!this.formLabelAlign.kclbmc){  
+                    this.$message({ message: '请输入课程类别全称！', type: 'error' });
                 }else{
                     this.add();
                 }
 
             }else if(this.optype=='修改'){
-                if(!this.formLabelAlign.kclbmc){
-                    alert("请输入课程类别全称！");
+                if(!this.formLabelAlign.kclbmc){  
+                    this.$message({ message: '请输入课程类别全称！', type: 'error' });
                 }else{
                     this.modify();
                 }
@@ -77,15 +77,12 @@ export default {
 
             this.axios.post('jwc/DmKclb/modify', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功修改课程类别', type: 'success' });
+                    _this.$message({ message: '成功修改课程类别: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '修改课程类别失败', type: 'error' });
+                    _this.$message({ message: '修改课程类别失败: '+error, type: 'error' });
                 });            
         },
         add(){
@@ -94,15 +91,12 @@ export default {
 
             this.axios.post('jwc/DmKclb/add', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功添加课程类别', type: 'success' });
+                    _this.$message({ message: '成功添加课程类别: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加课程类别失败', type: 'error' });
+                    _this.$message({ message: '添加课程类别失败: '+error, type: 'error' });
                 });            
         },
 
@@ -111,15 +105,13 @@ export default {
             //需要处理异步请求的问题
             this.axios.get('jwc/DmKclb/getKclbdm')
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.kclbdm = xqdmInitData;
-                    _this.$message({ message: '课程列表代码初始化成功', type: 'success' });
+                    _this.$message({ message: '课程列表代码初始化成功: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '课程类别代码初始化失败', type: 'error' });
+                    _this.$message({ message: '课程类别代码初始化失败: '+error, type: 'error' });
                 });
         },
 

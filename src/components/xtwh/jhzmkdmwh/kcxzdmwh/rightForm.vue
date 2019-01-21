@@ -61,16 +61,16 @@ export default {
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.kcxzdm){
-                    alert("获取课程性质代码失败！");
+                    this.$message({ message: '获取课程性质代码失败！', type: 'error' });
                 }else if(!this.formLabelAlign.kcxzmc){
-                    alert("请输入课程性质全称！");
+                    this.$message({ message: '请输入课程性质全称！', type: 'error' });
                 }else{
                     this.add();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.kcxzmc){
-                    alert("请输入课程性质全称！");
+                    this.$message({ message: '请输入课程性质全称！', type: 'error' });
                 }else{
                     this.modify();
                 }
@@ -82,15 +82,12 @@ export default {
 
             this.axios.post('jwc/DmKcxz/modify', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功修改课程性质代码', type: 'success' });
+                    _this.$message({ message: '成功修改课程性质代码: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true); 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '修改课程性质代码失败', type: 'error' });
+                    _this.$message({ message: '修改课程性质代码失败: '+error, type: 'error' });
                 });            
         },
         add(){
@@ -99,15 +96,12 @@ export default {
 
             this.axios.post('jwc/DmKcxz/add', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '添加课程性质代码成功', type: 'success' });
+                    _this.$message({ message: '添加课程性质代码成功: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true); 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加课程性质代码失败', type: 'error' });
+                    _this.$message({ message: '添加课程性质代码失败: '+error, type: 'error' });
                 });            
         },
 
@@ -120,11 +114,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.kcxzdm = xqdmInitData;
-                    _this.$message({ message: '成功初始化课程性质代码', type: 'success' });
+                    _this.$message({ message: '成功初始化课程性质代码: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '初始化课程性质代码失败', type: 'error' });
+                    _this.$message({ message: '初始化课程性质代码失败: '+error, type: 'error' });
                 });
         },
 

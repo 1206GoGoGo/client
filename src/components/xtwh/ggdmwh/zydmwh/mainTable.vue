@@ -18,7 +18,7 @@
                 <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除/国家专业代码未找到返回数据的字段</el-button>
+                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
         </el-table-column>
         <el-table-column
@@ -72,7 +72,7 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="gjzydm"
+            prop="tjzydm"
             label="国家专业代码"
             sortable>
         </el-table-column>
@@ -95,10 +95,15 @@ export default {
     //处理父窗口传来的查询------------------------------------------
     props:{
         kcSearch:{},
-        kcSearchValue:{}
+        kcSearchValue:{},
+        IsOp:false,
     },
     watch:{
         kcSearch:function(val){
+            //通过父页传入的数据进行搜索
+            this.getData(this.kcSearchValue.xydm,this.kcSearchValue.zy);  //将父传递的数据显示出来xydm,kcm
+        },
+        IsOp:function(val){
             //通过父页传入的数据进行搜索
             this.getData(this.kcSearchValue.xydm,this.kcSearchValue.zy);  //将父传递的数据显示出来xydm,kcm
         }
@@ -154,7 +159,7 @@ export default {
             .then(function (response) {
                 //将response获得的数据进行处理
                 //将获取到的数据以数组形式传递出去
-                _this.$message({ message: '成功删除专业代码', type: 'success' });
+                _this.$message({ message: '成功删除专业代码: '+response.data, type: 'success' });
                 _this.getData();
             })
             .catch(function (error) {
@@ -180,12 +185,12 @@ export default {
                 //将获取到的数据以数组形式传递出去
                 var dataList=response.data;
                 _this.tableData=dataList;
-                _this.$notify({title:"获取专业信息", message:"获取专业信息成功", type:"success"})
+                _this.$notify({title:"获取专业信息", message:"获取专业信息成功 ("+response.data.length+')', type:"success"})
                 _this.loading = false;
             })
             .catch(function (error) {
                 console.log(error);
-                _this.$notify({title:"获取专业信息", message:"获取专业信息失败", type:"error"})
+                _this.$notify({title:"获取专业信息", message:"获取专业信息失败: "+error, type:"error"})
                 _this.loading = false;
             });
       }

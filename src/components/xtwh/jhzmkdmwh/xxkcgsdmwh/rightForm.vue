@@ -58,16 +58,16 @@ export default {
         submitdate(){
             if(this.optype=='添加'){
                 if(!this.formLabelAlign.xxgsdm){
-                    alert("获取选修课程归属代码失败！");
+                    this.$message({ message: '获取选修课程归属代码失败！', type: 'error' });
                 }else if(!this.formLabelAlign.xxgsmc){
-                    alert("请输入选修课程归属代码全称！");
+                    this.$message({ message: '请输入选修课程归属代码全称！', type: 'error' });
                 }else{
                     this.add();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.xxgsmc){
-                    alert("请输入选修课程归属代码全称！");
+                    this.$message({ message: '请输入选修课程归属代码全称！', type: 'error' });
                 }else{
                     this.modify();
                 }
@@ -79,15 +79,12 @@ export default {
 
             this.axios.post('jwc/JyXxgs/modify', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$message({ message: '成功修改选修课程归属代码', type: 'success' });
+                    _this.$message({ message: '成功修改选修课程归属代码: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '修改选修课程归属代码失败', type: 'error' });
+                    _this.$message({ message: '修改选修课程归属代码失败: '+error, type: 'error' });
                 });            
         },
         add(){
@@ -96,15 +93,12 @@ export default {
 
             this.axios.post('jwc/JyXxgs/add', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功添加选修课程归属代码', type: 'success' });
+                    _this.$message({ message: '成功添加选修课程归属代码: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加选修课程归属代码失败', type: 'error' });
+                    _this.$message({ message: '添加选修课程归属代码失败: '+error, type: 'error' });
                 });            
         },
 
@@ -117,11 +111,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dmInitData=response.data;
                     _this.formLabelAlign.xxgsdm = dmInitData;
-                    _this.$message({ message: '成功初始化选修课程归属代码', type: 'success' });
+                    _this.$message({ message: '成功初始化选修课程归属代码: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '初始化选修课程归属代码失败', type: 'error' });
+                    _this.$message({ message: '初始化选修课程归属代码失败: '+error, type: 'error' });
                 });
         },
 

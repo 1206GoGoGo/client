@@ -31,9 +31,9 @@
             <el-form-item label="课程性质">
                 <el-select v-model="kcAdd.kcxz" placeholder="选择课程性质">
                     <el-option v-for="item in kcxzList"
-                        :key="item.kcxzdm"
+                        :key="item.kcxzmc"
                         :label="item.kcxzmc"
-                        :value="item.kcxzdm">
+                        :value="item.kcxzmc">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -69,7 +69,7 @@
                 <el-input v-model="kcAdd.kcywmc"></el-input>
             </el-form-item>
             <el-form-item label="选修归属">
-                <el-select v-model="kcAdd.jyXxgs" placeholder="字段类型待确认，暂时不能改" class="el_select" disabled="true">
+                <el-select v-model="kcAdd.jyXxgs.xxgsdm" placeholder="选择课程归属" class="el_select">
                     <el-option v-for="item in xxgsList"
                         :key="item.xxgsdm"
                         :label="item.xxgsmc"
@@ -88,7 +88,9 @@
             <el-form-item label="课外学时">
                 <el-input v-model="kcAdd.kwxs"></el-input>
             </el-form-item>
-            <el-checkbox>是否重点课程没找到对应字段</el-checkbox>
+            <el-form-item label="是否为重点课程">
+                <el-switch v-model="kcAdd.sfqy" active-value="1" off-value="0"></el-switch>
+            </el-form-item>
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="课程简介">
@@ -144,7 +146,11 @@ export default {
                     "kclbmc": null,
                     "zt": null
                 },
-                "jyXxgs": null,
+                "jyXxgs": {
+                    "xxgsdm": null,
+                    "xxgsmc": null,
+	                "zt": null
+                },
                 "kczwmc": null,
                 "kcywmc": null,
                 "xf": null,
@@ -167,7 +173,7 @@ export default {
                 "sjxs2": null,
                 "kcyl1": null,
                 "kcyl2": null,
-                "sfqy": null,
+                "sfqy": '0',
                 "kcyl4": null,
                 "kcyl5": null,
                 "kcyl6": null,
@@ -205,11 +211,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.kcdm1=dataList;
-                    _this.$message({ message: '成功获取课程代码', type: 'success' });
+                    _this.$message({ message: '成功获取课程代码: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '获取课程代码失败', type: 'error' });
+                    _this.$message({ message: '获取课程代码失败: '+error, type: 'error' });
                 });
         },
         button_click(kind){
@@ -219,23 +225,23 @@ export default {
             }else if(kind=='submit'){
                 this.kcAdd.kcdm = this.kcdm1 + '' + this.kcdm2;
                 if(!this.kcAdd.kcdm){
-                    this.$message({ message: '请输入课程代码', type: 'success' });
+                    this.$message({ message: '请输入课程代码', type: 'error' });
                     return;
                 }
                 if(!this.kcAdd.dmKclb.kclbdm){
-                    this.$message({ message: '请输入课程类别', type: 'success' });
+                    this.$message({ message: '请输入课程类别', type: 'error' });
                     return;
                 }
                 if(!this.kcAdd.kcxz){
-                    this.$message({ message: '请输入课程性质', type: 'success' });
+                    this.$message({ message: '请输入课程性质', type: 'error' });
                     return;
                 }
                 if(!this.kcAdd.xydm){
-                    this.$message({ message: '请输入学院代码', type: 'success' });
+                    this.$message({ message: '请输入学院代码', type: 'error' });
                     return;
                 }
                 if(!this.kcAdd.kczwmc){
-                    this.$message({ message: '请输入课程中文名称', type: 'success' });
+                    this.$message({ message: '请输入课程中文名称', type: 'error' });
                     return;
                 }
                 //验证输入信息
@@ -250,33 +256,28 @@ export default {
             var _this=this;
             this.axios.post('jwc/SysKc/add', _this.kcAdd)
                 .then(function (response) {
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功添加数据', type: 'success' });
+                    _this.$message({ message: '成功添加数据: '+response.data, type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加数据失败', type: 'error' });
+                    _this.$message({ message: '添加数据失败: '+error, type: 'error' });
                 });  
         },
 
 
         //初始化下拉列表信息 //学院,课程类别，课程性质
         initList(){
-                //alert('开始获取数据');
                 var _this=this;
                 //需要处理异步请求的问题
                 this.axios.get("jwc/SysXy/getAllList")
                     .then(function (response) {
-                        //将response获得的数据进行处理
-                        //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xyList=dataList;
-                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
+                        _this.$notify({title:"获取学院信息", message:"获取学院信息失败: "+error, type:"error"})
                     });
                 //课程类别
                 this.axios.get("jwc/DmKclb/getAll")
@@ -285,11 +286,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kclbList=dataList;
-                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功", type:"success"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败", type:"error"})
+                        _this.$notify({title:"获取课程类别", message:"获取课程类别失败: "+error, type:"error"})
                     });
                 //课程性质
                 this.axios.get("jwc/DmKcxz/getAll")
@@ -298,11 +299,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.kcxzList=dataList;
-                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功", type:"success"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败", type:"error"})
+                        _this.$notify({title:"获取课程性质", message:"获取课程性质失败: "+error, type:"error"})
                     });
                 //选修归属
                 this.axios.get("jwc/JyXxgs/getAll")
@@ -311,11 +312,11 @@ export default {
                         //将获取到的数据以数组形式传递出去
                         var dataList=response.data;
                         _this.xxgsList=dataList;
-                        _this.$notify({title:"获取课程归属", message:"获取课程归属成功", type:"success"})
+                        _this.$notify({title:"获取课程归属", message:"获取课程归属成功 ("+response.data.length+")", type:"success"})
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$notify({title:"获取课程归属", message:"获取课程归属失败", type:"error"})
+                        _this.$notify({title:"获取课程归属", message:"获取课程归属失败: "+error, type:"error"})
                     });
         },
 

@@ -42,13 +42,13 @@ export default {
                     xqdm: '',
                     zt: '1'
                 },
-                optype: type
+                optype: type,
             };
         }
         return {
             labelPosition: 'right',
             formLabelAlign: this.$route.params.val,
-            optype: type
+            optype: type,
         };
     },
     methods: {
@@ -64,11 +64,11 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var xqdmInitData=response.data;
                     _this.formLabelAlign.xqdm = xqdmInitData;
-                    _this.$message({ message: '校区代码成功生成',showClose: true,type: 'success' });
+                    _this.$message({ message: '校区代码成功生成: '+response.data,showClose: true,type: 'success' });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '生成校区代码失败',showClose: true,type: 'error' });
+                    _this.$message({ message: '生成校区代码失败: '+error,showClose: true,type: 'error' });
                 });
         },
         addXqdm(){
@@ -77,15 +77,13 @@ export default {
 
             this.axios.post('jwc/SysXq/add', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '校区代码成功添加',showClose: true,type: 'success' });
+                    _this.$message({ message: '校区代码成功添加: '+response.data,showClose: true,type: 'success' });
+                    //_this.getData();
+                    _this.$emit("opBack",true); 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '校区代码添加失败',showClose: true,type: 'error' });
+                    _this.$message({ message: '校区代码添加失败: '+error,showClose: true,type: 'error' });
                 });
         },
         modifyXqdm(){
@@ -94,15 +92,14 @@ export default {
 
             this.axios.post('jwc/SysXq/modify', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    //alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '校区代码修改成功',showClose: true,type: 'success' });
+                    _this.$message({ message: '校区代码修改成功: '+response.data,showClose: true,type: 'success' });
+                    
+                    _this.$emit("opBack",true); 
+                    
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '校区代码修改失败',showClose: true,type: 'error' });
+                    _this.$message({ message: '校区代码修改失败: '+error,showClose: true,type: 'error' });
                 });
         },
         submitdate(){

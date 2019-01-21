@@ -27,10 +27,10 @@
                 <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
             </span>
           </el-row>
-          <main-table :kc-search="searchValue.isSearch" :kc-search-value="searchValue"></main-table>
+          <main-table :kc-search="searchValue.isSearch" :kc-search-value="searchValue" :is-op="isOp"></main-table>
         </el-main>
         <el-aside id="isshow">
-          <router-view :key="key"></router-view>
+          <router-view :key="key" @opBack="opBack" ></router-view>
         </el-aside>
       </el-container>
     </el-container>
@@ -68,26 +68,30 @@ export default {
         },
         //初始化下拉列表调用的学院信息
         getXy(){
-              //alert('开始获取数据');
               var _this=this;
               //需要处理异步请求的问题
               this.axios.get("jwc/SysXy/getAllList")
                   .then(function (response) {
-                      //将response获得的数据进行处理
-                      //将获取到的数据以数组形式传递出去
                       var dataList=response.data;
                       _this.xyList=dataList;
-                      _this.$notify({title:"获取学院信息", message:"获取学院信息成功", type:"success"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息成功 ("+response.data.length+')', type:"success"})
                   })
                   .catch(function (error) {
                       console.log(error);
-                      _this.$notify({title:"获取学院信息", message:"获取学院信息失败", type:"error"})
+                      _this.$notify({title:"获取学院信息", message:"获取学院信息失败: "+error, type:"error"})
                   });
-              //alert('成功获取数据');
+        },
+        opBack(val){
+          if(this.isOp){
+            this.isOp = false;
+          }else{
+            this.isOp = true;
+          }
         }
   },
   data() {
       return {
+        isOp:false,
         xyList:[],
         searchValue:{//传递给子组件的查询条件
           xydm: '',

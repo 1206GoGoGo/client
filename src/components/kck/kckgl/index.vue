@@ -127,12 +127,12 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    _this.$message({ message: '成功弃用课程'+response.data, type: 'success' });
+                    _this.$message({ message: '成功弃用课程: '+response.data, type: 'success' });
                     _this.add_query('query');
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '弃用课程失败'+error, type: 'error' });
+                    _this.$message({ message: '弃用课程失败: '+error, type: 'error' });
                 });
       },
       delect(id){
@@ -159,13 +159,12 @@ export default {
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
-                    _this.$message({ message: '成功删除课程'+response.data, type: 'success' });
+                    _this.$message({ message: '成功删除课程: '+response.data, type: 'success' });
                     _this.add_query('query');
                 })
                 .catch(function (error) {
                     console.log(error);
-                    alert("此接口尚未配置成功");
-                    _this.$message({ message: '删除课程失败'+error, type: 'error' });
+                    _this.$message({ message: '删除课程失败: '+error, type: 'error' });
                 });
       },
       add_query(op_kind){
@@ -181,7 +180,7 @@ export default {
 
         if(op_kind==="query"){
             if(!this.query_view){
-              _this.$message({ message: '请选择正确的查询条件', type: 'success' });
+              _this.$message({ message: '请选择正确的查询条件', type: 'error' });
               return;
             }
             this.searchValue.hql="from SysKc where "+this.query_view;

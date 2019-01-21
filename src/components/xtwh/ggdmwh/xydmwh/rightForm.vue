@@ -43,8 +43,10 @@ export default {
                 labelPosition: 'right',
                 formLabelAlign: {
                     xydm: '',
+                    xymc: '',
                     xyqc: '',
-                    zt: '1',
+                    xyywmc: '',
+                    zt: 1,
                 },
                 optype: type
             };
@@ -75,11 +77,11 @@ export default {
                             canuse = true;
                             _this.formLabelAlign.xydm = this_re;
                         }
-                        _this.$message({ message: '成功生成学院代码', type: 'success' });
+                        _this.$message({ message: '成功生成学院代码: '+response.data, type: 'success' });
                     })
                     .catch(function (error) {
                         console.log(error);
-                        _this.$message({ message: '生成学院代码失败', type: 'error' });
+                        _this.$message({ message: '生成学院代码失败: '+error, type: 'error' });
                     });
             }
 
@@ -90,15 +92,12 @@ export default {
 
             this.axios.post('jwc/SysXy/add', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    //_this.$router.go(0);
-                    _this.$message({ message: '成功添加学院代码', type: 'success' });
+                    _this.$message({ message: '成功添加学院代码: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true); 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '添加学院代码失败', type: 'error' });
+                    _this.$message({ message: '添加学院代码失败: '+error, type: 'error' });
                 });
         },
         modifyXydm(){
@@ -107,15 +106,12 @@ export default {
 
             this.axios.post('jwc/SysXy/modify', _this.formLabelAlign)
                 .then(function (response) {
-                    //将response获得的数据进行处理
-                    //将获取到的数据以数组形式传递出去
-                    alert(response.data);
-                    _this.$router.go(0);
-                    _this.$message({ message: '成功修改学院代码', type: 'success' });
+                    _this.$message({ message: '成功修改学院代码: '+response.data, type: 'success' });
+                    _this.$emit("opBack",true); 
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '修改学院代码失败', type: 'error' });
+                    _this.$message({ message: '修改学院代码失败: '+error, type: 'error' });
                 });
         },
         submitdate(){
@@ -123,14 +119,14 @@ export default {
                 if(!this.formLabelAlign.xydm){
                     this.$message({ message: '获取学院代码失败', type: 'error' });
                 }else if(!this.formLabelAlign.xyqc){
-                    _this.$message({ message: '请输入学院全称', type: 'error' });
+                    this.$message({ message: '请输入学院全称', type: 'error' });
                 }else{
                     this.addXydm();
                 }
 
             }else if(this.optype=='修改'){
                 if(!this.formLabelAlign.xyqc){
-                    _this.$message({ message: '请输入学院全称', type: 'error' });
+                    this.$message({ message: '请输入学院全称', type: 'error' });
                 }else{
                     this.modifyXydm();
                 }

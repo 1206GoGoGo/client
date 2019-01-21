@@ -250,12 +250,12 @@ export default {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     //_this.$router.go(0);
-                    _this.$message({ message: '成功删除对照数据，后台返回'+response.data, type: 'success' });
+                    _this.$message({ message: '成功删除对照数据: '+response.data, type: 'success' });
                     _this.getData(_this.kcmSearchValue.kcm);
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '删除对照数据失败', type: 'error' });
+                    _this.$message({ message: '删除对照数据失败: '+error, type: 'error' });
                 });
       },  
       //将数据库存储的状态数值，格式化为汉字
@@ -265,7 +265,6 @@ export default {
       },
       //通过kcm查询
       getData(kcm){
-            //alert('开始获取数据');
             var _this=this;
             _this.loading = true;
             //需要处理异步请求的问题
@@ -276,16 +275,14 @@ export default {
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
-                    _this.$message({ message: '高低分课程对照数据获取成功', type: 'success' });
+                    _this.$message({ message: '高低分课程对照数据获取成功 ('+response.data.length+')', type: 'success' });
                     _this.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
                     _this.loading = false;
-                    _this.$message({ message: '高低分课程对照数据获取失败', type: 'error' });
+                    _this.$message({ message: '高低分课程对照数据获取失败: '+error, type: 'error' });
                 });
-
-            //alert('成功获取数据');
       }
     }
 }

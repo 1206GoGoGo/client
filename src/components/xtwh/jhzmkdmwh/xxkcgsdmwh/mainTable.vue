@@ -44,6 +44,17 @@
 
 <script>
 export default {
+    //处理父窗口传来的刷新------------------------------------------
+    props:{
+        IsOp:false,
+    },
+    watch:{
+        IsOp:function(val){
+            //通过父页传入的数据进行搜索
+            this.getData();  //将父传递的数据显示出来xydm,kcm
+        }
+    },
+    //-------------------------------------------------------------
     mounted(){
         this.getData(); //获取数据前先取数据
     },
@@ -94,12 +105,12 @@ export default {
             //需要处理异步请求的问题
             this.axios.get('jwc/JyXxgs/delete?xxgsdm='+dm)
                 .then(function (response) {
-                    _this.$message({ message: '成功删除选修课程归属', type: 'success' });
+                    _this.$message({ message: '成功删除选修课程归属: '+response.data, type: 'success' });
                     _this.getData();
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.$message({ message: '删除选修课程归属失败', type: 'error' });
+                    _this.$message({ message: '删除选修课程归属失败: '+error, type: 'error' });
                 });
       }, 
       getData(){
@@ -112,12 +123,12 @@ export default {
                 //将获取到的数据以数组形式传递出去
                 var dataList=response.data;
                 _this.tableData=dataList;
-                _this.$notify({title:"获取选修课程归属", message:"获取选修课程归属成功", type:"success"});
+                _this.$notify({title:"获取选修课程归属", message:"获取选修课程归属成功 ("+response.data.length+')', type:"success"});
                 _this.loading = false;
             })
             .catch(function (error) {
                 console.log(error);
-                _this.$notify({title:"获取选修课程归属", message:"获取选修课程归属失败", type:"error"});
+                _this.$notify({title:"获取选修课程归属", message:"获取选修课程归属失败: "+error, type:"error"});
                 _this.loading = false;
             });
       }
