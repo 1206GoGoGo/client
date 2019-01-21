@@ -7,6 +7,7 @@
           <el-breadcrumb-item>系统维护</el-breadcrumb-item>
           <el-breadcrumb-item>活动列表</el-breadcrumb-item>
           <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+          <el-tag type="success">选择查询条件后点击添加条件与、或按钮，将该条件追加到已有条件后。若只有一个条件直接点查询！</el-tag>
         </el-breadcrumb>
       </el-header>
       <el-container>
@@ -32,7 +33,7 @@
                   <el-button type="primary" plain v-on:click="add_query('clear')" style="margin-right:30px;">清除查询条件</el-button>
                   <el-button type="primary" plain v-on:click="add_query('and')">添加条件-与</el-button>
                   <el-button type="primary" plain v-on:click="add_query('or')">添加条件-或</el-button>
-                  <el-tag type="success">同时只能选择一种条件，当前选中的逻辑是：</el-tag>
+                  
                 </el-row>
               </div>
             </el-col>
@@ -179,10 +180,34 @@ export default {
         var _this = this;
 
         if(op_kind==="query"){
-            if(!this.query_view){
+            if(!this.query_view && !(this.query.name && this.query.op && this.query.value)){
               _this.$message({ message: '请选择正确的查询条件', type: 'error' });
               return;
+            }else if(!this.query_view){//下面是空的但是选择了查询条件
+            //-----------------------------------------------------------------单独处理的下面为空，条件选择完整的情况
+              this.searchValue.hql="from SysKc where "+this.query_view;
+              if(this.searchValue.isSearch){
+                this.searchValue.isSearch=false;
+              }else {
+                this.searchValue.isSearch=true;
+              }
+
+                  //处理值的问题----------------
+                  var key = " '"+this.query.value+"' ";
+                  if(this.query.op == 'like'){
+                      key = " '%"+this.query.value+"%' ";
+                  }
+                  if(this.query.name == 'xf'){
+                      key = " "+this.query.value+" ";
+                  }
+
+
+                  this.query_view +=  this.query.name + ' ' +this.query.op + key;
+                  this.searchValue.hql="from SysKc where "+this.query_view;
+                  return;
+            //------------------------------------------------后新加的
             }
+
             this.searchValue.hql="from SysKc where "+this.query_view;
             //拼接hql语句后向子组件传递
             if(this.searchValue.isSearch){

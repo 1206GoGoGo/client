@@ -7,7 +7,9 @@
     :before-close="handleClose"
     :center="true"
     append-to-body>
-  <el-header style="background-color:#87D4FE; padding:10px; ">使用方法</el-header>
+  <el-header style="background-color:#87D4FE; padding:10px; ">
+      选择需要对比的课程，若没有需要的课程点返回按钮重新查询。
+  </el-header>
     <el-table
         stripe
         border
@@ -80,7 +82,7 @@
         </el-table-column>
     </el-table>
     <el-row style="text-align:right;">
-        <el-button type="primary" @click="select_back">确定</el-button>
+        <el-button type="primary" @click="select_back" :disabled="okdisable">确定</el-button>
         <el-button type="primary" @click="return_back">返回</el-button>
     </el-row>
 </el-dialog>
@@ -109,7 +111,9 @@ export default {
         return {
             visible:this.dialogVisibleQuery.query,
             tableData:[],
-            selectedCourse:''   //选中的课程(内容)放在这里传给父显示
+            selectedCourse:'',   //选中的课程(内容)放在这里传给父显示
+
+            okdisable: false
         }
     },
     methods: {
@@ -157,6 +161,11 @@ export default {
                     var dataList=response.data;
                     _this.tableData=dataList;
                     _this.$message({ message: '获取课程数据成功 ('+response.data.length+')', type: 'success' });
+                    if(response.data.length==0){
+                        _this.okdisable=true;
+                    }else{
+                        _this.okdisable=false;
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);

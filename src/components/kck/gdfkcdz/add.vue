@@ -6,7 +6,9 @@
     top="7vh"
     :before-close="handleClose"
     :center="true">
-  <el-header style="background-color:#87D4FE; padding:10px; ">使用方法</el-header>
+  <el-header style="background-color:#87D4FE; padding:10px; ">
+      输入完整的课程编码或课程名称(包含)，点旁边的查询按钮，在弹出的页面选择需要对比的课程，页面中其他字段会自动填充。
+  </el-header>
   <el-main>
     <el-form ref="form" :model="sizeForm" label-width="100px" size="mini">
     <el-row>
