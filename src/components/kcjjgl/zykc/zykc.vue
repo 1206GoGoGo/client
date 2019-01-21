@@ -66,9 +66,9 @@
 
 <el-container>
     <el-main>
-        <el-row style="text-align:left; padding-bottom:20px; padding-left:0px;">
+        <!-- <el-row style="text-align:left; padding-bottom:20px; padding-left:0px;">
            <el-button type="primary" plain>课程简介管理</el-button>
-        </el-row>
+        </el-row> -->
          <!-- @row-click="CurrentRow" -->
         <main-table>
             <el-table
@@ -90,6 +90,13 @@
                     prop="pyjhzwmc"
                     label="标题"
                     sortable>
+                </el-table-column>
+                <el-table-column label="操作" width="160px">
+                    <template slot-scope="scope">
+                        <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)">课程简介管理</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </main-table>
@@ -153,9 +160,20 @@
                 });
             },
 
+            // manage1(){
+            //     this.$router.push({name: 'manageCourse'});
 
-            //页面初始化
-            init:function(){
+            // },
+            handleEdit(index, row) {
+                var _this=this;
+                //console.log(index, row);
+                //this.$router.push({name: 'kcjjgl',params:{jxjhh:_this.index}});
+                this.$router.push({path: '/zykc/Zykcjjgl',query:{index:index,row:row}});
+            },
+
+
+            //页面初始化init:function()
+            init(){
                 var _this=this;
 
                 //学院
