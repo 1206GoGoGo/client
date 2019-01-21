@@ -30,10 +30,10 @@
   <el-col :span="12">
     <div class="grid-content bg-purple">
       <el-row> 
-        <el-button type="primary" plain @click="cle">清空</el-button>
-        <el-button type="primary" plain @click="sel">查询</el-button>
-        <el-button type="primary" plain @click="del">删除</el-button>
-        <el-button type="primary" plain @click="look">查看</el-button>
+        <el-button type="primary" plain @click="clear">清空</el-button>
+        <el-button type="primary" plain @click="query">查询</el-button>
+        <!-- <el-button type="primary" plain @click="del">删除</el-button>
+        <el-button type="primary" plain @click="look">查看</el-button> -->
       </el-row>
     </div>
   </el-col>
@@ -46,7 +46,6 @@
 
 <!-- 表格 -->
 <el-container>
-  <!-- <el-aside width="200px">Aside</el-aside> @row-click="row1" v-for ="(item,items) in positionList[0]" :key="item.id"-->
   <el-main class="tmain">
     <div id="hsx">
         <el-table
@@ -61,33 +60,43 @@
           <!-- :label-class-name="positionKey[prop].label" -->
           <el-table-column
             
-            prop="send"
+            prop="fsf"
             header-align="center"
             label="发送方"
             height="50"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="receive"
+            prop="jsf"
             header-align="center"
             label="接收方"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="title"
+            prop="xxbt"
             header-align="center"
             label="标题">
           </el-table-column>
           <el-table-column
-            prop="content"
+            prop="xxnr"
             header-align="center"
             label="内容概要">
           </el-table-column>
           <el-table-column
-            prop="time"
+            prop="fssj"
             header-align="center"
             label="发送时间"
             sortable>
+          </el-table-column>
+          <el-table-column label="操作" width="160px" header-align="center">
+            <template slot-scope="scope">
+                <el-button
+                size="mini"
+                @click="handleQuery(scope.$index, scope.row)">查看</el-button>
+                <el-button
+                size="mini"
+                @click="handleDele(scope.$index, scope.row)">删除</el-button>
+            </template>
           </el-table-column>
         </el-table>
     </div>
@@ -102,20 +111,7 @@
 export default {
     data() {
       return {
-        // positionKey:[
-        // {prop:"status",label:"状态"},
-        // {prop:"new",label:"消息来源"},
-        // {prop:"title",label:"标题"},
-        // {prop:"content",label:"内容概要"},
-        // {prop:"time",label:"发送时间"}
-        // ],
-        // tableData: [{
-        //   send: '计算机学院',
-        //   receive: '教务处',
-        //   title: '学生培养计划',
-        //   content:'系统为C/S结构，客户端采用electron使用网页前端技术来编写。',
-        //   time:'2018-05-01'
-        // }],
+        tableData:'',
     //日期选择
     pickerOptions2: {
           shortcuts: [{
@@ -150,31 +146,49 @@ export default {
      //日期选择结束
 
     methods: {
-      formatter(row, column) {
-        return row.address;
-        //return column.address;
-      },
-      look(id){
-            // this.$router.push('/select')
-         },
-      cle(id){
-
-      },
-      sel(id){
-
-      },
-      del(id){
-
-      }
-
-      // row1(row, event, column){
-          
+      // formatter(row, column) {
+      //   return row.address;
+      //   //return column.address;
       // },
-      // del(id){
-      //     this.$http.get(''+id).then(){
 
-      //     }
-      
+      handleQuery(){
+
+      },
+      handleDele(){
+
+      },
+       clear(){
+        this.value1=""
+        this.query=[]
+      },
+      query(){
+        var _this=this;
+        var sj1='01/08/2012'
+        var sj2='02/08/2014'
+        var jyb='教研办'
+        this.axios({
+            method:'get',
+            url:'jwc/JyXxtx/getdelXxtxByfsforjsf?fsf='+jyb+'&sj1='+sj1+'&sj2='+sj2, 
+
+        })
+        .then(function(rep){
+            _this.tableData=rep.data;
+            // _this.$notify({
+            //     title:"初始化学院",
+            //     message:"初始化学院成功",
+            //     type:"success"
+            // })
+        })
+        .catch(function(e){
+        // _this.$notify({
+        //         title:"初始化学院",
+        //         dangerouslyUseHTMLString: true,
+        //         message:"初始化学院失败</br>"+e,
+        //         type:"error"
+        //     })
+        });
+      }, 
+
     },
   
   }

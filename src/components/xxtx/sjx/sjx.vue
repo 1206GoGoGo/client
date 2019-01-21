@@ -1,5 +1,4 @@
 <template>
-
 <!-- 显示当前页面路径 开始 -->
 <div class="order">
 <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -15,7 +14,6 @@
     <div>
         <span>按时间查询：</span>
         <el-date-picker
-          
           v-model="value1" 
           type="daterange" 
           align="right" 
@@ -32,8 +30,6 @@
       <el-row> 
         <el-button type="primary" plain @click="clear()">清空</el-button>
         <el-button type="primary" plain @click="query()">查询</el-button>
-        <el-button type="primary" plain @click="del()">删除</el-button>
-        <el-button type="primary" plain @click="look()">查看</el-button>
       </el-row>
     </div>
   </el-col>
@@ -41,10 +37,9 @@
 <!-- 菜单栏 结束 -->
 
 <!-- 表格 -->
-<!-- <el-container> -->
-  <!-- <el-aside width="200px">Aside</el-aside> height="500" @row-click="row1" v-for ="(item,items) in positionList[0]" :key="item.id"-->
-  <!-- <el-main class="tmain"> -->
-    <div id="sjx">
+<el-container>
+  <el-main class="tmain">
+    <!-- <div id="sjx"> -->
         <el-table
           :data="tableData"
           border
@@ -53,63 +48,94 @@
           :default-sort = "{prop: 'time', order: 'descending'}" >
           <!-- :label-class-name="positionKey[prop].label" -->
           <el-table-column
-            prop="status"
+            prop="zt"
             header-align="center"
             label="总表状态"
             height="50"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="new"
+            prop="fsf"
             header-align="center"
             label="消息来源"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="title"
+            prop="xxbt"
             header-align="center"
             label="标题">
           </el-table-column>
           <el-table-column
-            prop="content"
+            prop="xxnr"
             header-align="center"
             label="内容概要">
           </el-table-column>
           <el-table-column
-            prop="time"
+            prop="fssj"
             header-align="center"
             label="发送时间"
             sortable>
           </el-table-column>
+          <el-table-column label="操作" width="160px" header-align="center">
+            <template slot-scope="scope">
+                <el-button
+                size="mini"
+                @click="handleQuery(scope.$index, scope.row)">查看</el-button>
+                <el-button
+                size="mini"
+                @click="handleDele(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
+    <!-- </div> -->
+  </el-main>
+  <el-dialog title="武汉理工大学" :visible.sync="dialogFormVisible">
+    <el-form :model="form">
+        <el-form-item>
+            <el-input type="textarea" v-model="form.xxnr" >
+            </el-input>
+        </el-form-item>
+        <el-form-item >
+            发自：<el-input v-model="form.fsf" >
+            </el-input>
+            时间：<el-input v-model="form.fssj" >
+            </el-input>
+            <!-- 发自：<label>{{fsf}}</label> 时间：<label>{{fssj}}</label> :label-width="formLabelWidth"-->
+        </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <!-- <el-button @click="dialogFormVisible = false">取 消</el-button> -->
+        <el-button type="primary" @click="dialogFormVisible = false">返  回</el-button>
     </div>
-  <!-- </el-main> -->
-<!-- </el-container> -->
+   </el-dialog>
+</el-container>
  
 </div>
 </template>
-
 <script>
-
 export default {
     data() {
       return {
-        // positionKey:[
-        // {prop:"status",label:"状态"},
-        // {prop:"new",label:"消息来源"},
-        // {prop:"title",label:"标题"},
-        // {prop:"content",label:"内容概要"},
-        // {prop:"time",label:"发送时间"}
-        // ],
-        tableData: [{
-          status: '维护中',
-          new: '代码维护',
-          title: '前端框架',
-          content:'系统为C/S结构，客户端采用electron使用网页前端技术来编写。',
-          time:'2016-05-01'
-        }],
-    //日期选择
-    pickerOptions2: {
+        tableData: '',
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        form: {
+        xxnr:'',
+        fsf:'',
+        fssj:'',
+        
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+        },
+        formLabelWidth: '120px',
+
+        //日期选择
+        pickerOptions2: {
           shortcuts: [{
             text: '最近一周',
             onClick(picker) {
@@ -139,33 +165,53 @@ export default {
         value1: ''
       }
     },
-     //日期选择结束
+    //日期选择结束
 
     methods: {
-      formatter(row, column) {
-        return row.address;
-        //return column.address;
-      },
-      look(){
-            this.$router.push('/select')
-         },
-      clear(id){
-
-      },
-      query(id){
-
-      },
-      del(id){
-
-      }       
-      // row1(row, event, column){
-          
+      // formatter(row, column) {
+      //   return row.address;
+      //   //return column.address;
       // },
-      // del(id){
-      //     this.$http.get(''+id).then(){
+      handleQuery(){
+        var _this=this;
+        _this.dialogFormVisible = true
+        _this.form.name=_this.index.sysKc.kczwmc
 
-      //     }
-      
+      },
+      handleDele(){
+
+      },
+      clear(){
+        this.value1=""
+        this.query=[]
+      },
+      query(){
+        var _this=this;
+        var sj1='01/08/2012'
+        var sj2='02/08/2014'
+        var jyb='教研办'
+        this.axios({
+            method:'get',
+            url:'jwc/JyXxtx/getXxtxByjsf?jsf='+jyb+'&sj1='+sj1+'&sj2='+sj2, 
+        })
+        .then(function(rep){
+            _this.tableData=rep.data;
+            _this.$notify({
+                title:"初始化收件箱",
+                message:"初始化收件箱成功",
+                type:"success"
+            })
+        })
+        .catch(function(e){
+        _this.$notify({
+                title:"初始化收件箱",
+                dangerouslyUseHTMLString: true,
+                message:"初始化收件箱失败</br>"+e,
+                type:"error"
+            })
+        });
+
+      }, 
     },
   
   }

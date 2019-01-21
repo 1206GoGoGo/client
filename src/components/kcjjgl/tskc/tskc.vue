@@ -60,21 +60,21 @@
                 border
                 highlight-current-row
                 height="350px"
-                :data="tableData"
+                :data="tableData.GetList"
                 style="width: 100%"
                 :default-sort = "{prop: 'index', order: 'descending'}">
                 <el-table-column
-                    prop="index"
+                    prop="id"
                     label="序号"
                     sortable>
                 </el-table-column>
                 <el-table-column
-                    prop="title"
+                    prop="sysKc.kcyl10"
                     label="标题"
                     sortable>
                 </el-table-column>
                 <el-table-column
-                    prop="xy"
+                    prop="sysXy.xymc"
                     label="学院"
                     sortable>
                 </el-table-column>
@@ -90,6 +90,13 @@
                     prop="zt"
                     label="流程状态"
                     sortable>
+                </el-table-column>
+                <el-table-column label="操作" width="160px">
+                    <template slot-scope="scope">
+                        <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)">课程简介管理</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </main-table>
@@ -110,18 +117,24 @@
             nj:"",
             xyList:[],
             njList:[],
-            tableData:[],
+            tableData:{
+                    GetList:[
+                    ]
+                },
            }
 
        },
        methods:{
+
            query(){
+               var _this=this;
                this.axios({
                     method:'get',
-                    url:'/jwc/SysXy/getAllList', 
+                    url:'/jwc/JyTsxxpy/searchxvsn1?xydm='+_this.xy+'&nj='+_this.nj, 
+                    //url:'/jwc/JyTsxxpy/getList', 
                 })
                 .then(function(rep){
-                    _this.xyList=rep.data;
+                    _this.tableData.GetList=rep.data;
                     // _this.$notify({
                     //     title:"初始化学院",
                     //     message:"初始化学院成功",
@@ -137,6 +150,12 @@
                 //     })
                 });
            },
+           handleEdit(index, row) {
+                var _this=this;
+                //console.log(index, row);
+                //this.$router.push({name: 'kcjjgl',params:{jxjhh:_this.index}});
+                this.$router.push({path: '/tskc/Tskcjjgl',query:{index:index,row:row}});
+            },
 
 
             //页面初始化
