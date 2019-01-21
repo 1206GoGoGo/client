@@ -115,8 +115,8 @@ export default {
       },
       //将数据库存储的状态数值，格式化为汉字
       stateFormatter(row,column){
-        let state = row.state;
-        if(state === '0'){return '是'} else {return '否'}
+        let state = row.zt;
+        if(state == '0'){return '是'} else {return '否'}
       },
       getData(){
             var _this=this;

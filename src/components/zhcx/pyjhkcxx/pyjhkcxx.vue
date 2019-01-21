@@ -16,7 +16,7 @@
                 <el-col :span="12">
                     <div class="grid-content bg-purple left">
                         <!--下拉列表框 开始-->
-                        <el-select style="width:120px" v-model="query.name" placeholder="请选择">
+                        <el-select style="width:180px" v-model="query.name" placeholder="请选择">
                             <el-option v-for="item in select_name" 
                                 :key="item.name" :value="item.value" :label="item.name">
                             </el-option>
@@ -27,32 +27,33 @@
                             </el-option>
                         </el-select>
                         <el-input
-                        style="width:120px"
+                        style="width:180px"
                         placeholder="请输入内容"
                         v-model="query.value"
                         clearable>
                         </el-input>
                         <!--下拉列表框 结束-->
-                        <el-button type="primary" plain>添加</el-button>
+                        <el-button type="primary" plain v-on:click="goto('addline')">添加</el-button>
                     </div>
                     <el-row>
                         <el-col :span="19">
                             <div class="border-left">
+                                {{queryString}}
                             </div>
                         </el-col>
                         <el-col :span="5">
-                            <el-button type="primary" plain class="left-right"> （ </el-button>
-                            <el-button type="primary" plain class="left-right"> ） </el-button>
-                            <el-button type="primary" plain class="left-right">并且</el-button>
-                            <el-button type="primary" plain class="left-right">或者</el-button>
-                            <el-button type="primary" plain class="left-right">删除</el-button>
+                            <el-button type="primary" plain class="left-right" v-on:click="goto('left')"> （ </el-button>
+                            <el-button type="primary" plain class="left-right" v-on:click="goto('right')"> ） </el-button>
+                            <el-button type="primary" plain class="left-right" v-on:click="goto('and')">并且</el-button>
+                            <el-button type="primary" plain class="left-right" v-on:click="goto('or')">或者</el-button>
+                            <el-button type="primary" plain class="left-right" v-on:click="goto('clear')">清空</el-button>
                         </el-col>
                     </el-row>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content bg-purple-light border-right ">
                         <div class="d1">显示字段：</div>
-                        <el-checkbox-group v-model="checkList" class="right">
+                        <el-checkbox-group v-model="viewCheckList" class="right">
                             <el-checkbox label="教学计划号"></el-checkbox>
                             <el-checkbox label="年级"></el-checkbox>
                             <el-checkbox label="学院代码"></el-checkbox>
@@ -102,41 +103,153 @@
           <el-table-column
             prop="num"
             header-align="center"
-            label="序号"
+            label="教学计划号"
             height="50"
-            width="100"
+            :width="width.jxjhh"
              sortable>
           </el-table-column>
           <el-table-column
             prop="permission"
             header-align="center"
-            label="权限"
+            label="年级"
             width="100">
           </el-table-column>
           <el-table-column
             prop="name"
             header-align="center"
-            label="姓名">
+            label="学院代码">
           </el-table-column>
           <el-table-column
             prop="sex"
             header-align="center"
-            label="性别">
+            label="学院名称">
           </el-table-column>
           <el-table-column
             prop="job"
             header-align="center"
-            label="职务">
+            label="专业代码">
           </el-table-column>
           <el-table-column
             prop="jobTitle"
             header-align="center"
-            label="职称">
+            label="专业名称">
           </el-table-column>
           <el-table-column
             prop="phone"
             header-align="center"
-            label="联系方式">
+            label="课程代码">
+          </el-table-column>
+
+          <el-table-column
+            prop="permission"
+            header-align="center"
+            label="课程名称"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            header-align="center"
+            label="开课学院代码">
+          </el-table-column>
+          <el-table-column
+            prop="sex"
+            header-align="center"
+            label="开课学院名称">
+          </el-table-column>
+          <el-table-column
+            prop="job"
+            header-align="center"
+            label="考核方式">
+          </el-table-column>
+          <el-table-column
+            prop="jobTitle"
+            header-align="center"
+            label="课程性质">
+          </el-table-column>
+          <el-table-column
+            prop="phone"
+            header-align="center"
+            label="课程模块名称">
+          </el-table-column>
+
+          <el-table-column
+            prop="permission"
+            header-align="center"
+            label="课程类别"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            header-align="center"
+            label="专业方向名称">
+          </el-table-column>
+          <el-table-column
+            prop="sex"
+            header-align="center"
+            label="状态">
+          </el-table-column>
+          <el-table-column
+            prop="job"
+            header-align="center"
+            label="是否学位课">
+          </el-table-column>
+          <el-table-column
+            prop="jobTitle"
+            header-align="center"
+            label="是否第二专业">
+          </el-table-column>
+          <el-table-column
+            prop="phone"
+            header-align="center"
+            label="是否个性化课程">
+          </el-table-column>
+
+          <el-table-column
+            prop="permission"
+            header-align="center"
+            label="课程组名称"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            header-align="center"
+            label="学分">
+          </el-table-column>
+          <el-table-column
+            prop="sex"
+            header-align="center"
+            label="总学时">
+          </el-table-column>
+          <el-table-column
+            prop="job"
+            header-align="center"
+            label="理论学时">
+          </el-table-column>
+          <el-table-column
+            prop="jobTitle"
+            header-align="center"
+            label="实验学时">
+          </el-table-column>
+          <el-table-column
+            prop="phone"
+            header-align="center"
+            label="实践学时">
+          </el-table-column>
+
+          <el-table-column
+            prop="sex"
+            header-align="center"
+            label="上机学时">
+          </el-table-column>
+          <el-table-column
+            prop="job"
+            header-align="center"
+            label="课外学时">
+          </el-table-column>
+          <el-table-column
+            prop="jobTitle"
+            header-align="center"
+            label="开课学期">
           </el-table-column>
         </el-table>
     </div>
@@ -149,11 +262,9 @@
 export default {
     data () {
       return {
-    query: {
-        name: '',
-        op: '',
-        value: ''
-      },
+        width: {
+            jxjhh: 0,
+        },
         select_name: [
             {
             name: '年级',
@@ -216,8 +327,37 @@ export default {
             { name: '>=' },
             { name: '<=' }
         ],
-        checkList: ['','']
-      };
+        query: {
+            name: '',
+            op: '',
+            value: ''
+        },
+        tableData:[],
+        viewCheckList: ['',''],
+        queryString:''
+
+      }
+    },
+    methods:{
+
+        goto(val){
+            if(val == 'clear'){
+                this.queryString = '';
+                this.query.name='';
+                this.query.op='';
+                this.query.value='';
+            }else if(val == 'and'){
+                this.queryString+=" and ";
+            }else if(val == 'or'){
+                this.queryString+=" or ";
+            }else if(val == 'left'){
+                this.queryString+=" ( ";
+            }else if(val == 'right'){
+                this.queryString+=" ) ";
+            }else if(val == 'addline'){
+                this.queryString+= this.query.name+" "+this.query.op+" "+this.query.value;
+            }
+        }
     }
 }
 </script>
