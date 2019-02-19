@@ -50,9 +50,6 @@
 
 <el-container>
     <el-main>
-        <el-row style="text-align:left; padding-bottom:20px; padding-left:0px;">
-           <el-button type="primary" plain>课程简介管理</el-button>
-        </el-row>
         <main-table>
             <!-- @row-click="handleCurrentChange" -->
             <el-table
@@ -122,10 +119,8 @@
                     ]
                 },
            }
-
        },
        methods:{
-
            query(){
                var _this=this;
                this.axios({
@@ -169,19 +164,19 @@
                 })
                 .then(function(rep){
                     _this.xyList=rep.data;
-                    // _this.$notify({
-                    //     title:"初始化学院",
-                    //     message:"初始化学院成功",
-                    //     type:"success"
-                    // })
+                    _this.$notify({
+                        title:"初始化学院",
+                        message:"初始化学院成功",
+                        type:"success"
+                    })
                 })
                 .catch(function(e){
-                // _this.$notify({
-                //         title:"初始化学院",
-                //         dangerouslyUseHTMLString: true,
-                //         message:"初始化学院失败</br>"+e,
-                //         type:"error"
-                //     })
+                _this.$notify({
+                        title:"初始化学院",
+                        dangerouslyUseHTMLString: true,
+                        message:"初始化学院失败</br>"+e,
+                        type:"error"
+                    })
                 });
 
                 //年级
@@ -191,14 +186,11 @@
                 {
                     _this.njList.push({label:i+'',value:i+''});
                 }
-
-
-                // CurrentRow:function(val){
-                //     this.kcData.currentKc=val;
-                //     console.log("当前"+this.kcData.currentKc.jxjhh);
-                // }
-
-                
+                _this.$notify({
+                    title:"初始化年级",
+                    message:"初始化年级成功",
+                    type:"success"
+                })
             },
 
        }

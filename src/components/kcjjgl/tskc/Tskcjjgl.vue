@@ -75,22 +75,22 @@
             </el-table>
         </main-table>
     </el-main>
-            <el-dialog title="课程简介管理" :visible.sync="dialogFormVisible">
-                <el-form :model="form">
-                    <el-form-item label="课程名称：" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" >
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item label="课程简介：" :label-width="formLabelWidth">
-                        <el-input type="textarea" v-model="form.desc" >
-                        </el-input>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                </div>
-            </el-dialog>
+        <el-dialog title="课程简介管理" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="课程名称：" :label-width="formLabelWidth">
+                    <el-input v-model="form.kczwmc" >
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="课程简介：" :label-width="formLabelWidth">
+                    <el-input type="textarea" v-model="form.kcjj" >
+                    </el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submit">确 定</el-button>
+            </div>
+        </el-dialog>
 </el-container>
 
 </div>
@@ -113,14 +113,14 @@
                 dialogTableVisible: false,
                 dialogFormVisible: false,
                 form: {
-                name: '',
+                kczwmc:'',
                 region: '',
                 date1: '',
                 date2: '',
                 delivery: false,
                 type: [],
                 resource: '',
-                desc: ''
+                kcjj: ''
                 },
                 formLabelWidth: '120px'
             }
@@ -131,6 +131,29 @@
                 this.axios({
                     method:'get', //梳理一下！！！！！！！！！！
                     url:'/jwc/JyTsxxpy/gettspykcByXyNjMc?xydm='+_this.$route.query.row.xydm+'tspydm='+_this.$route.query.row.tsxxpydm+'kcmc'+_this.$route.query.row.kcmc, 
+                })
+                .then(function(rep){
+                    _this.tableData.GetList=rep.data;
+                    _this.$notify({
+                        title:"获取查询",
+                        message:"获取查询成功",
+                        type:"success"
+                    })
+                })
+                .catch(function(e){
+                _this.$notify({
+                        title:"获取查询",
+                        dangerouslyUseHTMLString: true,
+                        message:"获取查询</br>"+e,
+                        type:"error"
+                    })
+                });
+            },
+            query(){
+                var _this=this;
+                this.axios({
+                    method:'get',  //？？？？？？？？？？？？？？？？？？？？
+                    url:'/jwc/JyTsxxpy/gettspykcByXyNjMc?xydm='+_this.row.sysKc.tsxydm+'&tspydm='+_this.row.tspydm+'&kcmc'+_this.input1, 
                 })
                 .then(function(rep){
                     _this.tableData.GetList=rep.data;
@@ -148,13 +171,38 @@
                 //         type:"error"
                 //     })
                 });
-            },
-            query(){
 
-            },handleEdit(index, row) {
+            },
+            submit(){          //和专业课程一吗？？？？？？
+                var _this=this;
+                this.axios({
+                    method:'get',
+                    url:'/jwc/SysKc/modify?sysKc='+_this.form.kcjj, 
+                })
+                .then(function(rep){
+                    _this.tableData.GetList=rep.data;
+                    // _this.$notify({
+                    //     title:"初始化",
+                    //     message:"初始化成功",
+                    //     type:"success"
+                    // })
+                })
+                .catch(function(e){
+                // _this.$notify({
+                //         title:"初始化",
+                //         dangerouslyUseHTMLString: true,
+                //         message:"初始化失败</br>"+e,
+                //         type:"error"
+                //     })
+                });
+                
+                _this.dialogFormVisible = false
+            },
+            handleEdit(index, row) {
                 var _this=this;
                 _this.dialogFormVisible = true,
-                _this.form.name=_this.index.sysKc.kczwmc
+                _this.form.kczwmc=row.sysKc.kczwmc
+                _this.form.kcjj=row.sysKc.kcjj   //修改后无法返回改好的内容！！！！！！！！！
             },
 
         }

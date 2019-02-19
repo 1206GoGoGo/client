@@ -1,64 +1,4 @@
 <template>
-
-
-<!-- <script>
-  export default {
-    name: 'Window',
-    props: {
-      titlex: String,
-      id: [String, Number]
-    },
-    data() {
-      return {
-        title: '标题',
-        selectElement: ''
-      }
-    },
-    computed: {
-      dialogVisible: {
-        get: function () {
-          return this.$store.state.dialogVisible
-        },
-        set: function (newValue) {
-          this.$store.commit('newDialogVisible', newValue)
-        }
-      }
-    },
-    methods: {
-      closeDialog(e) {
-        this.dialogVisible = false
-        // alert(this.dialogVisible)
-        this.$store.commit('newDialogVisible', false)
-      },
-      mousedown(event) {
-        this.selectElement = document.getElementById(this.id)
-        var div1 = this.selectElement
-        this.selectElement.style.cursor = 'move'
-        this.isDowm = true
-        var distanceX = event.clientX - this.selectElement.offsetLeft
-        var distanceY = event.clientY - this.selectElement.offsetTop
-        // alert(distanceX)
-        // alert(distanceY)
-        console.log(distanceX)
-        console.log(distanceY)
-        document.onmousemove = function (ev) {
-          var oevent = ev || event
-          div1.style.left = oevent.clientX - distanceX + 'px'
-          div1.style.top = oevent.clientY - distanceY + 'px'
-        }
-        document.onmouseup = function () {
-          document.onmousemove = null
-          document.onmouseup = null
-          div1.style.cursor = 'default'
-        }
-      }
-    }
-  }
-</script> -->
-
-
-
-
 <div class="order">
     <!-- 显示当前页面路径 开始 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -116,7 +56,7 @@
         </div>
     </el-col>  -->
   </el-row>  
-    <div id="qxgl">
+    <div>
         <el-table
           v-if="hideRow1"
           :data="tableData.GetList"
@@ -174,68 +114,29 @@
                         @click="handleEdit(scope.$index, scope.row)">编辑</el-button></el-col>
                     <el-col :span="12"><el-button
                         size="mini"
-                        type="danger"
                         @click="handleDelete(scope.$index, scope.row)">删除</el-button></el-col>
                 </el-row>
             </template>
         </el-table-column>
         </el-table>
     </div>
-
-    <!-- <div id="qxgl">
-        <el-table
-          v-if="hideRow2"
-          :data="tableData.GetList"
-          border
-          highlight-current-row
-          class="t1"
-          height="500" 
-          style="width: 100%"
-          :default-sort = "{prop: 'name', order: 'descending'}" >
-          <el-table-column
-            prop="xm"
-            header-align="center"
-            label="姓名"
-            height="50"
-            width="100"
-             sortable>
-          </el-table-column>
-          <el-table-column
-            prop="whw"
-            header-align="center"
-            label="权限"
-            width="100">
-          </el-table-column>
-          <el-table-column
-            prop="szdw"
-            header-align="center"
-            label="所属单位">
-          </el-table-column>
-          <el-table-column label="操作" width="160px">
-            <template slot-scope="scope">
-                <el-row>
-                    <el-col :span="12"><el-button
-                        size="mini"
-                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button></el-col>
-                    <el-col :span="12"><el-button
-                        size="mini"
-                        type="danger"
-                        @click="handleDelete(scope.$index, scope.row)">删除</el-button></el-col>
-                </el-row>
-            </template>
-        </el-table-column>
-        </el-table>
-    </div> -->
+<!-- @mousedown="mousedown" v-bind:id="id"-->
     <el-dialog title="权 限 管 理" :visible.sync="dialogFormVisible" @mousedown="mousedown" v-bind:id="id">
         <el-form :model="form">
-            <el-form-item label="课程名称：" :label-width="formLabelWidth">
+            <!-- <el-form-item label="权  限：" :label-width="formLabelWidth">
                 <el-input v-model="form.kczwmc" >
                 </el-input>
-            </el-form-item>
-            <el-form-item label="课程简介：" :label-width="formLabelWidth">
-                <el-input type="textarea" v-model="form.desc" >
-                </el-input>
-            </el-form-item>
+            </el-form-item> -->
+            权 限：<el-select style="width:150px" v-model="qx" clearable placeholder="请选择">
+                <el-form-option
+                v-for="item in options1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                @click="toggle()"
+                >
+                </el-form-option>
+            </el-select>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -244,8 +145,6 @@
     </el-dialog>
 
 </div>
-
-
 </template>
 
 <script>
@@ -274,7 +173,6 @@
                 hideRow2:false,
                 tableData:{
                     GetList:[
-                   
                 ]
             },
             dialogFormVisible: false,
@@ -283,12 +181,13 @@
                 region: '',
                 date1: '',
                 date2: '',
+                qx:'',
                 delivery: false,
                 type: [],
                 resource: '',
                 desc: ''
                 },
-                formLabelWidth: '120px'
+                //formLabelWidth: '120px'
             }
             
     },
@@ -304,36 +203,45 @@
                 else if(xl === '6'){return '无权限'} 
 
             },
-            handleEdit(){
+            handleEdit(row,column){
                 var _this=this;
                 _this.dialogFormVisible = true;
-                _this.form=row;
+
+                let xl = row.xl;
+                if(xl === '1'){ _this.form.qx='教师'} 
+                else if(xl === '2'){ _this.form.qx='学生'} 
+                else if(xl === '3'){ _this.form.qx='教务处教研科'} 
+                else if(xl === '4'){ _this.form.qx='教务处其他'} 
+                else if(xl === '5'){ _this.form.qx='学院教务处'} 
+                else if(xl === '6'){ _this.form.qx='无权限'} 
+
+                //_this.form.qx=row.xl;
             },
             handleDelete(){
 
             },
-        mousedown(event) {
-        this.selectElement = document.getElementById(this.id)
-        var div1 = this.selectElement
-        this.selectElement.style.cursor = 'move'
-        this.isDowm = true
-        var distanceX = event.clientX - this.selectElement.offsetLeft
-        var distanceY = event.clientY - this.selectElement.offsetTop
-        // alert(distanceX)
-        // alert(distanceY)
-        console.log(distanceX)
-        console.log(distanceY)
-        document.onmousemove = function (ev) {
-          var oevent = ev || event
-          div1.style.left = oevent.clientX - distanceX + 'px'
-          div1.style.top = oevent.clientY - distanceY + 'px'
-        }
-        document.onmouseup = function () {
-          document.onmousemove = null
-          document.onmouseup = null
-          div1.style.cursor = 'default'
-        }
-      },
+      //   mousedown(event) {
+      //   this.selectElement = document.getElementById(this.id)
+      //   var div1 = this.selectElement
+      //   this.selectElement.style.cursor = 'move'
+      //   this.isDowm = true
+      //   var distanceX = event.clientX - this.selectElement.offsetLeft
+      //   var distanceY = event.clientY - this.selectElement.offsetTop
+      //   // alert(distanceX)
+      //   // alert(distanceY)
+      //   console.log(distanceX)
+      //   console.log(distanceY)
+      //   document.onmousemove = function (ev) {
+      //     var oevent = ev || event
+      //     div1.style.left = oevent.clientX - distanceX + 'px'
+      //     div1.style.top = oevent.clientY - distanceY + 'px'
+      //   }
+      //   document.onmouseup = function () {
+      //     document.onmousemove = null
+      //     document.onmouseup = null
+      //     div1.style.cursor = 'default'
+      //   }
+      // },
             toggle(){
                 var _this=this;
                 if(_this.value1=='选项1')
@@ -352,28 +260,26 @@
             //     params: {
             //         xm: '邓文'
             //     }
-            // }).then
-
+            // }).then   +_this.input1
                 this.axios.get('/jwc/JyQx/search?xm=邓文'
                 ).then(function(rep){
                     _this.tableData.GetList=rep.data;
-                   // console.log(_this.xyList)
-                    // _this.$notify({
-                    //     title:"初始化学院",
-                    //     message:"初始化学院成功",
-                    //     type:"success"
-                    // })
+                    // console.log(_this.xyList)
+                    _this.$notify({
+                        title:"获取权限",
+                        message:"获取权限成功",
+                        type:"success"
+                    })
                 })
                 .catch(function(e){
-                // _this.$notify({
-                //         title:"初始化学院",
-                //         dangerouslyUseHTMLString: true,
-                //         message:"初始化学院失败</br>"+e,
-                //         type:"error"
-                //     })
+                _this.$notify({
+                        title:"获取权限",
+                        dangerouslyUseHTMLString: true,
+                        message:"获取权限失败</br>"+e,
+                        type:"error"
+                    })
                 });
             }
-
         }
     }
 </script>

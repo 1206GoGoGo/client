@@ -127,16 +127,14 @@
            }
        },
        methods:{
-        //     created(){
-        //        this.getAllxy()
-        //    },
-            
-        //    getAllxy(){
-
-        //    },
-
             query(){
                 var _this=this;
+                if(_this.nj=='')
+                    _this.nj="0";
+                if(_this.xy=='')
+                    _this.xy="0";
+                if(_this.zy=='')
+                    _this.zy="0";
                 this.axios({
                     method:'get',
                     url:'/jwc/JyPyjhyq/search?xydm='+_this.xy+'&zydm='+_this.zy+'&nj='+_this.nj, 
@@ -160,10 +158,6 @@
                 });
             },
 
-            // manage1(){
-            //     this.$router.push({name: 'manageCourse'});
-
-            // },
             handleEdit(index, row) {
                 var _this=this;
                 //console.log(index, row);
@@ -172,10 +166,9 @@
             },
 
 
-            //页面初始化init:function()
+            //页面初始化学院、年级
             init(){
                 var _this=this;
-
                 //学院
                 this.axios({
                     method:'get',
@@ -183,19 +176,19 @@
                 })
                 .then(function(rep){
                     _this.xyList=rep.data;
-                    // _this.$notify({
-                    //     title:"初始化学院",
-                    //     message:"初始化学院成功",
-                    //     type:"success"
-                    // })
+                    _this.$notify({
+                        title:"初始化学院",
+                        message:"初始化学院成功",
+                        type:"success"
+                    })
                 })
                 .catch(function(e){
-                // _this.$notify({
-                //         title:"初始化学院",
-                //         dangerouslyUseHTMLString: true,
-                //         message:"初始化学院失败</br>"+e,
-                //         type:"error"
-                //     })
+                _this.$notify({
+                        title:"初始化学院",
+                        dangerouslyUseHTMLString: true,
+                        message:"初始化学院失败</br>"+e,
+                        type:"error"
+                    })
                 });
 
                 //年级
@@ -205,40 +198,39 @@
                 {
                     _this.njList.push({label:i+'',value:i+''});
                 }
-
-
-                // CurrentRow:function(val){
-                //     this.kcData.currentKc=val;
-                //     console.log("当前"+this.kcData.currentKc.jxjhh);
-                // }
+                _this.$notify({
+                    title:"初始化年级",
+                    message:"初始化年级成功",
+                    type:"success"
+                })
             },
 
-
-                initZy(){
-                    //_this.zy=""
-                    var _this=this;
-                    this.axios({
-                        method:'get',
-                        url:'/jwc/SysZy/getzyListByxydm?xydm='+this.xy
+            ////页面初始化专业
+            initZy(){
+                var _this=this
+                _this.zyList=""
+                this.axios({
+                    method:'get',
+                    url:'/jwc/SysZy/getzyListByxydm?xydm='+this.xy
+                })
+                .then(function(rep){
+                    _this.zyList=rep.data;
+                    
+                    _this.$notify({
+                        title:"初始化专业",
+                        message:"初始化专业成功",
+                        type:"success"
                     })
-                    .then(function(rep){
-                        _this.zyList=rep.data;
-                        
-                        // _this.$notify({
-                        //     title:"初始化学院",
-                        //     message:"初始化学院成功",
-                        //     type:"success"
-                        // })
+                })
+                .catch(function(e){
+                _this.$notify({
+                        title:"初始化专业",
+                        dangerouslyUseHTMLString: true,
+                        message:"初始化专业失败</br>"+e,
+                        type:"error"
                     })
-                    .catch(function(e){
-                    // _this.$notify({
-                    //         title:"初始化学院",
-                    //         dangerouslyUseHTMLString: true,
-                    //         message:"初始化学院失败</br>"+e,
-                    //         type:"error"
-                    //     })
-                    });
-                }
+                });
+            }
         }
    }
 

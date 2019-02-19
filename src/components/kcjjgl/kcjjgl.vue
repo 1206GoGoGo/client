@@ -88,7 +88,7 @@
                     <el-form-item label="课程简介：" :label-width="formLabelWidth">
                         <el-input type="textarea" v-model="form.desc" >
                         </el-input>
-                    </el-form-item>
+                    </el-form-item>  
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -138,19 +138,19 @@
                 })
                 .then(function(rep){
                     _this.tableData.GetList=rep.data;
-                    // _this.$notify({
-                    //     title:"初始化学院",
-                    //     message:"初始化学院成功",
-                    //     type:"success"
-                    // })
+                    _this.$notify({
+                        title:"初始化学院",
+                        message:"初始化学院成功",
+                        type:"success"
+                    })
                 })
                 .catch(function(e){
-                // _this.$notify({
-                //         title:"初始化学院",
-                //         dangerouslyUseHTMLString: true,
-                //         message:"初始化学院失败</br>"+e,
-                //         type:"error"
-                //     })
+                _this.$notify({
+                        title:"初始化学院",
+                        dangerouslyUseHTMLString: true,
+                        message:"初始化学院失败</br>"+e,
+                        type:"error"
+                    })
                 });
             },
             query(){

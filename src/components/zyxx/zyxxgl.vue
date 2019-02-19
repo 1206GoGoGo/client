@@ -335,19 +335,9 @@ export default {
 
                 }).catch(function(e){
 
-
                 })
 
-
-
             }
-
-
-
-
-
-
-
 
         },
 

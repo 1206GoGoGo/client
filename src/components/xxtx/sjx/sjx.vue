@@ -14,13 +14,14 @@
     <div>
         <span>按时间查询：</span>
         <el-date-picker
-          v-model="value1" 
+          v-model="Datedatas" 
           type="daterange" 
           align="right" 
           unlink-panels 
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="MM-dd-yyyy"
           :picker-options="pickerOptions2">
         </el-date-picker>
     </div>
@@ -41,7 +42,9 @@
   <el-main class="tmain">
     <!-- <div id="sjx"> -->
         <el-table
+          stripe
           :data="tableData"
+          
           border
           highlight-current-row
           style="width: 100%"
@@ -52,7 +55,8 @@
             header-align="center"
             label="总表状态"
             height="50"
-            width="100">
+            width="100"
+            :formatter="stateFormatter">
           </el-table-column>
           <el-table-column
             prop="fsf"
@@ -71,6 +75,7 @@
             label="内容概要">
           </el-table-column>
           <el-table-column
+            :formatter="fssjFormatter"
             prop="fssj"
             header-align="center"
             label="发送时间"
@@ -92,19 +97,17 @@
   <el-dialog title="武汉理工大学" :visible.sync="dialogFormVisible">
     <el-form :model="form">
         <el-form-item>
-            <el-input type="textarea" v-model="form.xxnr" >
+            <el-input type="textarea" v-model="form.xxnr" readonly>
             </el-input>
         </el-form-item>
         <el-form-item >
-            发自：<el-input v-model="form.fsf" >
+            发自：<el-input v-model="form.fsf" readonly>
             </el-input>
-            时间：<el-input v-model="form.fssj" >
+            时间：<el-input v-model="form.fssj" readonly>
             </el-input>
-            <!-- 发自：<label>{{fsf}}</label> 时间：<label>{{fssj}}</label> :label-width="formLabelWidth"-->
         </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-        <!-- <el-button @click="dialogFormVisible = false">取 消</el-button> -->
         <el-button type="primary" @click="dialogFormVisible = false">返  回</el-button>
     </div>
    </el-dialog>
@@ -114,9 +117,17 @@
 </template>
 <script>
 export default {
+  //获取数据前先取数据     无后台方法！！！！！！！！
+  //  mounted(){
+  //       this.getData(); 
+  //   },
     data() {
       return {
-        tableData: '',
+        tableData:'',
+        //loading: true,
+        tableHeight: window.innerHeight * 0.75 ,
+
+        //tableData: '',
         dialogTableVisible: false,
         dialogFormVisible: false,
         form: {
@@ -162,33 +173,101 @@ export default {
             }
           }]
         },
-        value1: ''
+        Datedatas:'',
       }
     },
     //日期选择结束
 
     methods: {
-      // formatter(row, column) {
-      //   return row.address;
-      //   //return column.address;
-      // },
-      handleQuery(){
-        var _this=this;
-        _this.dialogFormVisible = true
-        _this.form.name=_this.index.sysKc.kczwmc
-
+      //将数据库存储的状态数值，格式化为汉字
+      stateFormatter(row,column){
+          let zt = row.zt;
+          if(zt == '0'){return '已读'} 
+          else {return '未读'} 
       },
-      handleDele(){
-
+      add(m){return m<10?'0'+m:m },
+      fssjFormatter(row,column){
+            var fssj = new Date(parseInt(row.fssj));
+            var year=fssj.getFullYear();
+            var month=fssj.getMonth()+1;
+            var day=fssj.getDate();
+            var fssj1=year+"-"+this.add(month)+"-"+this.add(day)
+            return fssj1;
+      },
+      handleQuery(index, row){
+        // 获取表单元素的内容
+        // console.log(row.xxnr)
+        this.dialogFormVisible = true
+        this.form.xxnr=row.xxnr
+        this.form.fsf=row.fsf
+        
+        //时间格式转换
+        var fssj = new Date(parseInt(row.fssj));
+        var year=fssj.getFullYear();
+        var month=fssj.getMonth()+1;
+        var day=fssj.getDate();
+        var fssj1=year+"-"+this.add(month)+"-"+this.add(day)
+        this.form.fssj=fssj1
+      },
+      handleDele(index, row){
+       // this.row.splice();
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.deleteData(row.index);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+      },
+      deleteData(index){ //?????????????????????????????????????????????????????????????
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('jwc/JyXxtx/deleteMse?jyXxtx='+(jyXxtx)(index))
+                .then(function (response) {
+                    //refresh
+                    _this.$message({ message: '删除校区代码成功: '+response.data,showClose: true,type: 'success' });
+                    _this.getData();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    _this.$message({ message: '删除校区代码失败: '+error,showClose: true,type: 'error' });
+                });
+      },
+      getData(){
+        var _this=this;
+        // _this.loading = true;
+        var jyb='教研办'
+        this.axios.get('jwc/JyXxtx/getAllList')
+          .then(function (response) {
+              var dataList=response.data;
+              _this.tableData=dataList;
+              _this.$notify({title:"获取收件箱信息", message:"获取收件箱信息成功 ("+response.data.length+")", type:"success"});
+              // _this.loading = false;
+          })
+          .catch(function (error) {
+              console.log(error);
+              _this.$notify({title:"获取收件箱信息", message:"获取收件箱信息失败: "+error, type:"error"});
+              // _this.loading = false;
+          });
       },
       clear(){
-        this.value1=""
+        this.Datedatas=""
         this.query=[]
       },
       query(){
+        if(!this.Datedatas){
+                var sj1 = '0';
+                var sj2 = '0';
+        }else{
+                var sj1 = this.Datedatas.toString().split(',')[0];
+                var sj2 = this.Datedatas.toString().split(',')[1]; //????????????
+        }
         var _this=this;
-        var sj1='01/08/2012'
-        var sj2='02/08/2014'
         var jyb='教研办'
         this.axios({
             method:'get',
@@ -197,23 +276,21 @@ export default {
         .then(function(rep){
             _this.tableData=rep.data;
             _this.$notify({
-                title:"初始化收件箱",
-                message:"初始化收件箱成功",
+                title:"获取收件箱",
+                message:"获取收件箱成功",
                 type:"success"
             })
         })
         .catch(function(e){
         _this.$notify({
-                title:"初始化收件箱",
+                title:"获取收件箱",
                 dangerouslyUseHTMLString: true,
-                message:"初始化收件箱失败</br>"+e,
+                message:"获取收件箱失败</br>"+e,
                 type:"error"
             })
         });
-
       }, 
     },
-  
   }
 
 </script>

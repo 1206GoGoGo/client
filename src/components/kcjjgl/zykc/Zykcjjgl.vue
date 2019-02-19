@@ -82,17 +82,17 @@
             <el-dialog title="课程简介管理" :visible.sync="dialogFormVisible">
                 <el-form :model="form">
                     <el-form-item label="课程名称：" :label-width="formLabelWidth">
-                        <el-input v-model="form.kczwmc" >
+                        <el-input v-model="form.kczwmc" readonly>
                         </el-input>
                     </el-form-item>
                     <el-form-item label="课程简介：" :label-width="formLabelWidth">
-                        <el-input type="textarea" v-model="form.desc" >
+                        <el-input type="textarea" v-model="form.kcjj" >
                         </el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="submit">确 定</el-button>
                 </div>
             </el-dialog>
 </el-container>
@@ -118,13 +118,14 @@
                 dialogFormVisible: false,
                 form: {
                 name: '',
+                kczwmc:'',
                 region: '',
                 date1: '',
                 date2: '',
                 delivery: false,
                 type: [],
                 resource: '',
-                desc: ''
+                kcjj: ''
                 },
                 formLabelWidth: '120px'
             }
@@ -154,14 +155,60 @@
                 });
             },
             query(){
+                var _this=this;
+                this.axios({
+                    method:'get',
+                    url:'/jwc/JyPyjhkcxx/getZypyKcByjxjhhAndKcmc?jxjhh='+_this.$route.query.row.jxjhh+'&kcmc='+_this.input1, 
+                })
+                .then(function(rep){
+                    _this.tableData.GetList=rep.data;
+                    // _this.$notify({
+                    //     title:"初始化学院",
+                    //     message:"初始化学院成功",
+                    //     type:"success"
+                    // })
+                })
+                .catch(function(e){
+                // _this.$notify({
+                //         title:"初始化学院",
+                //         dangerouslyUseHTMLString: true,
+                //         message:"初始化学院失败</br>"+e,
+                //         type:"error"
+                //     })
+                });
 
+            },
+            submit(){
+                var _this=this;
+                this.axios({
+                    method:'get',
+                    url:'/jwc/SysKc/modify?sysKc='+_this.form.kcjj, 
+                })
+                .then(function(rep){
+                    _this.tableData.GetList=rep.data;
+                    // _this.$notify({
+                    //     title:"初始化",
+                    //     message:"初始化成功",
+                    //     type:"success"
+                    // })
+                })
+                .catch(function(e){
+                // _this.$notify({
+                //         title:"初始化",
+                //         dangerouslyUseHTMLString: true,
+                //         message:"初始化失败</br>"+e,
+                //         type:"error"
+                //     })
+                });
+                
+                _this.dialogFormVisible = false
             },
             handleEdit(index, row) {
                 var _this=this;
                 _this.dialogFormVisible = true;
-                _this.form=row;
-            },
-
+                _this.form.kczwmc=row.sysKc.kczwmc
+                _this.form.kcjj=row.sysKc.kcjj   //修改后无法返回改好的内容！！！！！！！！！
+            }
         }
     }
 </script>

@@ -16,18 +16,18 @@
                 <el-col :span="12">
                     <div class="grid-content bg-purple left">
                         <!--下拉列表框 开始-->
-                        <el-select style="width:180px" v-model="query.name" placeholder="请选择">
+                        <el-select style="width:110px" v-model="query.name" placeholder="请选择">
                             <el-option v-for="item in select_name" 
                                 :key="item.name" :value="item.value" :label="item.name">
                             </el-option>
                         </el-select>
-                        <el-select style="width:120px" v-model="query.op" placeholder="请选择">
+                        <el-select style="width:110px" v-model="query.op" placeholder="请选择">
                             <el-option v-for="item in select_op" 
                                 :key="item.name" :value="item.name" :label="item.name">
                             </el-option>
                         </el-select>
                         <el-input
-                        style="width:180px"
+                        style="width:120px"
                         placeholder="请输入内容"
                         v-model="query.value"
                         clearable>
@@ -38,7 +38,8 @@
                     <el-row>
                         <el-col :span="19">
                             <div class="border-left">
-                                {{queryString}}
+                              <!-- <el-input class="border-left" type="textarea" v-model="queryString" style="height:240px" ></el-input> -->
+                              {{queryString}} 
                             </div>
                         </el-col>
                         <el-col :span="5">
@@ -54,44 +55,44 @@
                     <div class="grid-content bg-purple-light border-right ">
                         <div class="d1">显示字段：</div>
                         <el-checkbox-group v-model="viewCheckList" class="right">
-                            <el-checkbox label="教学计划号"></el-checkbox>
-                            <el-checkbox label="年级"></el-checkbox>
-                            <el-checkbox label="学院代码"></el-checkbox>
-                            <el-checkbox label="学院名称"></el-checkbox>
-                            <el-checkbox label="专业代码"></el-checkbox>
-                            <el-checkbox label="专业名称"></el-checkbox>
-                            <el-checkbox label="课程代码"></el-checkbox>
-                            <el-checkbox label="课程名称"></el-checkbox>
-                            <el-checkbox label="开课学院代码"></el-checkbox>
-                            <el-checkbox label="开课学院名称"></el-checkbox>
-                            <el-checkbox label="考核方式"></el-checkbox>
-                            <el-checkbox label="课程性质"></el-checkbox>
-                            <el-checkbox label="课程模块名称"></el-checkbox>
-                            <el-checkbox label="课程类别"></el-checkbox>
-                            <el-checkbox label="专业方向名称"></el-checkbox>
-                            <el-checkbox label="状态"></el-checkbox>
-                            <el-checkbox label="是否学位课"></el-checkbox>
-                            <el-checkbox label="是否第二专业"></el-checkbox>
-                            <el-checkbox label="是否个性化课程"></el-checkbox>
-                            <el-checkbox label="课程组名称"></el-checkbox>
-                            <el-checkbox label="学分"></el-checkbox>
-                            <el-checkbox label="总学时"></el-checkbox>
-                            <el-checkbox label="理论学时"></el-checkbox>
-                            <el-checkbox label="实验学时"></el-checkbox>
-                            <el-checkbox label="实践学时"></el-checkbox>
-                            <el-checkbox label="上机学时"></el-checkbox>
-                            <el-checkbox label="课外学时"></el-checkbox>
-                            <el-checkbox label="开课学期"></el-checkbox>
+                            <el-checkbox label="教学计划号" id="cjxjhh" value="a.jxjhh"></el-checkbox>
+                            <el-checkbox label="年级" value="substr(a.jxjhh,1,4)"></el-checkbox>
+                            <el-checkbox label="学院代码" value="substr(a.jxjhh,5,3)"></el-checkbox>
+                            <el-checkbox label="学院名称" value="skxy.xymc"></el-checkbox>
+                            <el-checkbox label="专业代码" value="substr(a.jxjhh,5,4)"></el-checkbox>
+                            <el-checkbox label="专业名称" value="skzy.zymc"></el-checkbox>
+                            <el-checkbox label="课程代码" value="a.kcdm"></el-checkbox>
+                            <el-checkbox label="课程名称" value="kec.kczwmc"></el-checkbox>
+                            <el-checkbox label="开课学院代码" value="kkxy.xydm"></el-checkbox>
+                            <el-checkbox label="开课学院名称" value="kkxy.xymc"></el-checkbox>
+                            <el-checkbox label="考核方式" value="a.khfs"></el-checkbox>
+                            <el-checkbox label="课程性质" value="a.kcxz"></el-checkbox>
+                            <el-checkbox label="课程模块名称" value="kcmk.kcmkmc"></el-checkbox>
+                            <el-checkbox label="课程类别" value="kec.kclbmc"></el-checkbox>
+                            <el-checkbox label="专业方向名称" value="zyfx.zyfxzwmc"></el-checkbox>
+                            <el-checkbox label="状态" value="a.zt"></el-checkbox>
+                            <el-checkbox label="是否学位课" value="a.sfxwk"></el-checkbox>
+                            <el-checkbox label="是否第二专业" value="a.sfdezy"></el-checkbox>
+                            <el-checkbox label="是否个性化课程" value="a.sfgxkc"></el-checkbox>
+                            <el-checkbox label="课程组名称" value="kcz.kczmc"></el-checkbox>
+                            <el-checkbox label="学分" value="kec.xf"></el-checkbox>
+                            <el-checkbox label="总学时" value="kec.zhxs"></el-checkbox>
+                            <el-checkbox label="理论学时" value="kec.llxs" ></el-checkbox>
+                            <el-checkbox label="实验学时" value="kec.syxs" ></el-checkbox>
+                            <el-checkbox label="实践学时" value="kec.sjxs"></el-checkbox>
+                            <el-checkbox label="上机学时" value="kec.sjxs2"></el-checkbox>
+                            <el-checkbox label="课外学时" value="kec.kwxs"></el-checkbox>
+                            <el-checkbox label="开课学期" value="a.jykkxq"></el-checkbox>
                         </el-checkbox-group>
                         <el-button type="primary" plain class="left-right">学时统计</el-button>
                         <el-button type="primary" plain class="left-right">清空</el-button>
                         <el-button type="primary" plain class="left-right">导出</el-button>
-                        <el-button type="primary" plain class="left-right">查询</el-button>
+                        <el-button type="primary" plain class="left-right" @click="query">查询</el-button>
                     </div>
                 </el-col>
             </el-row>
             <!--菜单栏-->
-    <div id="qxgl">
+    <div>
         <el-table
           :data="tableData"
           border
@@ -104,7 +105,7 @@
             prop="num"
             header-align="center"
             label="教学计划号"
-            height="50"
+            
             :width="width.jxjhh"
              sortable>
           </el-table-column>
@@ -253,7 +254,6 @@
           </el-table-column>
         </el-table>
     </div>
-
         </el-container>
     </div>
 </template>
@@ -268,55 +268,55 @@ export default {
         select_name: [
             {
             name: '年级',
-            value: 'jxjhh14'
+            value: '年级'
             },
             {
             name: '学院代码',
-            value: 'jxjhh53'
+            value: '学院代码'
             },
             {
             name: '学院名称',
-            value: 'xymc'
+            value: '学院名称'
             },
             {
             name: '专业代码',
-            value: 'jxjhh54'
+            value: '专业代码'
             },
             {
             name: '专业名称',
-            value: 'zymc'
+            value: '专业名称'
             },
             {
             name: '课程代码',
-            value: 'kcdm'
+            value: '课程代码'
             },
             {
             name: '课程名称',
-            value: 'kczwmc'
+            value: '课程名称'
             },
             {
             name: '开课学院代码',
-            value: 'xydm'
+            value: '开课学院代码'
             },
             {
             name: '开课学院名称',
-            value: 'xymc'
+            value: '开课学院名称'
             },
             {
             name: '开课学期',
-            value: 'jykkxq'
+            value: '开课学期'
             },
             {
             name: '考核方式',
-            value: 'khfs'
+            value: '考核方式'
             },
             {
             name: '课程性质',
-            value: 'kcxz'
+            value: '课程性质'
             },
             {
             name: '状态',
-            value: 'zt'
+            value: '状态'
             }
         ],
         select_op: [
@@ -339,7 +339,6 @@ export default {
       }
     },
     methods:{
-
         goto(val){
             if(val == 'clear'){
                 this.queryString = '';
@@ -357,6 +356,9 @@ export default {
             }else if(val == 'addline'){
                 this.queryString+= this.query.name+" "+this.query.op+" "+this.query.value;
             }
+        },
+        query(){
+
         }
     }
 }
